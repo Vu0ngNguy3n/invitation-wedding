@@ -1,0 +1,41 @@
+# Copywriting Placeholders
+
+Replace all placeholders with the real wedding content before production.
+
+## Hero
+
+[COUPLE_NAMES]
+[WEDDING_PHRASE]
+[WEDDING_DATE_DISPLAY]
+
+## Couple
+
+[BRIDE_NAME]
+[BRIDE_DESCRIPTION]
+[GROOM_NAME]
+[GROOM_DESCRIPTION]
+
+## Save the Date
+
+[SAVE_THE_DATE_TITLE]
+[SAVE_THE_DATE_DESCRIPTION]
+
+## Guestbook
+
+[GUESTBOOK_TITLE]
+[GUESTBOOK_DESCRIPTION]
+[NAME_PLACEHOLDER]
+[MESSAGE_PLACEHOLDER]
+[SUBMIT_LABEL]
+[SUCCESS_MESSAGE]
+[ERROR_MESSAGE]
+
+## Gift
+
+[GIFT_TITLE]
+[GIFT_DESCRIPTION]
+
+## Thank You
+
+[THANK_YOU_TITLE]
+[THANK_YOU_MESSAGE]
