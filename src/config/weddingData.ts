@@ -358,7 +358,7 @@ export const weddingData: WeddingData = {
       openIndexed: "Xem ảnh lớn ",
     },
     thankYou: {
-      title: "Cảm Ơn",
+      title: "Thank You",
       message:
         "Cảm ơn bạn đã dành thời gian hiện diện, sẻ chia niềm vui và gửi những lời chúc tốt đẹp nhất đến chúng mình.",
       image: "/images/thank-you/thank-you.jpg",
