@@ -20,7 +20,9 @@ function dateLabel(display: string, day: string, month: string, year: string) {
     return explicit;
   }
 
-  const parts = [day, month, year].map(filledText).filter((part) => part !== undefined);
+  const parts = [day, month, year]
+    .map(filledText)
+    .filter((part) => part !== undefined);
   return parts.length > 0 ? parts.join(" · ") : undefined;
 }
 
@@ -59,7 +61,10 @@ export function HeroSection() {
       className="relative flex min-h-[calc(100svh-9.5rem)] w-full scroll-mt-6 flex-col items-center justify-center py-6 sm:min-h-[calc(100svh-11rem)] sm:scroll-mt-8 sm:py-8 lg:min-h-[calc(100svh-13rem)] lg:py-10"
     >
       <div className="flex w-full min-w-0 max-w-3xl flex-col items-center text-center">
-        <MotionReveal mode="enter" className="flex w-full flex-col items-center">
+        <MotionReveal
+          mode="enter"
+          className="flex w-full flex-col items-center"
+        >
           {showTitleKicker ? (
             <p className="type-overline text-accent-gold">{title}</p>
           ) : null}

@@ -1,21 +1,22 @@
 import Image from "next/image";
 import { MapPin } from "lucide-react";
+import { weddingData } from "@/config/weddingData";
 import type { WeddingEvent, WeddingEventType } from "@/types/wedding";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
-
-const eventTypeLabel: Record<WeddingEventType, string> = {
-  bride: "Nhà gái",
-  groom: "Nhà trai",
-  ceremony: "Lễ cưới",
-  reception: "Tiệc cưới",
-};
 
 type WeddingEventItemProps = {
   event: WeddingEvent;
 };
 
 export function WeddingEventItem({ event }: WeddingEventItemProps) {
+  const copy = weddingData.copy.events;
+  const eventTypeLabel: Record<WeddingEventType, string> = {
+    bride: copy.typeBride,
+    groom: copy.typeGroom,
+    ceremony: copy.typeCeremony,
+    reception: copy.typeReception,
+  };
   const title = filledText(event.title);
   const date = filledText(event.date);
   const time = filledText(event.time);
@@ -83,8 +84,8 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
           className="foil-border mt-6 inline-flex min-h-11 max-w-full items-center justify-center gap-2 px-4 py-2 text-accent-gold transition-opacity hover:opacity-80"
         >
           <MapPin aria-hidden="true" className="size-4" strokeWidth={1.25} />
-          <span className="type-overline">Xem bản đồ</span>
-          <span className="sr-only"> (mở tab mới)</span>
+          <span className="type-overline">{copy.mapsLabel}</span>
+          <span className="sr-only">{copy.mapsNewTab}</span>
         </a>
       ) : null}
     </article>

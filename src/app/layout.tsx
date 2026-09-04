@@ -7,6 +7,7 @@ import {
   invitationViewport,
 } from "@/lib/metadata";
 import { invitationLanguage } from "@/utils/seo";
+import { filledTextOr } from "@/utils/text";
 import "./globals.css";
 
 const displayFont = Cormorant_Garamond({
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           href="#invitation"
           className="sr-only foil-border bg-vintage-green px-4 py-3 type-overline text-paper-cream focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-[10050] focus-visible:inline-flex focus-visible:min-h-11 focus-visible:items-center"
         >
-          Tới nội dung thiệp
+          {filledTextOr(weddingData.copy.skipToContent, "Tới nội dung thiệp")}
         </a>
         <InvitationShell>{children}</InvitationShell>
       </body>

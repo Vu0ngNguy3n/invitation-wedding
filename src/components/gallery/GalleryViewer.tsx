@@ -30,9 +30,14 @@ const GalleryViewerContext = createContext<GalleryViewerContextValue | null>(
 type GalleryViewerProps = {
   images: GalleryImage[];
   children: ReactNode;
+  labels: {
+    close: string;
+    previous: string;
+    next: string;
+  };
 };
 
-export function GalleryViewer({ images, children }: GalleryViewerProps) {
+export function GalleryViewer({ images, children, labels }: GalleryViewerProps) {
   const [index, setIndex] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
@@ -78,6 +83,7 @@ export function GalleryViewer({ images, children }: GalleryViewerProps) {
             onClose={close}
             onPrev={showPrev}
             onNext={showNext}
+            labels={labels}
           />
         ) : null}
       </AnimatePresence>

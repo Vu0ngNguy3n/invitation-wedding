@@ -8,14 +8,19 @@ import { hasEventContent } from "@/utils/sectionVisibility";
 
 export function EventsSection() {
   const events = weddingData.events.filter(hasEventContent);
-  const heading = weddingData.navigation.find((item) => item.id === "events")?.label;
+  const heading = weddingData.navigation.find(
+    (item) => item.id === "events",
+  )?.label;
 
   if (events.length === 0) {
     return null;
   }
 
   return (
-    <SectionContainer id="events" labelledBy={heading ? "events-heading" : undefined}>
+    <SectionContainer
+      id="events"
+      labelledBy={heading ? "events-heading" : undefined}
+    >
       <MotionReveal>
         {heading ? (
           <SectionHeading title={heading} headingId="events-heading" />

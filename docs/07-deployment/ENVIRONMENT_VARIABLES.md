@@ -1,22 +1,26 @@
 # Environment Variables
 
-## Public / browser-safe
+## Required (Vercel Production / Preview / Development)
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
-```
-
-`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (and the older `NEXT_PUBLIC_SUPABASE_ANON_KEY` alias) is not read by this app. The guestbook server client uses only the project URL plus the server secret.
-
-## Server-only
-
-```env
 SUPABASE_SECRET_KEY=
 ```
 
-The exact key naming may be adjusted to match the installed Supabase
-integration, but any secret key MUST NOT start with `NEXT_PUBLIC_`.
+| Variable | Where it is read | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Server only (`src/lib/supabase/server.ts`) | Project URL, e.g. `https://xxxx.supabase.co`. Prefix `NEXT_PUBLIC_` because Next inlines it at **build** time. |
+| `SUPABASE_SECRET_KEY` | Server only | Dashboard secret / service key. **Never** prefix with `NEXT_PUBLIC_`. |
+
+## Unused by this app
+
+```env
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+```
+
+Optional leftover from the Supabase dashboard. The guestbook does **not** create a browser Supabase client. Do not put the secret key in this variable.
+
+Older local files may still have `NEXT_PUBLIC_SUPABASE_ANON_KEY`; it is also unused.
 
 ## Rules
 
@@ -24,3 +28,4 @@ integration, but any secret key MUST NOT start with `NEXT_PUBLIC_`.
 - `.env.example` may contain empty placeholders only.
 - Server-only secrets must only be read from server-side code.
 - If a secret was ever committed or shared, rotate it in the Supabase dashboard immediately.
+- After changing `NEXT_PUBLIC_SUPABASE_URL` on Vercel, redeploy so the build picks it up.

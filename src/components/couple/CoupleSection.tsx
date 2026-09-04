@@ -7,10 +7,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function CoupleSection() {
   const { bride, groom } = weddingData.couple;
-  const heading = weddingData.navigation.find((item) => item.id === "story")?.label;
+  const heading = weddingData.navigation.find(
+    (item) => item.id === "story",
+  )?.label;
 
   return (
-    <SectionContainer id="story" labelledBy={heading ? "story-heading" : undefined}>
+    <SectionContainer
+      id="story"
+      labelledBy={heading ? "story-heading" : undefined}
+    >
       <MotionReveal>
         {heading ? (
           <SectionHeading title={heading} headingId="story-heading" />

@@ -1,41 +1,38 @@
 # Production Checklist
 
+Use with `docs/07-deployment/DEPLOYMENT.md`.
+
 ## Application
-- [ ] Production build passes
-- [ ] No console errors
-- [ ] No broken links
-- [ ] No placeholder copy
-- [ ] No placeholder images
+- [ ] `npm run typecheck` passes
+- [ ] `npm run lint` passes
+- [ ] `npm run build` passes
+- [ ] Vercel env vars set for Production (and Preview)
+- [ ] No `SUPABASE_SECRET_KEY` in the client bundle
+- [ ] No secrets in Git (`.env.local` ignored; `.env.example` empty)
 
 ## Content
-- [ ] Couple names correct
-- [ ] Date correct
-- [ ] Timezone correct
-- [ ] Venue correct
-- [ ] Parent names correct
+- [ ] Couple names, date, timezone, venue, parents filled in `weddingData`
 - [ ] Event information correct
-- [ ] QR/account information correct
+- [ ] Gallery images in `public/images/gallery/`
+- [ ] Hero / couple photos in `public/images/`
+- [ ] QR / account information correct
+- [ ] No leftover placeholder-only sections you intend to show
 
 ## Guestbook
-- [ ] Supabase production project configured
-- [ ] Table exists
-- [ ] RLS enabled
-- [ ] POST works
-- [ ] GET works
+- [ ] Production Supabase project URL matches `NEXT_PUBLIC_SUPABASE_URL`
+- [ ] `guestbook_wishes` table exists
+- [ ] RLS enabled; SELECT approved only; no public INSERT/UPDATE/DELETE
+- [ ] POST from the live site works
+- [ ] GET / list on the page works
 - [ ] Invalid payload rejected
-- [ ] Rate limiting/abuse strategy verified
-
-## Security
-- [ ] No secret in browser bundle
-- [ ] No secrets in Git
-- [ ] No raw HTML rendering of guest wishes
-- [ ] No unrestricted public UPDATE/DELETE
+- [ ] Cross-origin POST rejected
 
 ## SEO
-- [ ] title
-- [ ] description
-- [ ] OG image
-- [ ] canonical URL if applicable
+- [ ] `seo.title` and `seo.description` set
+- [ ] `seo.canonicalUrl` set to the public HTTPS origin
+- [ ] `public` file exists for `seo.ogImage`
+- [ ] `/robots.txt` allows `/` and lists sitemap after canonical is set
+- [ ] `/sitemap.xml` contains the canonical URL
 
 ## Responsive
 - [ ] mobile
@@ -44,6 +41,7 @@
 - [ ] wide desktop
 
 ## Final
-- [ ] Domain works
-- [ ] HTTPS works
-- [ ] Final visual review completed
+- [ ] Custom domain (optional) on Vercel
+- [ ] HTTPS
+- [ ] Guestbook smoke test on the production origin
+- [ ] Final visual review
