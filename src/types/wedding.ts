@@ -89,6 +89,31 @@ export interface WeddingGift {
   transferNote?: string;
 }
 
+export type WeddingTimelineIcon =
+  | "church"
+  | "camera"
+  | "utensils"
+  | "party"
+  | "music"
+  | "heart"
+  | "rings";
+
+export interface WeddingTimelineItem {
+  id: string;
+  time: string;
+  title: string;
+  description?: string;
+  icon: WeddingTimelineIcon;
+}
+
+export interface WeddingTimeline {
+  title: string;
+  subtitle?: string;
+  backgroundImage?: string;
+  backgroundAlt?: string;
+  items: WeddingTimelineItem[];
+}
+
 export interface NavigationItem {
   id: string;
   label: string;
@@ -183,6 +208,7 @@ export interface WeddingData {
   couple: Couple;
   wedding: WeddingDetails;
   events: WeddingEvent[];
+  timeline: WeddingTimeline;
   gallery: GalleryImage[];
   gifts: WeddingGift[];
   navigation: NavigationItem[];
