@@ -49,11 +49,10 @@ Import wedding content only from `@/config/weddingData`.
 ## 5. Supabase
 
 Review:
-- `docs/05-database/DATABASE_SCHEMA.sql`
-- `docs/05-database/RLS_POLICIES.sql`
+- `supabase/migrations/20260904000000_guestbook_wishes.sql`
 - `docs/05-database/API_SPECIFICATION.md`
 
-Use `.env.local` for real credentials.
+Use `.env.local` for real credentials. On Vercel, set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SECRET_KEY` in the project settings.
 
 Do not commit `.env.local`.
 

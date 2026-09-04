@@ -9,19 +9,23 @@ import type { WeddingGift } from "@/types/wedding";
 import { hasGiftContent } from "@/utils/sectionVisibility";
 import { filledText } from "@/utils/text";
 
-const labels: GiftFieldLabels = {
-  bank: "Ngân hàng",
-  accountName: "Chủ tài khoản",
-  accountNumber: "Số tài khoản",
-  transferNote: "Nội dung chuyển khoản",
-  copy: "Sao chép số tài khoản",
-  copied: "Đã sao chép số tài khoản.",
-  copyFailed: "Không sao chép được. Vui lòng chọn số tài khoản.",
-  brideRole: "Cô dâu",
-  groomRole: "Chú rể",
-};
+function giftLabels(): GiftFieldLabels {
+  const copy = weddingData.copy.gift;
 
-function qrAlt(gift: WeddingGift): string {
+  return {
+    bank: copy.bank,
+    accountName: copy.accountName,
+    accountNumber: copy.accountNumber,
+    transferNote: copy.transferNote,
+    copy: copy.copy,
+    copied: copy.copied,
+    copyFailed: copy.copyFailed,
+    brideRole: copy.brideRole,
+    groomRole: copy.groomRole,
+  };
+}
+
+function qrAlt(gift: WeddingGift, labels: GiftFieldLabels): string {
   const recipient = filledText(gift.name);
   const role = gift.person === "bride" ? labels.brideRole : labels.groomRole;
 
@@ -34,6 +38,7 @@ function qrAlt(gift: WeddingGift): string {
 
 export function GiftSection() {
   const gifts = weddingData.gifts.filter(hasGiftContent);
+  const labels = giftLabels();
   const title = filledText(weddingData.copy.gift.title);
   const description = filledText(weddingData.copy.gift.description);
 
@@ -76,7 +81,7 @@ export function GiftSection() {
               key={gift.id}
               gift={gift}
               labels={labels}
-              qrAlt={qrAlt(gift)}
+              qrAlt={qrAlt(gift, labels)}
             />
           ))}
         </div>

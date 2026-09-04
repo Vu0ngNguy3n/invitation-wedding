@@ -7,27 +7,17 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { listApprovedWishesCached } from "@/lib/guestbook/cached-wishes";
-import {
-  GUESTBOOK_MESSAGE_MAX,
-  GUESTBOOK_NAME_MAX,
-  type GuestbookWish,
-} from "@/types/guestbook";
+import type { GuestbookWish } from "@/types/guestbook";
 import { filledText } from "@/utils/text";
-
-function textOrFallback(value: string | undefined, fallback: string): string {
-  const trimmed = value?.trim();
-  return trimmed && trimmed.length > 0 ? trimmed : fallback;
-}
 
 function guestbookHeading(): { title: string; description?: string } {
   const copy = weddingData.copy.guestbook;
 
   return {
-    title: textOrFallback(
-      copy.title,
+    title:
+      filledText(copy.title) ??
       weddingData.navigation.find((item) => item.id === "guestbook")?.label ??
-        "Lời chúc",
-    ),
+      copy.nameLabel,
     description: filledText(copy.description),
   };
 }
@@ -36,30 +26,24 @@ function guestbookLabels(): GuestbookUiLabels {
   const copy = weddingData.copy.guestbook;
 
   return {
-    nameLabel: "Họ và tên",
-    messageLabel: "Lời chúc",
-    namePlaceholder: textOrFallback(copy.namePlaceholder, ""),
-    messagePlaceholder: textOrFallback(copy.messagePlaceholder, ""),
-    nameRequired: "Vui lòng nhập họ và tên.",
-    nameTooLong: `Họ và tên tối đa ${GUESTBOOK_NAME_MAX} ký tự.`,
-    messageRequired: "Vui lòng viết lời chúc.",
-    messageTooLong: `Lời chúc tối đa ${GUESTBOOK_MESSAGE_MAX} ký tự.`,
-    submitLabel: textOrFallback(copy.submitLabel, "Gửi lời chúc"),
-    submittingLabel: "Đang ghi vào sổ...",
-    successMessage: textOrFallback(
-      copy.successMessage,
-      "Lời chúc đã được ghi vào sổ. Cảm ơn bạn.",
-    ),
-    errorMessage: textOrFallback(
-      copy.errorMessage,
-      "Chưa gửi được lời chúc. Vui lòng thử lại sau.",
-    ),
-    rateLimitMessage: "Bạn gửi hơi nhanh. Vui lòng thử lại sau một lát.",
-    listLoading: "Đang mở sổ lưu bút...",
-    listEmpty: "Sổ còn đang trống. Hãy là người đầu tiên viết lời chúc.",
-    listError: "Không mở được sổ lời chúc lúc này.",
-    listRetry: "Thử mở lại",
-    listTitle: "Những lời đã ghi",
+    nameLabel: copy.nameLabel,
+    messageLabel: copy.messageLabel,
+    namePlaceholder: copy.namePlaceholder,
+    messagePlaceholder: copy.messagePlaceholder,
+    nameRequired: copy.nameRequired,
+    nameTooLong: copy.nameTooLong,
+    messageRequired: copy.messageRequired,
+    messageTooLong: copy.messageTooLong,
+    submitLabel: copy.submitLabel,
+    submittingLabel: copy.submittingLabel,
+    successMessage: copy.successMessage,
+    errorMessage: copy.errorMessage,
+    rateLimitMessage: copy.rateLimitMessage,
+    listLoading: copy.listLoading,
+    listEmpty: copy.listEmpty,
+    listError: copy.listError,
+    listRetry: copy.listRetry,
+    listTitle: copy.listTitle,
   };
 }
 

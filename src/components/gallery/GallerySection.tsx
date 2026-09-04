@@ -15,14 +15,21 @@ export function GallerySection() {
   const images = weddingData.gallery.filter((image) =>
     Boolean(existingPublicAsset(image.src)),
   );
-  const heading = weddingData.navigation.find((item) => item.id === "gallery")?.label;
+  const heading = weddingData.navigation.find(
+    (item) => item.id === "gallery",
+  )?.label;
+
+  const galleryCopy = weddingData.copy.gallery;
 
   if (images.length === 0) {
     return null;
   }
 
   return (
-    <SectionContainer id="gallery" labelledBy={heading ? "gallery-heading" : undefined}>
+    <SectionContainer
+      id="gallery"
+      labelledBy={heading ? "gallery-heading" : undefined}
+    >
       <MotionReveal>
         {heading ? (
           <SectionHeading title={heading} headingId="gallery-heading" />
@@ -33,9 +40,16 @@ export function GallerySection() {
         </div>
 
         <div className="mt-10 sm:mt-14">
-          <GalleryViewer images={images}>
+          <GalleryViewer
+            images={images}
+            labels={{
+              close: galleryCopy.close,
+              previous: galleryCopy.previous,
+              next: galleryCopy.next,
+            }}
+          >
             <ul className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3 lg:gap-6">
-              {images.map((image, imageIndex) => (
+              {images.slice(0, 8).map((image, imageIndex) => (
                 <li
                   key={image.id}
                   className="mb-4 break-inside-avoid sm:mb-5 lg:mb-6"
@@ -44,8 +58,8 @@ export function GallerySection() {
                     index={imageIndex}
                     label={
                       filledText(image.alt)
-                        ? `Xem ảnh lớn: ${image.alt}`
-                        : `Xem ảnh lớn ${imageIndex + 1}`
+                        ? `${galleryCopy.openLabeled}${image.alt}`
+                        : `${galleryCopy.openIndexed}${imageIndex + 1}`
                     }
                   >
                     <Image

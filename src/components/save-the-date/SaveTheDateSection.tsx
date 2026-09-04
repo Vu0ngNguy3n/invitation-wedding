@@ -49,8 +49,7 @@ export function SaveTheDateSection() {
     year: wedding.date.year,
   });
   const featuredDay =
-    filledText(wedding.date.day) ??
-    (instant ? String(instant.day) : undefined);
+    filledText(wedding.date.day) ?? (instant ? String(instant.day) : undefined);
   const featuredMonth =
     filledText(wedding.date.month) ??
     (instant
@@ -81,6 +80,11 @@ export function SaveTheDateSection() {
             location: calendarLocation(),
             targetMs: instant.targetMs,
             timeZone: instant.timeZone,
+            durationMs:
+              Number.isFinite(wedding.calendarDurationHours) &&
+              wedding.calendarDurationHours > 0
+                ? wedding.calendarDurationHours * 60 * 60 * 1000
+                : undefined,
           }),
         )
       : null;
@@ -122,7 +126,9 @@ export function SaveTheDateSection() {
               </p>
             ) : null}
             {featuredMonth ? (
-              <p className="type-heading mt-3 text-accent-gold">{featuredMonth}</p>
+              <p className="type-heading mt-3 text-accent-gold">
+                {featuredMonth}
+              </p>
             ) : null}
             {featuredYear ? (
               <p className="type-overline mt-3 text-muted">{featuredYear}</p>
@@ -144,10 +150,10 @@ export function SaveTheDateSection() {
             <CountdownTimer
               targetMs={instant.targetMs}
               labels={{
-                days: "Ngày",
-                hours: "Giờ",
-                minutes: "Phút",
-                seconds: "Giây",
+                days: copy.saveTheDate.countdownDays,
+                hours: copy.saveTheDate.countdownHours,
+                minutes: copy.saveTheDate.countdownMinutes,
+                seconds: copy.saveTheDate.countdownSeconds,
               }}
             />
           </div>
@@ -160,8 +166,14 @@ export function SaveTheDateSection() {
               download="save-the-date.ics"
               className="foil-border inline-flex min-h-11 max-w-full items-center justify-center gap-2 px-4 py-2 text-center text-accent-gold transition-opacity hover:opacity-80 sm:px-5"
             >
-              <CalendarPlus aria-hidden="true" className="size-4" strokeWidth={1.25} />
-              <span className="sr-only">Tải lịch: </span>
+              <CalendarPlus
+                aria-hidden="true"
+                className="size-4"
+                strokeWidth={1.25}
+              />
+              <span className="sr-only">
+                {copy.saveTheDate.addToCalendarPrefix}
+              </span>
               <span className="type-overline">
                 {title ?? displayDate ?? eventTitle}
               </span>

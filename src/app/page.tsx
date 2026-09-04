@@ -12,12 +12,16 @@ export default function Home() {
   return (
     <>
       <InvitationNav />
-      <main id="invitation" tabIndex={-1} className="flex min-w-0 flex-1 flex-col outline-none">
+      <main
+        id="invitation"
+        tabIndex={-1}
+        className="flex min-w-0 flex-1 flex-col outline-none"
+      >
         <HeroSection />
         <CoupleSection />
         <SaveTheDateSection />
         <EventsSection />
-        <GallerySection />
+        <GallerySection /> 
         <GuestbookSection />
         <GiftSection />
         <ThankYouSection />

@@ -17,10 +17,19 @@ export function consumePostRateLimit(key: string): boolean {
   return true;
 }
 
-export function clientRateLimitKey(request: Request): string {
+export function clientRateLimitKey(request: Request): string | null {
   const vercelForwarded = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim();
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const realIp = request.headers.get("x-real-ip")?.trim();
+  const ip = vercelForwarded || forwarded || realIp;
 
-  return vercelForwarded || forwarded || realIp || "unknown";
+  if (ip) {
+    return ip;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
+
+  return "dev";
 }

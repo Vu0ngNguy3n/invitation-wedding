@@ -43,6 +43,8 @@ export interface WeddingDetails {
   date: WeddingDate;
   venue: WeddingVenue;
   cover: WeddingCover;
+  /** ICS event length in hours. [NEEDS_DECISION] if ceremony length should differ. */
+  calendarDurationHours: number;
 }
 
 export type WeddingEventType =
@@ -109,22 +111,65 @@ export interface SeoConfig {
 }
 
 export interface InvitationCopy {
+  skipToContent: string;
   saveTheDate: {
     title: string;
     description: string;
+    countdownDays: string;
+    countdownHours: string;
+    countdownMinutes: string;
+    countdownSeconds: string;
+    addToCalendarPrefix: string;
   };
   guestbook: {
     title: string;
     description: string;
+    nameLabel: string;
+    messageLabel: string;
     namePlaceholder: string;
     messagePlaceholder: string;
+    nameRequired: string;
+    nameTooLong: string;
+    messageRequired: string;
+    messageTooLong: string;
     submitLabel: string;
+    submittingLabel: string;
     successMessage: string;
     errorMessage: string;
+    rateLimitMessage: string;
+    listLoading: string;
+    listEmpty: string;
+    listError: string;
+    listRetry: string;
+    listTitle: string;
   };
   gift: {
     title: string;
     description: string;
+    bank: string;
+    accountName: string;
+    accountNumber: string;
+    transferNote: string;
+    copy: string;
+    copied: string;
+    copyFailed: string;
+    brideRole: string;
+    groomRole: string;
+  };
+  events: {
+    mapsLabel: string;
+    mapsNewTab: string;
+    typeBride: string;
+    typeGroom: string;
+    typeCeremony: string;
+    typeReception: string;
+  };
+  gallery: {
+    close: string;
+    previous: string;
+    next: string;
+    openLabeled: string;
+    openIndexed: string;
   };
   thankYou: {
     title: string;

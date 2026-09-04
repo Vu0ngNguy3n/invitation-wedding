@@ -10,7 +10,8 @@ import {
   validateContentLength,
   validateGuestbookWrite,
 } from "@/lib/guestbook/validation";
-import { insertWish, listApprovedWishes } from "@/lib/guestbook/wishes";
+import { insertWish } from "@/lib/guestbook/wishes";
+import { listApprovedWishesCached } from "@/lib/guestbook/cached-wishes";
 import type {
   GuestbookErrorCode,
   GuestbookErrorResponse,
@@ -28,36 +29,37 @@ function errorResponse(
   return NextResponse.json(body, { status });
 }
 
+function hostnameFrom(value: string | undefined): string | undefined {
+  const raw = value?.split(",")[0]?.trim();
+  if (!raw) {
+    return undefined;
+  }
+
+  try {
+    const url = raw.includes("://") ? new URL(raw) : new URL(`https://${raw}`);
+    const hostname = url.hostname.trim().toLowerCase();
+    return hostname.length > 0 ? hostname : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function isSameOriginPost(request: Request): boolean {
-  const origin = request.headers.get("origin");
-  if (!origin) {
+  const originHost = hostnameFrom(request.headers.get("origin") ?? undefined);
+  if (!originHost) {
     return false;
   }
 
-  let originHost: string;
-  try {
-    originHost = new URL(origin).host;
-  } catch {
-    return false;
-  }
-
-  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const host = request.headers.get("host")?.split(",")[0]?.trim();
-  let requestHost: string | undefined;
-  try {
-    requestHost = new URL(request.url).host;
-  } catch {
-    requestHost = undefined;
-  }
-
-  return [forwardedHost, host, requestHost].some(
-    (candidate) => Boolean(candidate) && candidate === originHost,
-  );
+  return [
+    hostnameFrom(request.headers.get("x-forwarded-host") ?? undefined),
+    hostnameFrom(request.headers.get("host") ?? undefined),
+    hostnameFrom(request.url),
+  ].some((candidate) => candidate === originHost);
 }
 
 export async function GET() {
   try {
-    const data = await listApprovedWishes();
+    const data = await listApprovedWishesCached();
     return NextResponse.json({ data });
   } catch {
     console.error("guestbook GET failed");
@@ -80,7 +82,7 @@ export async function POST(request: Request) {
     }
 
     const key = clientRateLimitKey(request);
-    if (!consumePostRateLimit(key)) {
+    if (!key || !consumePostRateLimit(key)) {
       return errorResponse(
         429,
         "RATE_LIMITED",

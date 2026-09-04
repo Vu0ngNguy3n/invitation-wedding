@@ -7,12 +7,19 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { GalleryImage } from "@/types/wedding";
 import { invitationMotion, invitationTransition } from "@/utils/motion";
 
+type GalleryLightboxLabels = {
+  close: string;
+  previous: string;
+  next: string;
+};
+
 type GalleryLightboxProps = {
   images: GalleryImage[];
   index: number;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  labels: GalleryLightboxLabels;
 };
 
 export function GalleryLightbox({
@@ -21,6 +28,7 @@ export function GalleryLightbox({
   onClose,
   onPrev,
   onNext,
+  labels,
 }: GalleryLightboxProps) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -141,7 +149,7 @@ export function GalleryLightbox({
           type="button"
           onClick={onClose}
           className="foil-border absolute top-0 right-0 z-10 flex size-11 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
-          aria-label="Đóng album"
+          aria-label={labels.close}
         >
           <X aria-hidden="true" className="size-5" strokeWidth={1.25} />
         </button>
@@ -151,7 +159,7 @@ export function GalleryLightbox({
             type="button"
             onClick={onPrev}
             className="foil-border absolute top-1/2 left-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
-            aria-label="Ảnh trước"
+            aria-label={labels.previous}
           >
             <ChevronLeft aria-hidden="true" className="size-5" strokeWidth={1.25} />
           </button>
@@ -162,7 +170,7 @@ export function GalleryLightbox({
             type="button"
             onClick={onNext}
             className="foil-border absolute top-1/2 right-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
-            aria-label="Ảnh tiếp"
+            aria-label={labels.next}
           >
             <ChevronRight aria-hidden="true" className="size-5" strokeWidth={1.25} />
           </button>
