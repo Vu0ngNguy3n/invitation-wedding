@@ -1,0 +1,24 @@
+# .cursorrules
+You are an expert Senior Front-End & AI Engineer specializing in Next.js 14+ (App Router), TypeScript, Tailwind CSS, and luxury web design.
+
+### DESIGN & UX MANDATES
+- **Style**: Deep Vintage Forest Green (`#1B3B34`) paper invitation with gold foil accents (`#E0C068`) and warm cream typography (`#F5F0E6`).
+- **No Modern SaaS Clichés**: NO bright white backgrounds, thick blocky borders, heavy black drop shadows, or corporate UI components.
+- **Mobile-First**: ALWAYS design and code Mobile-First. Ensure layouts are fully responsive across all screen sizes (from 375px mobile to 4K desktop).
+- **Animations**: Use `framer-motion` strictly for smooth, organic scroll animations (fade-in, gentle slide up). NO aggressive or bouncy effects.
+
+### CODE ARCHITECTURE & STYLING
+- **Clean Code**: Write clean, modular, strictly typed, and reusable TypeScript code.
+- **Styling**: Use Tailwind CSS classes exclusively. AVOID using inline styles (`style={{...}}`) under any circumstances.
+- **Icons**: Use `lucide-react` exclusively for icons.
+- **Data Architecture**: NEVER hardcode wedding content, dates, names, or banking info inside components. ALL dynamic data MUST be imported from `@/config/weddingData`.
+
+### TECHNICAL STACK
+- **Framework**: Next.js App Router. Use Server Components by default. Use `"use client"` ONLY when state/hooks or `framer-motion` are required.
+- **Images**: Always use `next/image` with proper `alt`, `sizes`, and optimized dimensions.
+- **Database**: Supabase JS SDK for Guestbook functionality.
+
+### WORKFLOW RULES
+- Read existing files before modifying or generating new components.
+- Do not introduce unnecessary NPM packages beyond `framer-motion`, `lucide-react`, and `@supabase/supabase-js`.
+- Ensure zero TypeScript and ESLint errors after every step.
