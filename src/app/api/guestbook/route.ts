@@ -126,7 +126,7 @@ export async function POST(request: Request) {
     }
 
     const data = await insertWish(parsed.value);
-    revalidateTag(GUESTBOOK_CACHE_TAG, "max");
+    revalidateTag(GUESTBOOK_CACHE_TAG, { expire: 0 });
     return NextResponse.json({ data }, { status: 201 });
   } catch {
     console.error("guestbook POST failed");

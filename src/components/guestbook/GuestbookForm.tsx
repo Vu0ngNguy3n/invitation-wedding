@@ -17,19 +17,21 @@ import {
   GUESTBOOK_MESSAGE_MIN,
   GUESTBOOK_NAME_MAX,
   GUESTBOOK_NAME_MIN,
+  type GuestbookWish,
 } from "@/types/guestbook";
 import { PaperSurface } from "@/components/ui/PaperSurface";
 import { cn } from "@/utils/cn";
 
 type GuestbookFormProps = {
   labels: GuestbookUiLabels;
+  onCreated?: (wish: GuestbookWish) => void;
 };
 
 function characterCount(value: string): number {
   return [...value].length;
 }
 
-export function GuestbookForm({ labels }: GuestbookFormProps) {
+export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
   const router = useRouter();
   const nameId = useId();
   const messageId = useId();
@@ -128,7 +130,8 @@ export function GuestbookForm({ labels }: GuestbookFormProps) {
     setFormMessage(null);
 
     try {
-      await createGuestbookWish(parsed.value);
+      const wish = await createGuestbookWish(parsed.value);
+      onCreated?.(wish);
       router.refresh();
       setName("");
       setMessage("");
