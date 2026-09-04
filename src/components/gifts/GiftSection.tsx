@@ -15,11 +15,6 @@ function giftLabels(): GiftFieldLabels {
   return {
     bank: copy.bank,
     accountName: copy.accountName,
-    accountNumber: copy.accountNumber,
-    transferNote: copy.transferNote,
-    copy: copy.copy,
-    copied: copy.copied,
-    copyFailed: copy.copyFailed,
     brideRole: copy.brideRole,
     groomRole: copy.groomRole,
   };
@@ -42,7 +37,9 @@ export function GiftSection() {
   const title = filledText(weddingData.copy.gift.title);
   const description = filledText(weddingData.copy.gift.description);
 
-  const navLabel = weddingData.navigation.find((item) => item.id === "gift")?.label;
+  const navLabel = weddingData.navigation.find(
+    (item) => item.id === "gift",
+  )?.label;
   const headingTitle = title ?? description ?? navLabel;
 
   if (gifts.length === 0) {

@@ -7,6 +7,7 @@ import { HeroSection } from "@/components/hero/HeroSection";
 import { InvitationNav } from "@/components/layout/InvitationNav";
 import { SaveTheDateSection } from "@/components/save-the-date/SaveTheDateSection";
 import { ThankYouSection } from "@/components/thank-you/ThankYouSection";
+import { TimelineSection } from "@/components/timeline/TimelineSection";
 
 export default function Home() {
   return (
@@ -21,7 +22,8 @@ export default function Home() {
         <CoupleSection />
         <SaveTheDateSection />
         <EventsSection />
-        <GallerySection /> 
+        <TimelineSection />
+        <GallerySection />
         <GuestbookSection />
         <GiftSection />
         <ThankYouSection />

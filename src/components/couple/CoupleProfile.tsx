@@ -73,11 +73,16 @@ export function CoupleProfile({
           <p className="type-caption mt-3 max-w-sm text-muted">{family}</p>
         ) : null}
 
-        {description ? (
-          <p className="type-body mt-5 max-w-md text-pretty text-muted">
-            {description}
-          </p>
-        ) : null}
+        {description
+          ? description.split(". ")?.map((sentence, index) => (
+              <p
+                key={index}
+                className="type-body mt-5 max-w-md text-pretty text-muted"
+              >
+                {sentence}
+              </p>
+            ))
+          : null}
 
         {quote ? (
           <blockquote className="mt-6 max-w-sm">

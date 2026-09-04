@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 import { weddingData } from "@/config/weddingData";
 import type { WeddingEvent, WeddingEventType } from "@/types/wedding";
 import { existingPublicAsset } from "@/utils/publicAsset";
+import { formatEventWhen } from "@/utils/datetime";
 import { filledText } from "@/utils/text";
 
 type WeddingEventItemProps = {
@@ -18,8 +19,11 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
     reception: copy.typeReception,
   };
   const title = filledText(event.title);
-  const date = filledText(event.date);
-  const time = filledText(event.time);
+  const when = formatEventWhen(
+    event.date,
+    event.time,
+    weddingData.wedding.timezone,
+  );
   const venue = filledText(event.venue);
   const address = filledText(event.address);
   const description = filledText(event.description);
@@ -42,10 +46,18 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
         <h3 className="type-overline text-accent-gold">{typeLabel}</h3>
       )}
 
-      {date || time ? (
-        <p className="type-caption mt-3 text-muted">
-          {[date, time].filter(Boolean).join(" · ")}
-        </p>
+      {when ? (
+        <time
+          dateTime={when.dateTime}
+          className="mt-3 flex flex-col items-center gap-1"
+        >
+          {when.timeLine ? (
+            <span className="type-caption text-accent-gold">{when.timeLine}</span>
+          ) : null}
+          {when.dateLine ? (
+            <span className="type-caption text-muted">{when.dateLine}</span>
+          ) : null}
+        </time>
       ) : null}
 
       {image ? (

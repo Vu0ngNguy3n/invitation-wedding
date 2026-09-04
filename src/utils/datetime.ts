@@ -325,3 +325,71 @@ export function calendarFileHref(ics: string): string {
 export function padTimeUnit(value: number, minDigits = 2): string {
   return String(value).padStart(minDigits, "0");
 }
+
+export type FormattedEventWhen = {
+  dateTime: string;
+  timeLine?: string;
+  dateLine?: string;
+};
+
+function titleCaseVi(value: string): string {
+  return value
+    .split(/\s+/)
+    .map((word) => {
+      if (!word) {
+        return word;
+      }
+
+      return word.charAt(0).toLocaleUpperCase("vi-VN") + word.slice(1);
+    })
+    .join(" ");
+}
+
+export function formatEventWhen(
+  date: string | undefined,
+  time: string | undefined,
+  timeZone: string,
+): FormattedEventWhen | null {
+  const dateValue = date?.trim();
+  const timeValue = time?.trim();
+
+  if (!dateValue && !timeValue) {
+    return null;
+  }
+
+  const naiveIso = dateValue
+    ? `${dateValue}T${timeValue ? `${timeValue}${timeValue.length === 5 ? ":00" : ""}` : "12:00:00"}`
+    : undefined;
+  const targetMs = naiveIso
+    ? parseWeddingTargetMs(naiveIso, timeZone)
+    : null;
+
+  let weekday: string | undefined;
+  let dateLine: string | undefined;
+
+  if (targetMs !== null) {
+    const parts = zonedParts(new Date(targetMs), timeZone);
+    dateLine = `${pad2(parts.day)} · ${pad2(parts.month)} · ${parts.year}`;
+    weekday = titleCaseVi(
+      new Intl.DateTimeFormat("vi-VN", {
+        weekday: "long",
+        timeZone,
+      }).format(new Date(targetMs)),
+    );
+  } else if (dateValue) {
+    dateLine = dateValue;
+  }
+
+  const timeLine = [timeValue, weekday].filter(Boolean).join(" · ") || undefined;
+  const dateTime = naiveIso ?? timeValue ?? dateValue ?? "";
+
+  if (!timeLine && !dateLine) {
+    return null;
+  }
+
+  return {
+    dateTime,
+    timeLine,
+    dateLine,
+  };
+}
