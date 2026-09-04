@@ -1,5 +1,6 @@
 import { GuestbookRetryButton } from "@/components/guestbook/GuestbookRetryButton";
 import { GuestbookWishEntry } from "@/components/guestbook/GuestbookWishEntry";
+import { GuestbookWishScroller } from "@/components/guestbook/GuestbookWishScroller";
 import type { GuestbookUiLabels } from "@/components/guestbook/guestbookUi";
 import type { GuestbookWish } from "@/types/guestbook";
 
@@ -48,6 +49,8 @@ export function GuestbookWishList({
     );
   }
 
+  const scrollable = wishes.length > 6;
+
   return (
     <div className="flex flex-col">
       {loadFailed ? (
@@ -55,19 +58,27 @@ export function GuestbookWishList({
           {labels.listError}
         </p>
       ) : null}
-      <ul className="flex flex-col" aria-label={labels.listTitle}>
-        {wishes.map((wish) => (
-          <li
-            key={wish.id}
-            className="border-t border-accent-gold/20 py-8 first:border-t-0 first:pt-0"
-          >
-            <GuestbookWishEntry
-              wish={wish}
-              signedOn={formatSignedOn(wish.createdAt, timeZone)}
-            />
-          </li>
-        ))}
-      </ul>
+      <GuestbookWishScroller
+        enabled={scrollable}
+        label={labels.listTitle}
+      >
+        <ul
+          className="flex flex-col"
+          aria-label={scrollable ? undefined : labels.listTitle}
+        >
+          {wishes.map((wish) => (
+            <li
+              key={wish.id}
+              className="border-t border-accent-gold/20 py-8 first:border-t-0 first:pt-0"
+            >
+              <GuestbookWishEntry
+                wish={wish}
+                signedOn={formatSignedOn(wish.createdAt, timeZone)}
+              />
+            </li>
+          ))}
+        </ul>
+      </GuestbookWishScroller>
     </div>
   );
 }

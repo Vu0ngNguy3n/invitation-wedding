@@ -17,6 +17,9 @@ export type {
   WeddingEvent,
   WeddingEventType,
   WeddingGift,
+  WeddingTimeline,
+  WeddingTimelineIcon,
+  WeddingTimelineItem,
   WeddingVenue,
 } from "@/types/wedding";
 
@@ -36,8 +39,8 @@ export const weddingData: WeddingData = {
         mother: "Nguyễn Thị Hồng",
       },
       description:
-        "Con gái của ông Nguyễn Ngọc Sỹ và bà Nguyễn Thị Hồng. Yến Vy dịu dàng, chân thành và luôn giữ trong tim một tình yêu lặng lẽ, bền bỉ.",
-      quote: "Gặp anh, em tin rằng trăm năm không còn là lời hứa xa xôi.",
+        "Dịu dàng, chân thành và luôn trân quý những điều giản dị. Với em, hạnh phúc là khi tìm thấy một người để cùng sẻ chia những ngày bình thường nhất.",
+      quote: "Gặp anh, em biết mình đã về đúng nhà.",
     },
     groom: {
       name: "Nhật Song",
@@ -48,14 +51,14 @@ export const weddingData: WeddingData = {
         mother: "Ngô Thị Phần",
       },
       description:
-        "Con trai của ông Nguyễn Văn Thành và bà Ngô Thị Phần. Nhật Song điềm đạm, trách nhiệm và chọn yêu thương bằng sự nâng niu từng ngày.",
-      quote: "Bên em, anh muốn trở thành người đàn ông của một đời bình yên.",
+        "Điềm đạm, chân thành và luôn tin rằng tình yêu đẹp nhất là sự đồng hành. Với anh, hạnh phúc là có một người để thương, để sẻ chia và cùng nhau đi qua những năm tháng phía trước.",
+      quote: "Từ ngày có em, anh biết mình muốn trở về đâu.",
     },
   },
 
   wedding: {
     title: "Lễ Thành Hôn",
-    phrase: "Trăm năm tình viên mãn, bạc đầu nghĩa phu thê",
+    phrase: "Từ đây, hai ta một nhà.",
     timezone: "Asia/Ho_Chi_Minh",
     date: {
       iso: "2026-12-20",
@@ -101,6 +104,44 @@ export const weddingData: WeddingData = {
       mapsUrl: "https://maps.app.goo.gl/G2iF34AjVL2foCW36",
     },
   ],
+
+  timeline: {
+    title: "Timeline",
+    subtitle:
+      "Cùng chúng mình lưu giữ những khoảnh khắc đáng nhớ trong ngày đặc biệt này.",
+    backgroundImage: "/images/timeline/timeline-bg.webp",
+    backgroundAlt: "Không gian tiệc cưới với hoa và thiệp cưới",
+    items: [
+      {
+        id: "ceremony",
+        time: "15:00",
+        title: "Thánh lễ",
+        description: "Thánh lễ hôn phối",
+        icon: "church",
+      },
+      {
+        id: "welcome",
+        time: "17:00",
+        title: "Đón khách",
+        description: "Hân hoan đón khách",
+        icon: "camera",
+      },
+      {
+        id: "dinner",
+        time: "18:00",
+        title: "Khai tiệc",
+        description: "Cùng nâng ly & chung vui",
+        icon: "utensils",
+      },
+      {
+        id: "party",
+        time: "19:00",
+        title: "Chung vui",
+        description: "Minigame & khiêu vũ",
+        icon: "party",
+      },
+    ],
+  },
 
   gallery: [
     {
@@ -243,20 +284,20 @@ export const weddingData: WeddingData = {
       id: "gift-bride",
       person: "bride",
       name: "Nguyễn Yến Vy",
-      bankName: "Vietcombank",
-      accountNumber: "0123456789",
+      bankName: "Vietinbank",
+      accountNumber: "100872095048",
       accountName: "NGUYEN YEN VY",
-      qrImage: "/images/gifts/bride-qr.jpg",
+      qrImage: "/images/gift/bride-qr.png",
       transferNote: "Mung cuoi Yen Vy",
     },
     {
       id: "gift-groom",
       person: "groom",
       name: "Nguyễn Nhật Song",
-      bankName: "MB Bank",
-      accountNumber: "0987654321",
+      bankName: "Vietinbank",
+      accountNumber: "100872095048",
       accountName: "NGUYEN NHAT SONG",
-      qrImage: "/images/gifts/groom-qr.jpg",
+      qrImage: "/images/gift/groom-qr.png",
       transferNote: "Mung cuoi Nhat Song",
     },
   ],
@@ -266,6 +307,7 @@ export const weddingData: WeddingData = {
     { id: "story", label: "Câu chuyện", href: "#story" },
     { id: "save-the-date", label: "Ngày cưới", href: "#save-the-date" },
     { id: "events", label: "Sự kiện", href: "#events" },
+    { id: "timeline", label: "Timeline", href: "#timeline" },
     { id: "gallery", label: "Album", href: "#gallery" },
     { id: "guestbook", label: "Lời chúc", href: "#guestbook" },
     { id: "gift", label: "Mừng cưới", href: "#gift" },
@@ -298,7 +340,7 @@ export const weddingData: WeddingData = {
     saveTheDate: {
       title: "Save the Date",
       description:
-        "Chúng mình sẽ rất hạnh phúc khi có bạn cùng hiện diện trong ngày đặc biệt này.",
+        "Hãy dành ngày này để cùng chúng mình lưu giữ một kỷ niệm thật đẹp.",
       countdownDays: "Ngày",
       countdownHours: "Giờ",
       countdownMinutes: "Phút",
@@ -360,7 +402,7 @@ export const weddingData: WeddingData = {
     thankYou: {
       title: "Cảm Ơn",
       message:
-        "Cảm ơn bạn đã dành thời gian hiện diện, sẻ chia niềm vui và gửi những lời chúc tốt đẹp nhất đến chúng mình.",
+        "Cảm ơn bạn đã dành thời gian hiện diện, chứng kiến và sẻ chia niềm vui trong ngày đặc biệt của chúng mình.",
       image: "/images/thank-you/thank-you.jpg",
       imageAlt: "Yến Vy và Nhật Song trong ngày cưới",
     },
