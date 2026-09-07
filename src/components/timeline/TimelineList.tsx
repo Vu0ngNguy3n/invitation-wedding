@@ -16,7 +16,6 @@ type TimelineListProps = {
 
 export function TimelineList({ items }: TimelineListProps) {
   const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = prefersReducedMotion === true;
   const lineTransition = invitationTransition(prefersReducedMotion, {
     duration: invitationMotion.duration,
   });
@@ -26,7 +25,7 @@ export function TimelineList({ items }: TimelineListProps) {
       <motion.span
         aria-hidden="true"
         className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-accent-gold/40 lg:hidden"
-        initial={reduceMotion ? { scaleY: 1 } : { scaleY: 0 }}
+        initial={{ scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={lineTransition}
@@ -34,7 +33,7 @@ export function TimelineList({ items }: TimelineListProps) {
       <motion.span
         aria-hidden="true"
         className="absolute top-7 right-[6%] left-[6%] hidden h-px origin-left bg-accent-gold/40 lg:block"
-        initial={reduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
+        initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={lineTransition}
@@ -46,11 +45,11 @@ export function TimelineList({ items }: TimelineListProps) {
             key={item.id}
             className="relative flex min-w-0 gap-5 lg:flex-1 lg:flex-col lg:items-center lg:gap-4 lg:text-center"
             variants={staggerItem}
-            initial={reduceMotion ? "shown" : "hidden"}
+            initial="hidden"
             whileInView="shown"
             viewport={invitationViewportTight}
             transition={invitationTransition(prefersReducedMotion, {
-              delay: reduceMotion ? 0 : invitationMotion.stagger * index,
+              delay: invitationMotion.stagger * index,
             })}
           >
             <TimelineItem item={item} />

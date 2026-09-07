@@ -130,7 +130,7 @@ export function SaveTheDateSection() {
             {featuredDay || featuredMonth || featuredYear || displayDate ? (
               <div className="flex flex-col items-center text-center">
                 {featuredDay ? (
-                  <p className="font-display text-6xl leading-none tracking-wide text-foreground sm:text-7xl lg:text-8xl">
+                  <p className="font-display text-6xl leading-none tracking-wide sm:text-7xl lg:text-8xl">
                     {featuredDay}
                   </p>
                 ) : null}
@@ -143,7 +143,7 @@ export function SaveTheDateSection() {
                   <p className="type-overline mt-3 text-muted">{featuredYear}</p>
                 ) : null}
                 {displayDate && !featuredDay ? (
-                  <p className="type-heading text-foreground">{displayDate}</p>
+                  <p className="type-heading">{displayDate}</p>
                 ) : null}
               </div>
             ) : null}

@@ -25,7 +25,6 @@ export function MotionStagger({
   personality = "section",
 }: MotionStaggerProps) {
   const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = prefersReducedMotion === true;
   const variants =
     personality === "hero" ? heroStaggerContainer : staggerContainer;
   const transition = invitationTransition(prefersReducedMotion, {
@@ -40,7 +39,7 @@ export function MotionStagger({
       <motion.div
         className={cn(className)}
         variants={variants}
-        initial={reduceMotion ? "shown" : "hidden"}
+        initial="hidden"
         animate="shown"
         transition={transition}
       >
@@ -53,7 +52,7 @@ export function MotionStagger({
     <motion.div
       className={cn(className)}
       variants={variants}
-      initial={reduceMotion ? "shown" : "hidden"}
+      initial="hidden"
       whileInView="shown"
       viewport={invitationViewport}
       transition={transition}

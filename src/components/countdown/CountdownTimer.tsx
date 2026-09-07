@@ -74,7 +74,7 @@ export function CountdownTimer({ targetMs, labels }: CountdownTimerProps) {
                 />
               ) : null}
               <div className="flex min-w-0 flex-1 flex-col items-center px-2 sm:px-4">
-                <span className="font-display text-3xl tabular-nums tracking-wide text-foreground sm:text-4xl lg:text-[2.75rem]">
+                <span className="font-display text-3xl tabular-nums tracking-wide sm:text-4xl lg:text-[2.75rem]">
                   {unit.value}
                 </span>
                 <span className="type-overline mt-2 text-center text-accent-gold">

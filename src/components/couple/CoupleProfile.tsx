@@ -67,7 +67,7 @@ export function CoupleProfile({
         )}
       >
         {displayName ? (
-          <h3 className="type-heading text-balance break-words text-foreground">
+          <h3 className="type-heading text-balance break-words">
             {displayName}
           </h3>
         ) : null}

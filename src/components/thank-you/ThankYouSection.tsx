@@ -103,8 +103,8 @@ export function ThankYouSection() {
               <p
                 className={
                   title
-                    ? "type-body mt-6 max-w-md text-pretty text-foreground sm:mt-8"
-                    : "type-body max-w-md text-pretty text-foreground"
+                    ? "type-body mt-6 max-w-md text-pretty sm:mt-8"
+                    : "type-body max-w-md text-pretty"
                 }
               >
                 {message}
@@ -139,8 +139,8 @@ export function ThankYouSection() {
               <p
                 className={
                   image
-                    ? "mt-10 text-balance text-foreground sm:mt-12"
-                    : "mt-8 text-balance text-foreground sm:mt-10"
+                    ? "mt-10 text-balance sm:mt-12"
+                    : "mt-8 text-balance sm:mt-10"
                 }
               >
                 {brideName && groomName ? (

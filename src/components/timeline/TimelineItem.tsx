@@ -22,7 +22,7 @@ export function TimelineItem({ item }: TimelineItemProps) {
           <p className="type-overline text-accent-gold">{time}</p>
         ) : null}
         {title ? (
-          <h3 className="type-body mt-1 text-pretty break-words text-foreground">
+          <h3 className="type-body mt-1 text-pretty break-words">
             {title}
           </h3>
         ) : null}

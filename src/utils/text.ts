@@ -17,5 +17,5 @@ export function givenInitial(name?: string): string | undefined {
   const given = parts[parts.length - 1] ?? filled;
   const first = [...given][0];
 
-  return first?.toLocaleUpperCase("vi-VN");
+  return first?.toUpperCase();
 }

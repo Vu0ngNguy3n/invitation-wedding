@@ -30,7 +30,7 @@ export function SectionHeading({
       {eyebrow ? (
         <p className="type-script text-accent-gold">{eyebrow}</p>
       ) : null}
-      <h2 id={headingId} className="type-heading text-balance text-foreground">
+      <h2 id={headingId} className="type-heading text-balance">
         {title}
       </h2>
       {description ? (

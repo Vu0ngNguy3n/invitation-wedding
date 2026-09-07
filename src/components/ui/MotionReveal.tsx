@@ -27,7 +27,6 @@ export function MotionReveal({
   variant = "softReveal",
 }: MotionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = prefersReducedMotion === true;
   const variants = revealVariantMap[variant];
   const duration =
     mode === "enter"
@@ -43,16 +42,14 @@ export function MotionReveal({
     delay,
     duration,
   });
-  const shown = "shown";
-  const from = reduceMotion ? shown : "hidden";
 
   if (mode === "enter") {
     return (
       <motion.div
         className={cn(className)}
         variants={variants}
-        initial={from}
-        animate={shown}
+        initial="hidden"
+        animate="shown"
         transition={transition}
       >
         {children}
@@ -64,8 +61,8 @@ export function MotionReveal({
     <motion.div
       className={cn(className)}
       variants={variants}
-      initial={from}
-      whileInView={shown}
+      initial="hidden"
+      whileInView="shown"
       viewport={invitationViewport}
       transition={transition}
     >

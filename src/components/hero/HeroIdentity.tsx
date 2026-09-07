@@ -38,7 +38,6 @@ export function HeroIdentity({
   documentTitle,
 }: HeroIdentityProps) {
   const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = prefersReducedMotion === true;
   const transition = invitationTransition(prefersReducedMotion, {
     duration: invitationMotion.heroDuration,
   });
@@ -47,7 +46,7 @@ export function HeroIdentity({
     <motion.div
       className="flex w-full flex-col items-center"
       variants={heroStaggerContainer}
-      initial={reduceMotion ? "shown" : "hidden"}
+      initial="hidden"
       animate="shown"
     >
       {brideInitial || groomInitial ? (
