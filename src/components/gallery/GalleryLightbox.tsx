@@ -5,7 +5,10 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { GalleryImage } from "@/types/wedding";
-import { invitationMotion, invitationTransition } from "@/utils/motion";
+import {
+  invitationMotion,
+  invitationTransition,
+} from "@/lib/motion";
 
 type GalleryLightboxLabels = {
   close: string;
@@ -106,7 +109,8 @@ export function GalleryLightbox({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[10000] flex items-center justify-center bg-vintage-green/88 p-3 sm:p-8"
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-vintage-green-deep/92 p-3 text-paper-cream sm:p-8"
+      data-lenis-prevent
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -148,7 +152,7 @@ export function GalleryLightbox({
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="foil-border absolute top-0 right-0 z-10 flex size-11 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
+          className="foil-border absolute top-0 right-0 z-10 flex size-11 items-center justify-center text-accent-gold transition-opacity duration-300 hover:opacity-80"
           aria-label={labels.close}
         >
           <X aria-hidden="true" className="size-5" strokeWidth={1.25} />
@@ -158,7 +162,7 @@ export function GalleryLightbox({
           <button
             type="button"
             onClick={onPrev}
-            className="foil-border absolute top-1/2 left-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
+            className="foil-border absolute top-1/2 left-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity duration-300 hover:opacity-80"
             aria-label={labels.previous}
           >
             <ChevronLeft aria-hidden="true" className="size-5" strokeWidth={1.25} />
@@ -169,7 +173,7 @@ export function GalleryLightbox({
           <button
             type="button"
             onClick={onNext}
-            className="foil-border absolute top-1/2 right-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity hover:opacity-80"
+            className="foil-border absolute top-1/2 right-0 z-10 flex size-11 -translate-y-1/2 items-center justify-center text-accent-gold transition-opacity duration-300 hover:opacity-80"
             aria-label={labels.next}
           >
             <ChevronRight aria-hidden="true" className="size-5" strokeWidth={1.25} />
@@ -199,7 +203,7 @@ export function GalleryLightbox({
           </AnimatePresence>
         </div>
 
-        <p className="type-caption mt-4 max-w-lg px-4 text-center text-pretty text-muted sm:mt-5 sm:px-16" aria-live="polite">
+        <p className="type-caption mt-4 max-w-lg px-4 text-center text-pretty text-sage-light sm:mt-5 sm:px-16" aria-live="polite">
           {image.alt
             ? `${image.alt} · ${index + 1} / ${total}`
             : `${index + 1} / ${total}`}

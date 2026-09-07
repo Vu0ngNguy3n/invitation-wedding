@@ -13,7 +13,7 @@ export function TimelineItem({ item }: TimelineItemProps) {
 
   return (
     <>
-      <span className="foil-border relative z-10 flex size-11 shrink-0 items-center justify-center rounded-full bg-vintage-green text-accent-gold lg:size-14">
+      <span className="foil-border relative z-10 flex size-11 shrink-0 items-center justify-center rounded-full bg-ivory text-accent-gold lg:size-14">
         <TimelineGlyph icon={item.icon} className="size-4 lg:size-5" />
       </span>
 
@@ -22,12 +22,12 @@ export function TimelineItem({ item }: TimelineItemProps) {
           <p className="type-overline text-accent-gold">{time}</p>
         ) : null}
         {title ? (
-          <h3 className="type-body mt-1 text-pretty break-words text-paper-cream">
+          <h3 className="type-body mt-1 text-pretty break-words text-foreground">
             {title}
           </h3>
         ) : null}
         {description ? (
-          <p className="type-caption mt-1.5 text-pretty break-words text-sage-light/90">
+          <p className="type-caption mt-1.5 text-pretty break-words text-muted">
             {description}
           </p>
         ) : null}

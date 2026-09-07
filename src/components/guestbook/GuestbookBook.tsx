@@ -27,7 +27,7 @@ export function GuestbookBook({
   ];
 
   return (
-    <div className="mt-10 grid min-w-0 gap-10 sm:mt-14 lg:mt-16 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16">
+    <div className="mt-10 grid min-w-0 gap-10 sm:mt-14 lg:mt-16 lg:grid-cols-2 lg:items-start lg:gap-14 xl:gap-20">
       <div className="min-w-0">
         <GuestbookForm
           labels={labels}
@@ -40,7 +40,7 @@ export function GuestbookBook({
           }}
         />
       </div>
-      <div className="min-w-0 lg:border-l lg:border-accent-gold/20 lg:pl-10 xl:pl-16">
+      <div className="min-w-0 lg:border-l lg:border-accent-gold/25 lg:pl-12 xl:pl-16">
         <GuestbookWishList
           wishes={wishes}
           loadFailed={loadFailed}

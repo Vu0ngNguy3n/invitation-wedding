@@ -2,11 +2,12 @@ import Image from "next/image";
 import { weddingData } from "@/config/weddingData";
 import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
+import { InvitationMonogram } from "@/components/decorative/InvitationMonogram";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { invitationDocumentTitle } from "@/utils/seo";
 import { existingPublicAsset } from "@/utils/publicAsset";
-import { filledText } from "@/utils/text";
+import { filledText, givenInitial } from "@/utils/text";
 
 function personName(profile: { name: string; fullName?: string }): string | undefined {
   return filledText(profile.name) ?? filledText(profile.fullName);
@@ -70,16 +71,23 @@ export function ThankYouSection() {
   return (
     <SectionContainer
       id="thank-you"
+      tone="forest"
       labelledBy={title ? "thank-you-heading" : undefined}
       className="py-20 sm:py-28 lg:py-32"
       containerClassName="max-w-2xl"
     >
-      <MotionReveal>
-        <BotanicalDecoration className="px-2 py-8 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
-          <div className="relative flex flex-col items-center px-3 py-8 text-center sm:px-8 sm:py-14">
+      <MotionReveal variant="fadeReveal">
+        <BotanicalDecoration density="cover" className="px-2 py-8 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
+          <div className="relative flex flex-col items-center px-3 py-10 text-center sm:px-8 sm:py-14">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 border border-accent-gold/25"
+            />
+
+            <InvitationMonogram
+              brideInitial={givenInitial(brideName)}
+              groomInitial={givenInitial(groomName)}
+              className="mb-6 sm:mb-8"
             />
 
             {title ? (
@@ -95,8 +103,8 @@ export function ThankYouSection() {
               <p
                 className={
                   title
-                    ? "type-body mt-6 max-w-md text-pretty text-paper-cream sm:mt-8"
-                    : "type-body max-w-md text-pretty text-paper-cream"
+                    ? "type-body mt-6 max-w-md text-pretty text-foreground sm:mt-8"
+                    : "type-body max-w-md text-pretty text-foreground"
                 }
               >
                 {message}
@@ -115,7 +123,7 @@ export function ThankYouSection() {
 
             {image ? (
               <figure className="mt-10 w-full max-w-[168px] sm:mt-12 sm:max-w-[200px]">
-                <div className="foil-border relative aspect-[3/4] overflow-hidden bg-surface">
+                <div className="foil-border relative aspect-[3/4] overflow-hidden bg-vintage-card">
                   <Image
                     src={image}
                     alt={imageAlt}
@@ -131,8 +139,8 @@ export function ThankYouSection() {
               <p
                 className={
                   image
-                    ? "mt-10 text-balance text-paper-cream sm:mt-12"
-                    : "mt-8 text-balance text-paper-cream sm:mt-10"
+                    ? "mt-10 text-balance text-foreground sm:mt-12"
+                    : "mt-8 text-balance text-foreground sm:mt-10"
                 }
               >
                 {brideName && groomName ? (

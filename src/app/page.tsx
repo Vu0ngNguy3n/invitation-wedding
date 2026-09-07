@@ -11,23 +11,27 @@ import { TimelineSection } from "@/components/timeline/TimelineSection";
 
 export default function Home() {
   return (
-    <>
-      <InvitationNav />
-      <main
-        id="invitation"
-        tabIndex={-1}
-        className="flex min-w-0 flex-1 flex-col outline-none"
+    <main
+      id="invitation"
+      tabIndex={-1}
+      className="flex min-w-0 flex-1 flex-col outline-none"
+    >
+      <header
+        id="home"
+        aria-labelledby="home-heading"
+        className="section-forest relative flex min-h-svh flex-col"
       >
+        <InvitationNav />
         <HeroSection />
-        <CoupleSection />
-        <SaveTheDateSection />
-        <EventsSection />
-        <TimelineSection />
-        <GallerySection />
-        <GuestbookSection />
-        <GiftSection />
-        <ThankYouSection />
-      </main>
-    </>
+      </header>
+      <CoupleSection />
+      <SaveTheDateSection />
+      <EventsSection />
+      <TimelineSection />
+      <GallerySection />
+      <GuestbookSection />
+      <GiftSection />
+      <ThankYouSection />
+    </main>
   );
 }

@@ -69,7 +69,7 @@ export function GuestbookWishList({
           {wishes.map((wish) => (
             <li
               key={wish.id}
-              className="border-t border-accent-gold/20 py-8 first:border-t-0 first:pt-0"
+              className="border-t border-accent-gold/25 py-8 first:border-t-0 first:pt-0"
             >
               <GuestbookWishEntry
                 wish={wish}

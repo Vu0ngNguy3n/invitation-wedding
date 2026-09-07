@@ -4,7 +4,7 @@ Update this file after every meaningful phase.
 
 ## Current Phase
 
-Phase 12 — QA
+Phase 13 — Fine-art botanical visual refactor
 
 ## Completed
 
@@ -24,6 +24,7 @@ Phase 12 — QA
 - [x] Performance audit (hero art-direction, font subset, guestbook cache/RSC list, gallery code-split)
 - [ ] QA
 - [x] Production deployment docs and build gate (`docs/07-deployment/`)
+- [x] Fine-art botanical visual refactor (ivory-dominant section rhythm, shared motion system, Lenis desktop smooth scroll, gift copy control restored)
 
 ## Known Issues
 
@@ -58,7 +59,8 @@ Phase 12 — QA
 - Next.js App Router (Next.js 16)
 - TypeScript
 - Tailwind CSS v4 (`@theme` tokens in `globals.css`)
-- Framer Motion
+- Framer Motion with a shared motion system in `src/lib/motion/`
+- Lenis for desktop/editorial smooth scrolling only (native touch on mobile; respects reduced motion)
 - lucide-react
 - Supabase
 - Vercel
@@ -67,7 +69,7 @@ Phase 12 — QA
 - Domain types live in `src/types/`
 - Guestbook wishes persist in Supabase PostgreSQL via `/api/guestbook`
 - Browser never receives `SUPABASE_SECRET_KEY`; no browser Supabase client is created for Guestbook
-- Hero is a Server Component; entrance and scroll motion share one client primitive (`MotionReveal`) with tokens in `src/utils/motion.ts`
+- Hero is a Server Component; sequential entrance lives in `HeroIdentity`, scroll motion uses `MotionReveal` with tokens in `src/lib/motion/`
 - Couple introduction uses a shared `CoupleProfile` with an editorial mirrored layout on desktop
 - Countdown is an isolated Client Component; it receives a UTC timestamp and does not import wedding content
 - Calendar math uses `wedding.timezone` (`Asia/Ho_Chi_Minh` by default)
@@ -76,7 +78,7 @@ Phase 12 — QA
 - Until `seo.canonicalUrl` is set, metadata and `robots.txt` stay `noindex`
 - Guestbook wishes are server-rendered from a tagged 30s cache; `GET /api/guestbook` uses the same cache; the form POSTs and revalidates the tag
 - Invitation UI chrome (guestbook/gift/events/gallery/countdown labels) lives in `weddingData.copy`
-- Gift / QR content is read only from `@/config/weddingData`; the copy-account control is an isolated Client Component
+- Gift / QR content is read only from `@/config/weddingData`; the copy-account control is an isolated Client Component (`GiftCopyButton`)
 - Thank You is a server-rendered closing page: copy, names, and date from `@/config/weddingData`; optional photo; no site-footer navigation
 - The page follows the invitation journey; `InvitationNav` only links to sections that currently render; Events occupy the slot after Save the Date
 - Document metadata, Open Graph, Twitter cards, robots, and sitemap are built from `weddingData` in `src/lib/metadata.ts` and `src/utils/seo.ts`; no SEO library

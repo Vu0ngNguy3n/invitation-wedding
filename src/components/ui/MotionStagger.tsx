@@ -3,56 +3,45 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import {
+  heroStaggerContainer,
   invitationMotion,
   invitationTransition,
   invitationViewport,
-  revealVariantMap,
-  type RevealVariantName,
+  staggerContainer,
 } from "@/lib/motion";
 import { cn } from "@/utils/cn";
 
-type MotionRevealProps = {
+type MotionStaggerProps = {
   children: ReactNode;
   className?: string;
-  delay?: number;
   mode?: "view" | "enter";
-  variant?: RevealVariantName;
+  personality?: "section" | "hero";
 };
 
-export function MotionReveal({
+export function MotionStagger({
   children,
   className,
-  delay = 0,
   mode = "view",
-  variant = "softReveal",
-}: MotionRevealProps) {
+  personality = "section",
+}: MotionStaggerProps) {
   const prefersReducedMotion = useReducedMotion();
   const reduceMotion = prefersReducedMotion === true;
-  const variants = revealVariantMap[variant];
-  const duration =
-    mode === "enter"
-      ? invitationMotion.heroDuration
-      : variant === "imageReveal"
-        ? invitationMotion.imageDuration
-        : variant === "fadeReveal"
-          ? 0.7
-          : variant === "fadeScale"
-            ? 0.85
-            : invitationMotion.duration;
+  const variants =
+    personality === "hero" ? heroStaggerContainer : staggerContainer;
   const transition = invitationTransition(prefersReducedMotion, {
-    delay,
-    duration,
+    duration:
+      personality === "hero"
+        ? invitationMotion.heroDuration
+        : invitationMotion.duration,
   });
-  const shown = "shown";
-  const from = reduceMotion ? shown : "hidden";
 
   if (mode === "enter") {
     return (
       <motion.div
         className={cn(className)}
         variants={variants}
-        initial={from}
-        animate={shown}
+        initial={reduceMotion ? "shown" : "hidden"}
+        animate="shown"
         transition={transition}
       >
         {children}
@@ -64,8 +53,8 @@ export function MotionReveal({
     <motion.div
       className={cn(className)}
       variants={variants}
-      initial={from}
-      whileInView={shown}
+      initial={reduceMotion ? "shown" : "hidden"}
+      whileInView="shown"
       viewport={invitationViewport}
       transition={transition}
     >

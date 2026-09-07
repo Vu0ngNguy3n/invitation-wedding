@@ -3,7 +3,12 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { WeddingTimelineItem } from "@/types/wedding";
 import { TimelineItem } from "@/components/timeline/TimelineItem";
-import { invitationMotion, invitationTransition } from "@/utils/motion";
+import {
+  invitationMotion,
+  invitationTransition,
+  invitationViewportTight,
+  staggerItem,
+} from "@/lib/motion";
 
 type TimelineListProps = {
   items: WeddingTimelineItem[];
@@ -15,10 +20,6 @@ export function TimelineList({ items }: TimelineListProps) {
   const lineTransition = invitationTransition(prefersReducedMotion, {
     duration: invitationMotion.duration,
   });
-  const itemHidden = reduceMotion
-    ? { opacity: 1, y: 0 }
-    : { opacity: 0, y: invitationMotion.y };
-  const itemShown = { opacity: 1, y: 0 };
 
   return (
     <div className="relative mt-12 sm:mt-14 lg:mt-16">
@@ -44,9 +45,10 @@ export function TimelineList({ items }: TimelineListProps) {
           <motion.li
             key={item.id}
             className="relative flex min-w-0 gap-5 lg:flex-1 lg:flex-col lg:items-center lg:gap-4 lg:text-center"
-            initial={itemHidden}
-            whileInView={itemShown}
-            viewport={{ once: true, amount: 0.24 }}
+            variants={staggerItem}
+            initial={reduceMotion ? "shown" : "hidden"}
+            whileInView="shown"
+            viewport={invitationViewportTight}
             transition={invitationTransition(prefersReducedMotion, {
               delay: reduceMotion ? 0 : invitationMotion.stagger * index,
             })}
