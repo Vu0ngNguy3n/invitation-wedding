@@ -19,8 +19,8 @@ const nativeScrollOptions: LenisOptions = {
 
 const editorialScrollOptions: LenisOptions = {
   autoRaf: true,
-  lerp: 0.09,
-  duration: 1.15,
+        lerp: 0.08,
+        duration: 1.2,
   smoothWheel: true,
   syncTouch: false,
   anchors: true,

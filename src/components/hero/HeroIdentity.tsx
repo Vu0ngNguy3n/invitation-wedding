@@ -54,6 +54,7 @@ export function HeroIdentity({
           <InvitationMonogram
             brideInitial={brideInitial}
             groomInitial={groomInitial}
+            framed
           />
         </motion.div>
       ) : null}
@@ -104,7 +105,7 @@ export function HeroIdentity({
         <motion.p
           variants={staggerItem}
           transition={transition}
-          className="type-script mt-5 max-w-md px-1 text-pretty break-words text-paper-cream sm:mt-6"
+          className="type-body mt-5 max-w-md px-1 text-pretty break-words text-paper-cream sm:mt-6"
         >
           {phrase}
         </motion.p>

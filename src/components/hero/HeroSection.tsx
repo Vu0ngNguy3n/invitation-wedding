@@ -78,7 +78,7 @@ export function HeroSection() {
         <MotionReveal
           mode="enter"
           variant="fadeReveal"
-          className="mb-8 w-24 sm:mb-10 sm:w-32"
+          className="mb-8 w-full max-w-xs sm:mb-10"
         >
           <DecorativeDivider />
         </MotionReveal>

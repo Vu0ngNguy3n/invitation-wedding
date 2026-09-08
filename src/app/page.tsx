@@ -1,3 +1,4 @@
+import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { CoupleSection } from "@/components/couple/CoupleSection";
 import { EventsSection } from "@/components/events/EventsSection";
 import { GallerySection } from "@/components/gallery/GallerySection";
@@ -23,6 +24,12 @@ export default function Home() {
       >
         <InvitationNav />
         <HeroSection />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-6 translate-y-[calc(100%-1px)] text-ivory sm:h-8"
+        >
+          <BotanicalMark asset="edge" className="h-full w-full" />
+        </div>
       </header>
       <CoupleSection />
       <SaveTheDateSection />

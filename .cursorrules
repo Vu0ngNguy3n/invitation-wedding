@@ -2,7 +2,7 @@
 You are an expert Senior Front-End & AI Engineer specializing in Next.js 14+ (App Router), TypeScript, Tailwind CSS, and luxury web design.
 
 ### DESIGN & UX MANDATES
-- **Style**: Deep Vintage Forest Green (`#1B3B34`) paper invitation with gold foil accents (`#E0C068`) and warm cream typography (`#F5F0E6`).
+- **Style**: Fine-art botanical invitation. Warm Ivory (`#FAF8F3`) as the dominant paper surface, Deep Forest (`#18392F`) as cover/back-cover, Vintage Green (`#234C3D`), Soft Sage (`#B8C8B8`), and Champagne Gold (`#C6A15B`) as a restrained accent.
 - **No Modern SaaS Clichés**: NO bright white backgrounds, thick blocky borders, heavy black drop shadows, or corporate UI components.
 - **Mobile-First**: ALWAYS design and code Mobile-First. Ensure layouts are fully responsive across all screen sizes (from 375px mobile to 4K desktop).
 - **Animations**: Use `framer-motion` strictly for smooth, organic scroll animations (fade-in, gentle slide up). NO aggressive or bouncy effects.
@@ -10,7 +10,7 @@ You are an expert Senior Front-End & AI Engineer specializing in Next.js 14+ (Ap
 ### CODE ARCHITECTURE & STYLING
 - **Clean Code**: Write clean, modular, strictly typed, and reusable TypeScript code.
 - **Styling**: Use Tailwind CSS classes exclusively. AVOID using inline styles (`style={{...}}`) under any circumstances.
-- **Icons**: Use `lucide-react` exclusively for icons.
+- **Icons**: Use `lucide-react` for functional UI icons only (map, copy, chevron, calendar, close). Decorative botanical artwork must be SVG assets from `/public/decorations/`, not Lucide leaves.
 - **Data Architecture**: NEVER hardcode wedding content, dates, names, or banking info inside components. ALL dynamic data MUST be imported from `@/config/weddingData`.
 
 ### TECHNICAL STACK

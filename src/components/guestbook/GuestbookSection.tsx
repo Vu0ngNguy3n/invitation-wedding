@@ -59,7 +59,7 @@ function GuestbookFrame({ children }: { children: ReactNode }) {
           headingId="guestbook-heading"
         />
 
-        <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
+        <div className="mx-auto mt-6 max-w-xs sm:mt-8">
           <DecorativeDivider />
         </div>
 

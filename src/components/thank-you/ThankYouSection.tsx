@@ -73,8 +73,9 @@ export function ThankYouSection() {
       id="thank-you"
       tone="forest"
       labelledBy={title ? "thank-you-heading" : undefined}
-      className="py-20 sm:py-28 lg:py-32"
+      className="py-20 sm:py-28 lg:py-36"
       containerClassName="max-w-2xl"
+      edgeTop="paper"
     >
       <MotionReveal variant="fadeReveal">
         <BotanicalDecoration density="cover" className="px-2 py-8 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
@@ -87,6 +88,7 @@ export function ThankYouSection() {
             <InvitationMonogram
               brideInitial={givenInitial(brideName)}
               groomInitial={givenInitial(groomName)}
+              framed
               className="mb-6 sm:mb-8"
             />
 
@@ -114,8 +116,8 @@ export function ThankYouSection() {
             <div
               className={
                 title || message
-                  ? "mt-8 w-24 sm:mt-10 sm:w-32"
-                  : "w-24 sm:w-32"
+                  ? "mt-8 w-full max-w-xs sm:mt-10"
+                  : "w-full max-w-xs"
               }
             >
               <DecorativeDivider />

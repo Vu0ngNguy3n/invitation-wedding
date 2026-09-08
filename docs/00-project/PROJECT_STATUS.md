@@ -25,6 +25,7 @@ Phase 13 — Fine-art botanical visual refactor
 - [ ] QA
 - [x] Production deployment docs and build gate (`docs/07-deployment/`)
 - [x] Fine-art botanical visual refactor (ivory-dominant section rhythm, shared motion system, Lenis desktop smooth scroll, gift copy control restored)
+- [x] Botanical SVG decoration system and refined palette (Deep Forest / Ivory / Sage / Champagne Gold)
 
 ## Known Issues
 

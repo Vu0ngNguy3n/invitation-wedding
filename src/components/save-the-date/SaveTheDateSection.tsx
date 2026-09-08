@@ -1,6 +1,7 @@
 import { CalendarPlus } from "lucide-react";
 import { weddingData } from "@/config/weddingData";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
+import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
 import { CountdownTimer } from "@/components/countdown/CountdownTimer";
 import { WeddingCalendar } from "@/components/save-the-date/WeddingCalendar";
@@ -118,7 +119,7 @@ export function SaveTheDateSection() {
         ) : null}
 
         {title ? (
-          <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
+          <div className="mx-auto mt-6 max-w-xs sm:mt-8">
             <DecorativeDivider />
           </div>
         ) : null}
@@ -130,9 +131,15 @@ export function SaveTheDateSection() {
             {featuredDay || featuredMonth || featuredYear || displayDate ? (
               <div className="flex flex-col items-center text-center">
                 {featuredDay ? (
-                  <p className="font-display text-6xl leading-none tracking-wide sm:text-7xl lg:text-8xl">
-                    {featuredDay}
-                  </p>
+                  <div className="relative flex size-36 items-center justify-center sm:size-44">
+                    <BotanicalMark
+                      asset="wreath"
+                      className="absolute inset-0 h-full w-full text-botanical-green/35"
+                    />
+                    <p className="relative font-display text-6xl leading-none tracking-wide sm:text-7xl">
+                      {featuredDay}
+                    </p>
+                  </div>
                 ) : null}
                 {featuredMonth ? (
                   <p className="type-heading mt-3 text-accent-gold">
