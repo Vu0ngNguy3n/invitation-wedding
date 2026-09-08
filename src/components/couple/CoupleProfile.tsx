@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { PersonProfile } from "@/types/wedding";
-import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
+import { MotionReveal } from "@/components/ui/MotionReveal";
 import { cn } from "@/utils/cn";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
@@ -35,42 +35,45 @@ export function CoupleProfile({
   const Root = displayName ? "article" : "div";
 
   return (
-    <Root className="grid min-w-0 grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-      <BotanicalDecoration
+    <Root className="grid min-w-0 grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
+      <MotionReveal
+        variant="imageReveal"
         className={cn(
-          "mx-auto w-full max-w-[min(100%,260px)] p-3 sm:max-w-[300px] sm:p-4 lg:max-w-md",
-          reverse && "lg:order-2",
+          "mx-auto w-full max-w-[min(100%,280px)] overflow-hidden sm:max-w-[340px] lg:col-span-5 lg:max-w-none",
+          reverse && "lg:order-2 lg:col-start-8",
         )}
       >
-        <figure className="foil-border relative aspect-[3/4] overflow-hidden bg-surface">
+        <figure className="group foil-border relative aspect-[3/4] overflow-hidden bg-kraft">
           {photo ? (
             <Image
               src={photo}
               alt={imageAlt}
               fill
-              sizes="(max-width: 639px) 260px, (max-width: 1023px) 300px, 28vw"
-              className="object-cover object-center"
+              sizes="(max-width: 639px) 280px, (max-width: 1023px) 340px, 36vw"
+              className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
             />
           ) : null}
         </figure>
-      </BotanicalDecoration>
+      </MotionReveal>
 
-      <div
+      <MotionReveal
+        variant="softReveal"
+        delay={0.12}
         className={cn(
-          "flex min-w-0 flex-col items-center px-1 text-center",
+          "flex min-w-0 flex-col items-center px-1 text-center lg:col-span-6",
           reverse
-            ? "lg:order-1 lg:items-end lg:text-right"
-            : "lg:items-start lg:text-left",
+            ? "lg:col-start-1 lg:row-start-1 lg:items-end lg:pr-4 lg:text-right"
+            : "lg:col-start-7 lg:items-start lg:pl-4 lg:text-left",
         )}
       >
         {displayName ? (
-          <h3 className="type-heading text-balance break-words text-paper-cream">
+          <h3 className="type-heading text-balance break-words">
             {displayName}
           </h3>
         ) : null}
 
         {family ? (
-          <p className="type-caption mt-3 max-w-sm text-muted">{family}</p>
+          <p className="type-caption mt-4 max-w-sm text-muted">{family}</p>
         ) : null}
 
         {description
@@ -85,11 +88,11 @@ export function CoupleProfile({
           : null}
 
         {quote ? (
-          <blockquote className="mt-6 max-w-sm">
+          <blockquote className="mt-8 max-w-sm">
             <p className="type-script break-words text-accent-gold">{quote}</p>
           </blockquote>
         ) : null}
-      </div>
+      </MotionReveal>
     </Root>
   );
 }

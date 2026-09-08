@@ -28,54 +28,55 @@ export function GallerySection() {
   return (
     <SectionContainer
       id="gallery"
+      tone="gallery"
       labelledBy={heading ? "gallery-heading" : undefined}
     >
-      <MotionReveal>
+      <MotionReveal variant="fadeReveal">
         {heading ? (
           <SectionHeading title={heading} headingId="gallery-heading" />
         ) : null}
 
-        <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
+        <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
           <DecorativeDivider />
         </div>
+      </MotionReveal>
 
-        <div className="mt-10 sm:mt-14">
-          <GalleryViewer
-            images={images}
-            labels={{
-              close: galleryCopy.close,
-              previous: galleryCopy.previous,
-              next: galleryCopy.next,
-            }}
-          >
-            <ul className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3 lg:gap-6">
-              {images.slice(0, 8).map((image, imageIndex) => (
-                <li
-                  key={image.id}
-                  className="mb-4 break-inside-avoid sm:mb-5 lg:mb-6"
+      <MotionReveal variant="sectionReveal" className="mt-10 sm:mt-16">
+        <GalleryViewer
+          images={images}
+          labels={{
+            close: galleryCopy.close,
+            previous: galleryCopy.previous,
+            next: galleryCopy.next,
+          }}
+        >
+          <ul className="columns-1 gap-5 sm:columns-2 sm:gap-6 lg:columns-3 lg:gap-7">
+            {images.slice(0, 8).map((image, imageIndex) => (
+              <li
+                key={image.id}
+                className="mb-5 break-inside-avoid sm:mb-6 lg:mb-7"
+              >
+                <GalleryOpenButton
+                  index={imageIndex}
+                  label={
+                    filledText(image.alt)
+                      ? `${galleryCopy.openLabeled}${image.alt}`
+                      : `${galleryCopy.openIndexed}${imageIndex + 1}`
+                  }
                 >
-                  <GalleryOpenButton
-                    index={imageIndex}
-                    label={
-                      filledText(image.alt)
-                        ? `${galleryCopy.openLabeled}${image.alt}`
-                        : `${galleryCopy.openIndexed}${imageIndex + 1}`
-                    }
-                  >
-                    <Image
-                      src={image.src}
-                      alt=""
-                      width={image.width}
-                      height={image.height}
-                      sizes="(max-width: 639px) 90vw, (max-width: 1023px) 44vw, 30vw"
-                      className="h-auto w-full object-cover"
-                    />
-                  </GalleryOpenButton>
-                </li>
-              ))}
-            </ul>
-          </GalleryViewer>
-        </div>
+                  <Image
+                    src={image.src}
+                    alt=""
+                    width={image.width}
+                    height={image.height}
+                    sizes="(max-width: 639px) 90vw, (max-width: 1023px) 44vw, 30vw"
+                    className="h-auto w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+                  />
+                </GalleryOpenButton>
+              </li>
+            ))}
+          </ul>
+        </GalleryViewer>
       </MotionReveal>
     </SectionContainer>
   );

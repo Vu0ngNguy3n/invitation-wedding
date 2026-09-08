@@ -157,7 +157,7 @@ export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
   }
 
   return (
-    <PaperSurface as="div" className="min-w-0 px-4 py-6 sm:px-8 sm:py-8">
+    <PaperSurface as="div" className="min-w-0 px-5 py-8 sm:px-9 sm:py-10">
       <form
         noValidate
         onSubmit={handleSubmit}
@@ -190,7 +190,7 @@ export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
               clearFeedback();
             }}
             className={cn(
-              "type-body min-h-11 w-full min-w-0 border-0 border-b bg-transparent px-0 py-2 text-base text-paper-cream placeholder:text-muted",
+              "type-body min-h-11 w-full min-w-0 border-0 border-b bg-transparent px-0 py-2 text-base text-ink placeholder:text-muted",
               nameError ? "border-error" : "border-accent-gold/40",
               submitting && "cursor-not-allowed opacity-60",
             )}
@@ -230,7 +230,7 @@ export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
               clearFeedback();
             }}
             className={cn(
-              "type-body min-h-36 w-full min-w-0 resize-y bg-transparent px-3 py-3 text-base text-paper-cream placeholder:text-muted foil-border-dashed",
+              "type-body min-h-36 w-full min-w-0 resize-y bg-transparent px-3 py-3 text-base text-ink placeholder:text-muted foil-border-dashed",
               messageError && "border-error",
               submitting && "cursor-not-allowed opacity-60",
             )}
@@ -267,8 +267,8 @@ export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
           type="submit"
           disabled={submitting}
           className={cn(
-            "foil-border inline-flex min-h-11 w-full max-w-full items-center justify-center gap-2 px-4 py-2.5 text-center text-accent-gold transition-opacity sm:w-auto sm:px-5",
-            submitting ? "cursor-not-allowed opacity-60" : "hover:opacity-80",
+            "foil-border invitation-action inline-flex min-h-11 w-full max-w-full items-center justify-center gap-2 px-4 py-2.5 text-center text-accent-gold sm:w-auto sm:px-5",
+            submitting && "cursor-not-allowed opacity-60 hover:translate-y-0 hover:opacity-60",
           )}
         >
           <PenLine aria-hidden="true" className="size-4" strokeWidth={1.25} />

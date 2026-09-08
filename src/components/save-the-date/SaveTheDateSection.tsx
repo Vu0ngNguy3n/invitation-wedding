@@ -1,11 +1,14 @@
 import { CalendarPlus } from "lucide-react";
 import { weddingData } from "@/config/weddingData";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
+import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
 import { CountdownTimer } from "@/components/countdown/CountdownTimer";
 import { WeddingCalendar } from "@/components/save-the-date/WeddingCalendar";
 import { MotionReveal } from "@/components/ui/MotionReveal";
+import { PaperSurface } from "@/components/ui/PaperSurface";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { invitationActionClassName } from "@/components/ui/invitationAction";
 import {
   buildCalendarFile,
   buildCalendarMonth,
@@ -13,6 +16,7 @@ import {
   resolveWeddingInstant,
 } from "@/utils/datetime";
 import { filledText } from "@/utils/text";
+import { cn } from "@/utils/cn";
 
 function calendarTitle(): string {
   const bride = filledText(weddingData.couple.bride.name);
@@ -101,9 +105,10 @@ export function SaveTheDateSection() {
   return (
     <SectionContainer
       id="save-the-date"
+      tone="paper"
       labelledBy={headingTitle ? "save-the-date-heading" : undefined}
     >
-      <MotionReveal>
+      <MotionReveal variant="fadeReveal">
         {headingTitle ? (
           <SectionHeading
             title={headingTitle}
@@ -113,73 +118,79 @@ export function SaveTheDateSection() {
         ) : null}
 
         {title ? (
-          <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
+          <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
             <DecorativeDivider />
           </div>
         ) : null}
+      </MotionReveal>
 
-        {featuredDay || featuredMonth || featuredYear || displayDate ? (
-          <div className="mt-10 flex flex-col items-center text-center sm:mt-12">
-            {featuredDay ? (
-              <p className="font-display text-6xl leading-none tracking-wide text-paper-cream sm:text-7xl lg:text-8xl">
-                {featuredDay}
-              </p>
+      <MotionReveal variant="fadeScale" className="mx-auto mt-10 max-w-lg sm:mt-14">
+        <PaperSurface className="px-4 py-8 sm:px-10 sm:py-12">
+          <BotanicalDecoration className="px-2 py-4 sm:px-4 sm:py-6">
+            {featuredDay || featuredMonth || featuredYear || displayDate ? (
+              <div className="flex flex-col items-center text-center">
+                {featuredDay ? (
+                  <p className="font-display text-6xl leading-none tracking-wide sm:text-7xl lg:text-8xl">
+                    {featuredDay}
+                  </p>
+                ) : null}
+                {featuredMonth ? (
+                  <p className="type-heading mt-3 text-accent-gold">
+                    {featuredMonth}
+                  </p>
+                ) : null}
+                {featuredYear ? (
+                  <p className="type-overline mt-3 text-muted">{featuredYear}</p>
+                ) : null}
+                {displayDate && !featuredDay ? (
+                  <p className="type-heading">{displayDate}</p>
+                ) : null}
+              </div>
             ) : null}
-            {featuredMonth ? (
-              <p className="type-heading mt-3 text-accent-gold">
-                {featuredMonth}
-              </p>
-            ) : null}
-            {featuredYear ? (
-              <p className="type-overline mt-3 text-muted">{featuredYear}</p>
-            ) : null}
-            {displayDate && !featuredDay ? (
-              <p className="type-heading text-paper-cream">{displayDate}</p>
-            ) : null}
-          </div>
-        ) : null}
 
-        {calendar ? (
-          <div className="mt-10 sm:mt-14">
-            <WeddingCalendar month={calendar} />
-          </div>
-        ) : null}
+            {calendar ? (
+              <div className="mt-8 sm:mt-10">
+                <WeddingCalendar month={calendar} />
+              </div>
+            ) : null}
 
-        {instant ? (
-          <div className="mt-12 sm:mt-16">
-            <CountdownTimer
-              targetMs={instant.targetMs}
-              labels={{
-                days: copy.saveTheDate.countdownDays,
-                hours: copy.saveTheDate.countdownHours,
-                minutes: copy.saveTheDate.countdownMinutes,
-                seconds: copy.saveTheDate.countdownSeconds,
-              }}
-            />
-          </div>
-        ) : null}
+            {instant ? (
+              <div className="mt-10 sm:mt-12">
+                <CountdownTimer
+                  targetMs={instant.targetMs}
+                  labels={{
+                    days: copy.saveTheDate.countdownDays,
+                    hours: copy.saveTheDate.countdownHours,
+                    minutes: copy.saveTheDate.countdownMinutes,
+                    seconds: copy.saveTheDate.countdownSeconds,
+                  }}
+                />
+              </div>
+            ) : null}
 
-        {calendarHref ? (
-          <div className="mt-10 flex w-full justify-center sm:mt-12">
-            <a
-              href={calendarHref}
-              download="save-the-date.ics"
-              className="foil-border inline-flex min-h-11 max-w-full items-center justify-center gap-2 px-4 py-2 text-center text-accent-gold transition-opacity hover:opacity-80 sm:px-5"
-            >
-              <CalendarPlus
-                aria-hidden="true"
-                className="size-4"
-                strokeWidth={1.25}
-              />
-              <span className="sr-only">
-                {copy.saveTheDate.addToCalendarPrefix}
-              </span>
-              <span className="type-overline">
-                {title ?? displayDate ?? eventTitle}
-              </span>
-            </a>
-          </div>
-        ) : null}
+            {calendarHref ? (
+              <div className="mt-10 flex w-full justify-center sm:mt-12">
+                <a
+                  href={calendarHref}
+                  download="save-the-date.ics"
+                  className={cn(invitationActionClassName)}
+                >
+                  <CalendarPlus
+                    aria-hidden="true"
+                    className="size-4"
+                    strokeWidth={1.25}
+                  />
+                  <span className="sr-only">
+                    {copy.saveTheDate.addToCalendarPrefix}
+                  </span>
+                  <span className="type-overline">
+                    {title ?? displayDate ?? eventTitle}
+                  </span>
+                </a>
+              </div>
+            ) : null}
+          </BotanicalDecoration>
+        </PaperSurface>
       </MotionReveal>
     </SectionContainer>
   );

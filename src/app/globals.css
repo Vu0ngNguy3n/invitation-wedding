@@ -1,68 +1,91 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 :root {
   --vintage-green: #1b3b34;
+  --vintage-green-deep: #142924;
   --vintage-card: #22443c;
+  --ivory: #faf6ee;
+  --soft-white: #fcfaf5;
   --paper-cream: #f5f0e6;
+  --kraft: #eadfcd;
+  --sage: #7d9a8a;
   --sage-light: #a3c1ad;
-  --accent-gold: #e0c068;
-  --success: #9bbb96;
-  --error: #d4a496;
+  --sage-mist: #e7eee8;
+  --ink: #1b3b34;
+  --ink-muted: #5a6e68;
+  --gold-foil: #e0c068;
+  --gold-deep: #b08d3a;
+  --accent-gold: var(--gold-foil);
+  --success: #6f8f6c;
+  --error: #b56a5c;
+  --guestbook-fade: var(--ivory);
 }
 
 @theme inline {
   --color-vintage-green: var(--vintage-green);
+  --color-vintage-green-deep: var(--vintage-green-deep);
   --color-vintage-card: var(--vintage-card);
+  --color-ivory: var(--ivory);
+  --color-soft-white: var(--soft-white);
   --color-paper-cream: var(--paper-cream);
+  --color-kraft: var(--kraft);
+  --color-sage: var(--sage);
   --color-sage-light: var(--sage-light);
+  --color-sage-mist: var(--sage-mist);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-gold-foil: var(--gold-foil);
+  --color-gold-deep: var(--gold-deep);
   --color-accent-gold: var(--accent-gold);
   --color-success: var(--success);
   --color-error: var(--error);
-  --color-background: var(--vintage-green);
-  --color-surface: var(--vintage-card);
-  --color-foreground: var(--paper-cream);
-  --color-muted: var(--sage-light);
-  --color-border: var(--accent-gold);
+  --color-background: var(--ivory);
+  --color-surface: var(--paper-cream);
+  --color-foreground: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-border: var(--gold-foil);
   --color-primary: var(--vintage-green);
-  --color-secondary: var(--vintage-card);
+  --color-secondary: var(--sage-mist);
   --font-display: var(--font-cormorant);
   --font-body: var(--font-lora);
   --font-script: var(--font-great-vibes);
   --font-sans: var(--font-lora);
   --radius-sm: 0.125rem;
   --radius-md: 0.25rem;
-  --shadow-paper: 0 6px 18px rgb(0 0 0 / 0.16);
+  --shadow-paper: 0 10px 28px rgb(27 59 52 / 0.08);
+  --shadow-insert: 0 8px 22px rgb(27 59 52 / 0.1);
 }
 
 @utility type-display {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
-  font-size: 2.25rem;
+  font-size: 2.35rem;
   font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: 0.06em;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
 
   @variant sm {
-    font-size: 3rem;
+    font-size: 3.15rem;
   }
 
   @variant lg {
-    font-size: 3.75rem;
+    font-size: 4rem;
   }
 }
 
 @utility type-heading {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
+  line-height: 1.22;
+  letter-spacing: 0.07em;
 
   @variant sm {
-    font-size: 2.25rem;
+    font-size: 2.15rem;
   }
 
   @variant lg {
-    font-size: 2.75rem;
+    font-size: 2.6rem;
   }
 }
 
@@ -70,7 +93,7 @@
   font-family: var(--font-lora), ui-serif, Georgia, serif;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.8;
 
   @variant sm {
     font-size: 1.0625rem;
@@ -81,7 +104,7 @@
   font-family: var(--font-lora), ui-serif, Georgia, serif;
   font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.65;
   letter-spacing: 0.02em;
 }
 
@@ -90,11 +113,11 @@
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 1.45;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 
   @variant sm {
-    letter-spacing: 0.28em;
+    letter-spacing: 0.24em;
   }
 }
 
@@ -105,16 +128,93 @@
   line-height: 1.3;
 
   @variant sm {
-    font-size: 2rem;
+    font-size: 2.05rem;
   }
 }
 
 @utility foil-border {
-  border: 1px solid color-mix(in srgb, var(--accent-gold) 42%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold-foil) 48%, transparent);
 }
 
 @utility foil-border-dashed {
-  border: 1px dashed color-mix(in srgb, var(--accent-gold) 55%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--gold-foil) 58%, transparent);
+}
+
+@utility invitation-action {
+  transition-property: color, opacity, border-color, transform;
+  transition-duration: 280ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+
+  @variant hover {
+    opacity: 0.82;
+    transform: translateY(-1px);
+  }
+
+  @variant active {
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .section-forest {
+    background-color: var(--vintage-green);
+    color: var(--paper-cream);
+    --color-background: var(--vintage-green);
+    --color-foreground: var(--paper-cream);
+    --color-muted: var(--sage-light);
+    --color-surface: var(--vintage-card);
+    --color-accent-gold: var(--gold-foil);
+    --accent-gold: var(--gold-foil);
+    --guestbook-fade: var(--vintage-green);
+  }
+
+  .section-ivory {
+    background-color: var(--ivory);
+    color: var(--ink);
+    --color-background: var(--ivory);
+    --color-foreground: var(--ink);
+    --color-muted: var(--ink-muted);
+    --color-surface: var(--paper-cream);
+    --color-accent-gold: var(--gold-deep);
+    --accent-gold: var(--gold-deep);
+    --guestbook-fade: var(--ivory);
+  }
+
+  .section-paper {
+    background-color: var(--paper-cream);
+    color: var(--ink);
+    --color-background: var(--paper-cream);
+    --color-foreground: var(--ink);
+    --color-muted: var(--ink-muted);
+    --color-surface: var(--ivory);
+    --color-accent-gold: var(--gold-deep);
+    --accent-gold: var(--gold-deep);
+    --guestbook-fade: var(--paper-cream);
+  }
+
+  .section-mist {
+    background-color: var(--sage-mist);
+    color: var(--ink);
+    --color-background: var(--sage-mist);
+    --color-foreground: var(--ink);
+    --color-muted: var(--ink-muted);
+    --color-surface: var(--ivory);
+    --color-accent-gold: var(--gold-deep);
+    --accent-gold: var(--gold-deep);
+    --guestbook-fade: var(--sage-mist);
+  }
+
+  .section-gallery {
+    background-color: var(--soft-white);
+    color: var(--ink);
+    --color-background: var(--soft-white);
+    --color-foreground: var(--ink);
+    --color-muted: var(--ink-muted);
+    --color-surface: var(--paper-cream);
+    --color-accent-gold: var(--gold-deep);
+    --accent-gold: var(--gold-deep);
+    --guestbook-fade: var(--soft-white);
+  }
 }
 
 @utility guestbook-scroll-fade {
@@ -135,12 +235,12 @@
   pointer-events: none;
   background: linear-gradient(
     to top,
-    color-mix(in srgb, var(--vintage-green) 38%, transparent) 0%,
+    var(--guestbook-fade) 0%,
     transparent 100%
   );
-  box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--accent-gold) 16%, transparent);
+  box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--gold-foil) 18%, transparent);
   opacity: 1;
-  transition: opacity 300ms ease;
+  transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .guestbook-scroll-more[data-can-scroll-more="false"] {
@@ -151,6 +251,15 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 1.5rem;
   overflow-x: clip;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -169,14 +278,19 @@ html {
 }
 
 body {
-  background-color: var(--vintage-green);
-  background-image: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--vintage-card) 55%, transparent) 0%,
-    transparent 58%,
-    rgb(0 0 0 / 0.2) 100%
-  );
-  color: var(--paper-cream);
+  background-color: var(--ivory);
+  background-image:
+    radial-gradient(
+      ellipse at top,
+      color-mix(in srgb, var(--sage-mist) 55%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at bottom,
+      color-mix(in srgb, var(--kraft) 35%, transparent) 0%,
+      transparent 50%
+    );
+  color: var(--ink);
   font-family: var(--font-lora), ui-serif, Georgia, "Times New Roman", serif;
   overflow-x: clip;
   text-rendering: optimizeLegibility;
@@ -188,17 +302,26 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  opacity: 0.045;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-gold);
+  outline: 2px solid var(--gold-deep);
   outline-offset: 3px;
 }
 
+.section-forest :focus-visible {
+  outline-color: var(--gold-foil);
+}
+
 ::selection {
-  background-color: color-mix(in srgb, var(--accent-gold) 35%, transparent);
+  background-color: color-mix(in srgb, var(--gold-foil) 38%, transparent);
+  color: var(--vintage-green);
+}
+
+.section-forest ::selection {
   color: var(--paper-cream);
 }

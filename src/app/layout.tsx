@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Great_Vibes, Lora } from "next/font/google";
 import { InvitationShell } from "@/components/layout/InvitationShell";
+import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { weddingData } from "@/config/weddingData";
 import {
   buildInvitationMetadata,
@@ -41,14 +42,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang={invitationLanguage(weddingData)}
       className={`${displayFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-vintage-green font-body text-paper-cream">
+      <body className="flex min-h-full flex-col bg-ivory font-body text-ink">
         <a
           href="#invitation"
           className="sr-only foil-border bg-vintage-green px-4 py-3 type-overline text-paper-cream focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-[10050] focus-visible:inline-flex focus-visible:min-h-11 focus-visible:items-center"
         >
           {filledTextOr(weddingData.copy.skipToContent, "Tới nội dung thiệp")}
         </a>
-        <InvitationShell>{children}</InvitationShell>
+        <SmoothScrollProvider>
+          <InvitationShell>{children}</InvitationShell>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

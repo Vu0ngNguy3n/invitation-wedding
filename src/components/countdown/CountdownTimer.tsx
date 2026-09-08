@@ -60,15 +60,28 @@ export function CountdownTimer({ targetMs, labels }: CountdownTimerProps) {
       }
       className={remaining?.expired ? "opacity-70" : undefined}
     >
-      <ul className="mx-auto flex w-full max-w-sm items-end justify-between gap-1 px-1 sm:max-w-md sm:justify-center sm:gap-8 lg:max-w-lg lg:gap-10">
-        {units.map((unit) => (
-          <li key={unit.key} className="flex min-w-0 flex-1 flex-col items-center sm:flex-none">
-            <span className="font-display text-3xl tabular-nums tracking-wide text-paper-cream sm:text-4xl lg:text-5xl">
-              {unit.value}
-            </span>
-            <span className="type-overline mt-2 text-center text-accent-gold">
-              {unit.label}
-            </span>
+      <ul className="mx-auto flex w-full max-w-md items-end justify-center">
+        {units.map((unit, index) => (
+          <li
+            key={unit.key}
+            className="flex min-w-0 flex-1 flex-col items-center"
+          >
+            <div className="flex w-full items-center">
+              {index > 0 ? (
+                <span
+                  aria-hidden="true"
+                  className="h-8 w-px shrink-0 bg-accent-gold/35 sm:h-10"
+                />
+              ) : null}
+              <div className="flex min-w-0 flex-1 flex-col items-center px-2 sm:px-4">
+                <span className="font-display text-3xl tabular-nums tracking-wide sm:text-4xl lg:text-[2.75rem]">
+                  {unit.value}
+                </span>
+                <span className="type-overline mt-2 text-center text-accent-gold">
+                  {unit.label}
+                </span>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

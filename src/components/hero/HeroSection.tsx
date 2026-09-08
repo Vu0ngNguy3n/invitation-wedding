@@ -1,10 +1,13 @@
+import { ChevronDown } from "lucide-react";
 import { weddingData } from "@/config/weddingData";
+import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
 import { HeroCover } from "@/components/hero/HeroCover";
+import { HeroIdentity } from "@/components/hero/HeroIdentity";
 import { MotionReveal } from "@/components/ui/MotionReveal";
-import { invitationMotion } from "@/utils/motion";
+import { invitationMotion } from "@/lib/motion";
 import { invitationDocumentTitle } from "@/utils/seo";
-import { filledText } from "@/utils/text";
+import { filledText, givenInitial } from "@/utils/text";
 
 function coupleHeading(brideName?: string, groomName?: string, title?: string) {
   if (brideName && groomName) {
@@ -53,94 +56,52 @@ export function HeroSection() {
   const mobileImage = wedding.cover.mobileImage;
   const desktopImage = wedding.cover.desktopImage;
   const showTitleKicker = Boolean(title && heading && heading !== title);
+  const storyLabel = weddingData.navigation.find(
+    (item) => item.id === "story",
+  )?.label;
 
   return (
-    <header
-      id="home"
-      aria-labelledby="home-heading"
-      className="relative flex min-h-[calc(100svh-9.5rem)] w-full scroll-mt-6 flex-col items-center justify-center py-6 sm:min-h-[calc(100svh-11rem)] sm:scroll-mt-8 sm:py-8 lg:min-h-[calc(100svh-13rem)] lg:py-10"
-    >
-      <div className="flex w-full min-w-0 max-w-3xl flex-col items-center text-center">
+    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-5 py-8 sm:px-10 sm:py-10 lg:px-16 lg:py-12">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-4 foil-border sm:inset-6 lg:inset-8"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-5 border border-accent-gold/20 sm:inset-7 lg:inset-9"
+      />
+
+      <BotanicalDecoration
+        density="cover"
+        className="flex w-full min-w-0 max-w-3xl flex-col items-center px-4 py-8 text-center sm:px-8 sm:py-10"
+      >
         <MotionReveal
           mode="enter"
-          className="flex w-full flex-col items-center"
+          variant="fadeReveal"
+          className="mb-8 w-24 sm:mb-10 sm:w-32"
         >
-          {showTitleKicker ? (
-            <p className="type-overline text-accent-gold">{title}</p>
-          ) : null}
-
-          {heading ? (
-            <h1
-              id="home-heading"
-              className={
-                showTitleKicker
-                  ? "mt-5 max-w-full px-1 text-balance break-words text-paper-cream sm:mt-6"
-                  : "max-w-full px-1 text-balance break-words text-paper-cream"
-              }
-            >
-              {brideName && groomName ? (
-                <>
-                  <span className="type-display block">{brideName}</span>
-                  <span
-                    aria-hidden="true"
-                    className="type-script mt-1 mb-1 block text-accent-gold"
-                  >
-                    &
-                  </span>
-                  <span className="type-display block">{groomName}</span>
-                </>
-              ) : (
-                <span className="type-display block">{heading}</span>
-              )}
-            </h1>
-          ) : (
-            <h1 id="home-heading" className="sr-only">
-              {documentTitle}
-            </h1>
-          )}
-
-          {phrase ? (
-            <p
-              className={
-                title || heading
-                  ? "type-script mt-5 max-w-md px-1 text-pretty break-words text-paper-cream sm:mt-6"
-                  : "type-script max-w-md px-1 text-pretty break-words text-paper-cream"
-              }
-            >
-              {phrase}
-            </p>
-          ) : null}
-
-          <div
-            className={
-              title || heading || phrase
-                ? "mt-6 w-28 sm:mt-8 sm:w-36"
-                : "w-28 sm:w-36"
-            }
-          >
-            <DecorativeDivider />
-          </div>
-
-          {displayedDate ? (
-            dateTime ? (
-              <time
-                dateTime={dateTime}
-                className="type-overline mt-5 text-accent-gold sm:mt-6"
-              >
-                {displayedDate}
-              </time>
-            ) : (
-              <p className="type-overline mt-5 text-accent-gold sm:mt-6">
-                {displayedDate}
-              </p>
-            )
-          ) : null}
+          <DecorativeDivider />
         </MotionReveal>
 
+        <HeroIdentity
+          title={title}
+          heading={heading}
+          brideName={brideName}
+          groomName={groomName}
+          brideInitial={givenInitial(brideName)}
+          groomInitial={givenInitial(groomName)}
+          phrase={phrase}
+          displayedDate={displayedDate}
+          dateTime={dateTime}
+          showTitleKicker={showTitleKicker}
+          documentTitle={documentTitle}
+        />
+
         <MotionReveal
           mode="enter"
-          className="mt-8 w-full sm:mt-10 lg:mt-12"
-          delay={invitationMotion.stagger}
+          variant="imageReveal"
+          className="mt-8 w-full overflow-hidden sm:mt-10 lg:mt-12"
+          delay={invitationMotion.heroStagger * 6}
         >
           <HeroCover
             alt={imageAlt}
@@ -148,7 +109,26 @@ export function HeroSection() {
             desktopSrc={desktopImage}
           />
         </MotionReveal>
-      </div>
-    </header>
+
+        <MotionReveal
+          mode="enter"
+          variant="fadeReveal"
+          className="mt-8 sm:mt-10"
+          delay={invitationMotion.heroStagger * 7}
+        >
+          <a
+            href="#story"
+            className="invitation-action inline-flex min-h-11 flex-col items-center justify-center text-accent-gold/70 hover:text-accent-gold hover:opacity-100"
+            aria-label={storyLabel ?? "story"}
+          >
+            <ChevronDown
+              aria-hidden="true"
+              className="size-5"
+              strokeWidth={1.15}
+            />
+          </a>
+        </MotionReveal>
+      </BotanicalDecoration>
+    </div>
   );
 }

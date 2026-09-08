@@ -64,12 +64,13 @@ export function GuestbookWishScroller({
       <div
         ref={scrollerRef}
         className={cn(
-          "max-h-[min(70svh,42rem)] overflow-y-auto overscroll-y-contain pr-2 [scrollbar-width:thin] [scrollbar-color:color-mix(in_srgb,var(--accent-gold)_42%,transparent)_transparent] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent-gold/50",
+          "max-h-[min(70svh,42rem)] overflow-y-auto overscroll-y-contain pr-2 [scrollbar-width:thin] [scrollbar-color:color-mix(in_srgb,var(--gold-foil)_42%,transparent)_transparent] focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-accent-gold/50",
           canScrollMore && "guestbook-scroll-fade",
         )}
         tabIndex={0}
         role="region"
         aria-label={label}
+        data-lenis-prevent
       >
         {children}
       </div>

@@ -28,53 +28,40 @@ export function TimelineSection() {
   return (
     <SectionContainer
       id="timeline"
+      tone="mist"
       labelledBy={title ? "timeline-heading" : undefined}
-      className="overflow-hidden py-0"
-      containerClassName="max-w-none"
+      className="overflow-hidden"
+      backdrop={
+        backgroundImage ? (
+          <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.14]">
+            <Image
+              src={backgroundImage}
+              alt={backgroundAlt}
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
+        ) : undefined
+      }
     >
-      <div className="relative px-0 py-14 sm:py-20 lg:py-24">
-        {backgroundImage ? (
-          <>
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src={backgroundImage}
-                alt={backgroundAlt}
-                fill
-                sizes="100vw"
-                className="object-cover object-center"
-              />
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-vintage-green/82"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-b from-vintage-green/55 via-transparent to-vintage-green/70"
-            />
-          </>
+      <MotionReveal variant="fadeReveal">
+        {title ? (
+          <SectionHeading
+            title={title}
+            description={subtitle}
+            headingId="timeline-heading"
+          />
         ) : null}
 
-        <div className="relative mx-auto w-full min-w-0 max-w-6xl">
-          <MotionReveal>
-            {title ? (
-              <SectionHeading
-                title={title}
-                description={subtitle}
-                headingId="timeline-heading"
-              />
-            ) : null}
+        {title ? (
+          <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
+            <DecorativeDivider />
+          </div>
+        ) : null}
+      </MotionReveal>
 
-            {title ? (
-              <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
-                <DecorativeDivider />
-              </div>
-            ) : null}
-          </MotionReveal>
-
-          <TimelineList items={items} />
-        </div>
-      </div>
+      <TimelineList items={items} />
     </SectionContainer>
   );
 }

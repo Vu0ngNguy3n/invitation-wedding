@@ -14,22 +14,23 @@ export function CoupleSection() {
   return (
     <SectionContainer
       id="story"
+      tone="ivory"
       labelledBy={heading ? "story-heading" : undefined}
     >
-      <MotionReveal>
+      <MotionReveal variant="fadeReveal">
         {heading ? (
           <SectionHeading title={heading} headingId="story-heading" />
         ) : null}
 
-        <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
+        <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
           <DecorativeDivider />
         </div>
-
-        <div className="mt-12 flex flex-col gap-16 sm:mt-16 lg:mt-20 lg:gap-24">
-          <CoupleProfile profile={bride} />
-          <CoupleProfile profile={groom} reverse />
-        </div>
       </MotionReveal>
+
+      <div className="mt-14 flex flex-col gap-20 sm:mt-20 lg:mt-28 lg:gap-32">
+        <CoupleProfile profile={bride} />
+        <CoupleProfile profile={groom} reverse />
+      </div>
     </SectionContainer>
   );
 }

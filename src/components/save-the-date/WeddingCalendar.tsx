@@ -35,7 +35,7 @@ export function WeddingCalendar({ month }: WeddingCalendarProps) {
                       "mx-auto flex size-7 items-center justify-center text-xs sm:size-9 sm:text-base",
                       cell.isWeddingDay
                         ? "foil-border text-accent-gold"
-                        : "text-paper-cream/85",
+                        : "opacity-80",
                     )}
                     aria-current={cell.isWeddingDay ? "date" : undefined}
                     aria-label={

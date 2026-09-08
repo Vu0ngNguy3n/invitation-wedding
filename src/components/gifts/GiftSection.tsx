@@ -5,6 +5,7 @@ import type { GiftFieldLabels } from "@/components/gifts/giftUi";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { invitationMotion } from "@/lib/motion";
 import type { WeddingGift } from "@/types/wedding";
 import { hasGiftContent } from "@/utils/sectionVisibility";
 import { filledText } from "@/utils/text";
@@ -15,6 +16,11 @@ function giftLabels(): GiftFieldLabels {
   return {
     bank: copy.bank,
     accountName: copy.accountName,
+    accountNumber: copy.accountNumber,
+    transferNote: copy.transferNote,
+    copy: copy.copy,
+    copied: copy.copied,
+    copyFailed: copy.copyFailed,
     brideRole: copy.brideRole,
     groomRole: copy.groomRole,
   };
@@ -49,9 +55,10 @@ export function GiftSection() {
   return (
     <SectionContainer
       id="gift"
+      tone="paper"
       labelledBy={headingTitle ? "gift-heading" : undefined}
     >
-      <MotionReveal>
+      <MotionReveal variant="fadeReveal">
         {headingTitle ? (
           <SectionHeading
             title={headingTitle}
@@ -61,28 +68,33 @@ export function GiftSection() {
         ) : null}
 
         {title ? (
-          <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
+          <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
             <DecorativeDivider />
           </div>
         ) : null}
+      </MotionReveal>
 
-        <div
-          className={
-            gifts.length === 1
-              ? "mx-auto mt-10 max-w-md sm:mt-14"
-              : "mt-10 grid min-w-0 gap-8 sm:mt-14 lg:grid-cols-2 lg:gap-12"
-          }
-        >
-          {gifts.map((gift) => (
+      <div
+        className={
+          gifts.length === 1
+            ? "mx-auto mt-10 max-w-md sm:mt-14"
+            : "mt-10 grid min-w-0 gap-6 sm:mt-14 lg:grid-cols-2 lg:gap-10"
+        }
+      >
+        {gifts.map((gift, index) => (
+          <MotionReveal
+            key={gift.id}
+            variant="fadeScale"
+            delay={invitationMotion.stagger * index}
+          >
             <GiftRecipient
-              key={gift.id}
               gift={gift}
               labels={labels}
               qrAlt={qrAlt(gift, labels)}
             />
-          ))}
-        </div>
-      </MotionReveal>
+          </MotionReveal>
+        ))}
+      </div>
     </SectionContainer>
   );
 }

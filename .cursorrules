@@ -22,3 +22,48 @@ You are an expert Senior Front-End & AI Engineer specializing in Next.js 14+ (Ap
 - Read existing files before modifying or generating new components.
 - Do not introduce unnecessary NPM packages beyond `framer-motion`, `lucide-react`, and `@supabase/supabase-js`.
 - Ensure zero TypeScript and ESLint errors after every step.
+
+### MOTION DESIGN SYSTEM
+
+Motion must feel:
+- soft
+- romantic
+- editorial
+- organic
+- premium
+
+Use Motion / Framer Motion as the primary animation engine.
+Use Lenis only for smooth scrolling.
+
+Never add another animation library unless explicitly justified.
+
+Global easing:
+[0.16, 1, 0.3, 1]
+
+Typical duration:
+- micro interaction: 200-350ms
+- element reveal: 600-900ms
+- hero reveal: 900-1400ms
+
+Use stagger between:
+60-150ms.
+
+Avoid:
+- bounce
+- elastic animations
+- aggressive scale
+- large Y translations
+- excessive parallax
+- animations on every element
+
+Prefer:
+- opacity
+- transform
+- clip-path/image reveal
+- subtle scale
+- staggered typography
+- botanical decorative motion
+
+Respect prefers-reduced-motion.
+
+Mobile animation must be simpler than desktop animation.

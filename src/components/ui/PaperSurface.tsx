@@ -15,7 +15,7 @@ export function PaperSurface({
   return (
     <Component
       className={cn(
-        "foil-border relative bg-surface px-5 py-6 text-paper-cream shadow-paper sm:px-7 sm:py-8",
+        "foil-border relative bg-paper-cream px-5 py-7 text-ink shadow-paper [--accent-gold:var(--gold-deep)] [--color-accent-gold:var(--gold-deep)] sm:px-8 sm:py-10",
         className,
       )}
     >

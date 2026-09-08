@@ -51,15 +51,15 @@ function GuestbookFrame({ children }: { children: ReactNode }) {
   const heading = guestbookHeading();
 
   return (
-    <SectionContainer id="guestbook" labelledBy="guestbook-heading">
-      <MotionReveal>
+    <SectionContainer id="guestbook" tone="ivory" labelledBy="guestbook-heading">
+      <MotionReveal variant="fadeReveal">
         <SectionHeading
           title={heading.title}
           description={heading.description}
           headingId="guestbook-heading"
         />
 
-        <div className="mx-auto mt-6 w-28 sm:mt-8 sm:w-36">
+        <div className="mx-auto mt-6 w-24 sm:mt-8 sm:w-32">
           <DecorativeDivider />
         </div>
 

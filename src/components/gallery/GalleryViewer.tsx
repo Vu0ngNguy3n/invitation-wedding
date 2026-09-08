@@ -107,7 +107,7 @@ export function GalleryOpenButton({
   return (
     <button
       type="button"
-      className="foil-border block w-full overflow-hidden bg-surface text-left transition-opacity hover:opacity-90"
+      className="group foil-border block w-full overflow-hidden bg-kraft text-left"
       onClick={(event) => {
         context?.openAt(index, event.currentTarget);
       }}
