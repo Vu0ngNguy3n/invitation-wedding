@@ -3,15 +3,16 @@
 ## Journey A — First Visit
 
 1. User opens invitation link.
-2. Hero loads with elegant entrance.
-3. User understands couple identity immediately.
-4. User scrolls naturally through invitation story.
-5. Date and countdown reinforce anticipation.
-6. User reads event details.
-7. User browses gallery.
-8. User leaves a message.
-9. User can inspect wedding gift information.
-10. User reaches final thank-you section.
+2. User opens the sealed envelope (wax seal) to enter the invitation.
+3. Hero loads with elegant entrance.
+4. User understands couple identity immediately.
+5. User scrolls naturally through invitation story.
+6. Date and countdown reinforce anticipation.
+7. User reads event details.
+8. User browses gallery.
+9. User leaves a message.
+10. User can inspect wedding gift information.
+11. User reaches final thank-you section.
 
 ## Navigation Principles
 

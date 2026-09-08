@@ -4,12 +4,13 @@ Update this file after every meaningful phase.
 
 ## Current Phase
 
-Phase 13 — Fine-art botanical visual refactor
+Invitation opening experience
 
 ## Completed
 
 - [x] Project foundation
 - [x] Design system
+- [x] Invitation opening experience (sealed envelope overlay before Hero)
 - [x] Hero
 - [x] Couple
 - [x] Save the Date
@@ -71,6 +72,7 @@ Phase 13 — Fine-art botanical visual refactor
 - Guestbook wishes persist in Supabase PostgreSQL via `/api/guestbook`
 - Browser never receives `SUPABASE_SECRET_KEY`; no browser Supabase client is created for Guestbook
 - Hero is a Server Component; sequential entrance lives in `HeroIdentity`, scroll motion uses `MotionReveal` with tokens in `src/lib/motion/`
+- The invitation opening is a client overlay (`OpeningExperience`) that scroll-locks with the existing Lenis provider, then fades into the current Hero without routing
 - Couple introduction uses a shared `CoupleProfile` with an editorial mirrored layout on desktop
 - Countdown is an isolated Client Component; it receives a UTC timestamp and does not import wedding content
 - Calendar math uses `wedding.timezone` (`Asia/Ho_Chi_Minh` by default)

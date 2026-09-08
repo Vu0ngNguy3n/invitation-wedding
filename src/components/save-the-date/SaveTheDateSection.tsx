@@ -127,42 +127,44 @@ export function SaveTheDateSection() {
 
       <MotionReveal variant="fadeScale" className="mx-auto mt-10 max-w-lg sm:mt-14">
         <PaperSurface className="px-4 py-8 sm:px-10 sm:py-12">
-          <BotanicalDecoration className="px-2 py-4 sm:px-4 sm:py-6">
+          <BotanicalDecoration className="flex flex-col items-center px-2 py-4 text-center sm:px-4 sm:py-6">
             {featuredDay || featuredMonth || featuredYear || displayDate ? (
-              <div className="flex flex-col items-center text-center">
+              <div className="flex w-full flex-col items-center text-center">
                 {featuredDay ? (
-                  <div className="relative flex size-36 items-center justify-center sm:size-44">
+                  <div className="relative mx-auto flex size-36 items-center justify-center sm:size-44">
                     <BotanicalMark
                       asset="wreath"
                       className="absolute inset-0 h-full w-full text-botanical-green/35"
                     />
-                    <p className="relative font-display text-6xl leading-none tracking-wide sm:text-7xl">
+                    <p className="relative font-display text-6xl leading-none sm:text-7xl">
                       {featuredDay}
                     </p>
                   </div>
                 ) : null}
                 {featuredMonth ? (
-                  <p className="type-heading mt-3 text-accent-gold">
+                  <p className="type-heading mt-3 text-center text-accent-gold">
                     {featuredMonth}
                   </p>
                 ) : null}
                 {featuredYear ? (
-                  <p className="type-overline mt-3 text-muted">{featuredYear}</p>
+                  <p className="type-overline mt-3 text-center text-muted">
+                    {featuredYear}
+                  </p>
                 ) : null}
                 {displayDate && !featuredDay ? (
-                  <p className="type-heading">{displayDate}</p>
+                  <p className="type-heading text-center">{displayDate}</p>
                 ) : null}
               </div>
             ) : null}
 
             {calendar ? (
-              <div className="mt-8 sm:mt-10">
+              <div className="mt-8 w-full sm:mt-10">
                 <WeddingCalendar month={calendar} />
               </div>
             ) : null}
 
             {instant ? (
-              <div className="mt-10 sm:mt-12">
+              <div className="mt-10 w-full sm:mt-12">
                 <CountdownTimer
                   targetMs={instant.targetMs}
                   labels={{

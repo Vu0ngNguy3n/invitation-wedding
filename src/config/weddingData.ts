@@ -337,6 +337,10 @@ export const weddingData: WeddingData = {
 
   copy: {
     skipToContent: "Tới nội dung thiệp",
+    opening: {
+      hint: "Chạm để mở thiệp",
+      sealLabel: "Mở thiệp cưới",
+    },
     saveTheDate: {
       title: "Save the Date",
       description:

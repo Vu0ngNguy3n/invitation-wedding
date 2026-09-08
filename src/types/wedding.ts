@@ -137,6 +137,10 @@ export interface SeoConfig {
 
 export interface InvitationCopy {
   skipToContent: string;
+  opening: {
+    hint: string;
+    sealLabel: string;
+  };
   saveTheDate: {
     title: string;
     description: string;
