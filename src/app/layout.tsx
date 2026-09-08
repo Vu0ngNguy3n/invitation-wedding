@@ -45,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-ivory font-body text-ink">
         <a
           href="#invitation"
-          className="sr-only foil-border bg-vintage-green px-4 py-3 type-overline text-paper-cream focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-[10050] focus-visible:inline-flex focus-visible:min-h-11 focus-visible:items-center"
+          className="sr-only foil-border bg-deep-forest px-4 py-3 type-overline text-paper-cream focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-[10050] focus-visible:inline-flex focus-visible:min-h-11 focus-visible:items-center"
         >
           {filledTextOr(weddingData.copy.skipToContent, "Tới nội dung thiệp")}
         </a>

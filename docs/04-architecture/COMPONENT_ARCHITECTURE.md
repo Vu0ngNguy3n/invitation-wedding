@@ -6,6 +6,7 @@ src/components/
 ├── layout/
 ├── ui/
 ├── decorative/
+├── opening/
 ├── hero/
 ├── couple/
 ├── save-the-date/

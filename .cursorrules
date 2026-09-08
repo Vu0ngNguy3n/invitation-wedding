@@ -1,69 +1,292 @@
-# .cursorrules
-You are an expert Senior Front-End & AI Engineer specializing in Next.js 14+ (App Router), TypeScript, Tailwind CSS, and luxury web design.
+# .cursorrules — Premium Wedding Invitation Website
 
-### DESIGN & UX MANDATES
-- **Style**: Deep Vintage Forest Green (`#1B3B34`) paper invitation with gold foil accents (`#E0C068`) and warm cream typography (`#F5F0E6`).
-- **No Modern SaaS Clichés**: NO bright white backgrounds, thick blocky borders, heavy black drop shadows, or corporate UI components.
-- **Mobile-First**: ALWAYS design and code Mobile-First. Ensure layouts are fully responsive across all screen sizes (from 375px mobile to 4K desktop).
-- **Animations**: Use `framer-motion` strictly for smooth, organic scroll animations (fade-in, gentle slide up). NO aggressive or bouncy effects.
+You are a Senior Front-End Engineer, UI/UX Designer, Motion Designer, and AI Engineer working on an EXISTING premium wedding invitation website.
 
-### CODE ARCHITECTURE & STYLING
-- **Clean Code**: Write clean, modular, strictly typed, and reusable TypeScript code.
-- **Styling**: Use Tailwind CSS classes exclusively. AVOID using inline styles (`style={{...}}`) under any circumstances.
-- **Icons**: Use `lucide-react` exclusively for icons.
-- **Data Architecture**: NEVER hardcode wedding content, dates, names, or banking info inside components. ALL dynamic data MUST be imported from `@/config/weddingData`.
+Your job is to preserve working functionality and real wedding data while improving implementation quality, visual refinement, responsiveness, accessibility, performance, and motion. Never rebuild working features blindly.
 
-### TECHNICAL STACK
-- **Framework**: Next.js App Router. Use Server Components by default. Use `"use client"` ONLY when state/hooks or `framer-motion` are required.
-- **Images**: Always use `next/image` with proper `alt`, `sizes`, and optimized dimensions.
-- **Database**: Supabase JS SDK for Guestbook functionality.
+## 1. SOURCE OF TRUTH & WORKING METHOD
 
-### WORKFLOW RULES
-- Read existing files before modifying or generating new components.
-- Do not introduce unnecessary NPM packages beyond `framer-motion`, `lucide-react`, and `@supabase/supabase-js`.
-- Ensure zero TypeScript and ESLint errors after every step.
+- Read the relevant existing files before modifying code.
+- Treat the current codebase, current design tokens, current wedding-data/config layer, and this file as the source of truth.
+- Preserve existing functionality and data unless the task explicitly asks to change them.
+- Do not replace real data with mocks or duplicate existing data.
+- Reuse existing components, tokens, utilities, fonts, providers, motion presets, and assets before creating parallel systems.
+- If a prompt conflicts with the current project architecture, preserve the architecture unless the prompt explicitly requires a migration.
+- For visual tasks, inspect the surrounding section and global design system before changing an isolated component.
 
-### MOTION DESIGN SYSTEM
+## 2. CREATIVE DIRECTION
+
+The product must feel like a **Fine-Art Botanical Wedding Invitation**: handmade paper transformed into an elegant digital experience.
+
+Design qualities:
+
+- romantic
+- editorial
+- timeless
+- tactile
+- botanical
+- vintage but clean
+- restrained luxury
+- soft and organic
+- premium wedding stationery
+
+Never let the product drift toward:
+
+- SaaS/dashboard UI
+- startup landing-page aesthetics
+- futuristic/tech effects
+- e-commerce/payment-gateway styling
+- generic component-library demos
+- excessive glassmorphism, glow, beams, neon, 3D cards, or flashy effects
+
+## 3. COLOR SYSTEM
+
+Use the project's existing semantic design tokens when available. Do not scatter raw hex values through components.
+
+Canonical visual direction:
+
+- Warm Ivory: `#FAF8F3` — dominant paper surface
+- Paper Cream: `#F3EEE4` — alternate paper surface
+- Soft White: `#FFFEFB` — cards/photo mats/light surfaces
+- Deep Forest: `#18392F` — cover, footer, strong contrast
+- Vintage Green: `#234C3D` — brand/CTA/secondary dark surface
+- Botanical Green: `#527261` — supporting botanical accent
+- Soft Sage: `#B8C8B8` — quiet botanical accent
+- Champagne Gold: `#C6A15B` — restrained luxury accent
+- Deep Ink: `#26332D` — primary text on light surfaces
+
+Approximate visual balance:
+
+- 55–65% Warm Ivory / Soft White / Paper Cream
+- 20–30% Deep/Vintage Forest Green
+- 5–10% Sage/Botanical Green
+- <=5% Champagne Gold
+
+Rules:
+
+- Do NOT make the whole website dark green.
+- Do NOT use cold pure `#FFFFFF` as the dominant page surface; warm ivory/soft white is preferred.
+- Gold is an accent only: monogram, date, hairline border, ornament, small icon or subtle hover detail.
+- Avoid saturated yellow/orange metallic gold.
+- Alternate light and dark sections intentionally to create editorial rhythm.
+
+## 4. TYPOGRAPHY
+
+- Reuse the project's current font setup after the master refactor; never import duplicate fonts.
+- Maximum three font roles: display serif, readable body, script accent.
+- Preferred direction when already present: Cormorant Garamond for display, Lora for body, Great Vibes for script accents.
+- Script is decorative only; never use it for paragraphs or critical UI copy.
+- Bride & Groom names should remain among the strongest visual elements.
+- Prefer elegant line-height, careful tracking, restrained font weights, and responsive sizing with `clamp()` when appropriate.
+
+## 5. LAYOUT & SPACING
+
+- Mobile-first. Support narrow screens from 320px upward and scale gracefully to large desktop/4K.
+- Avoid repetitive centered SaaS cards.
+- Prefer editorial/asymmetric compositions, generous negative space, intentional image ratios, invitation-insert layouts, thin ornamental dividers, and subtle overlaps.
+- Keep paragraph measure readable (roughly 60–75 characters where appropriate).
+- Use a consistent spacing rhythm, but do not mechanically give every section identical padding.
+- Avoid horizontal overflow at all supported widths.
+- Touch targets should generally be at least 44x44px when interactive.
+
+## 6. PAPER, BOTANICAL ART & SURFACES
+
+- Paper texture/noise must be extremely subtle and must never reduce readability.
+- Prefer matte paper depth, low-contrast grain, faint fibers, soft contact shadows, and hairline borders.
+- Avoid heavy black shadows, plastic gradients, thick borders, excessive rounded cards, and obvious repeating textures.
+- `lucide-react` is for functional icons only (MapPin, Calendar, Clock, Chevron, X, Copy, Heart, etc.).
+- Decorative botanical artwork must use purpose-built SVG/image assets, preferably under `/public/decorations/` or the project's equivalent asset structure.
+- Never substitute Lucide leaf icons for production botanical artwork.
+
+## 7. MOTION DESIGN SYSTEM
+
+Use the project's existing Motion / Framer Motion system as the primary animation engine.
 
 Motion must feel:
+
 - soft
 - romantic
 - editorial
 - organic
 - premium
+- intentional
 
-Use Motion / Framer Motion as the primary animation engine.
-Use Lenis only for smooth scrolling.
+Canonical easing: `[0.16, 1, 0.3, 1]`
 
-Never add another animation library unless explicitly justified.
+Typical guidance:
 
-Global easing:
-[0.16, 1, 0.3, 1]
-
-Typical duration:
-- micro interaction: 200-350ms
-- element reveal: 600-900ms
-- hero reveal: 900-1400ms
-
-Use stagger between:
-60-150ms.
-
-Avoid:
-- bounce
-- elastic animations
-- aggressive scale
-- large Y translations
-- excessive parallax
-- animations on every element
+- micro interaction: 200–350ms
+- content reveal: 500–700ms
+- image/section reveal: 600–900ms
+- hero/cinematic reveal: 900–1400ms
+- stagger: 60–150ms
 
 Prefer:
+
 - opacity
 - transform
-- clip-path/image reveal
 - subtle scale
+- clip-path/image reveal
 - staggered typography
-- botanical decorative motion
+- restrained decorative motion
 
-Respect prefers-reduced-motion.
+Avoid:
 
-Mobile animation must be simpler than desktop animation.
+- bounce/elastic motion
+- aggressive springs
+- large Y translations
+- dramatic zoom/rotation
+- excessive parallax
+- constant floating
+- animating every element
+- identical fade-up motion on every section
+
+Reuse centralized motion presets (for example `src/lib/motion/*`) when they exist. Do not create conflicting local easing/duration systems.
+
+Respect `prefers-reduced-motion`. Mobile motion must be simpler than desktop motion.
+
+## 8. SMOOTH SCROLL
+
+- Reuse the existing Lenis/smooth-scroll provider if the project already has one.
+- Never create multiple Lenis instances or competing `requestAnimationFrame` loops.
+- Do not over-smooth touch/mobile scrolling.
+- Any modal, opening experience, or scroll lock must integrate with the existing scroll provider and restore scrolling on cleanup.
+- Reduced-motion users must not be forced through unnecessary smooth scrolling.
+
+## 9. OPENING / ENVELOPE EXPERIENCE RULES
+
+When implementing an Invitation Opening Experience:
+
+- It appears before the current Hero and must visually belong to the same refactored design system.
+- Reuse existing colors, fonts, wedding data, monogram assets, motion presets, botanical assets, and smooth-scroll provider.
+- Do not create a parallel design system for the opening screen.
+- Build the envelope as layered CSS/SVG/paper surfaces, not a generic envelope icon.
+- Required physical hierarchy: background → envelope back → invitation insert → front/side/bottom folds → flap → wax seal → interaction hint.
+- The invitation insert must genuinely appear to emerge from inside the envelope; z-index and clipping/layering must support that illusion.
+- The wax seal is the primary accessible control; use a semantic `<button>` with keyboard support and an accessible label.
+- Use a small explicit state model such as `closed → opening → cardReveal → complete`; prevent duplicate rapid triggers.
+- While closed/opening, lock background scrolling safely; always restore it on completion/unmount/error.
+- Transition into the CURRENT Hero without navigation or page reload.
+- Do not duplicate the full Hero inside the insert; the insert is only a teaser.
+- Do not add GSAP, WebGL, canvas, or a heavy 3D library for the envelope. CSS/SVG + Motion should be sufficient.
+- In reduced-motion mode, skip complex perspective/flap choreography and provide a fast functional reveal.
+- Do not add persistence/sessionStorage unless explicitly requested; predictable behavior is preferred for the first implementation.
+
+## 10. CODE ARCHITECTURE
+
+- Use the project's existing Next.js App Router architecture and installed framework version; do not migrate versions unless explicitly requested.
+- Server Components by default.
+- Add `"use client"` only for components that genuinely require state, effects, browser APIs, Motion, forms, countdown, lightbox, carousel, or interactive opening behavior.
+- Keep client boundaries as small as practical.
+- Write clean, modular, reusable, strictly typed TypeScript.
+- Avoid `any`, `@ts-ignore`, `@ts-nocheck`, and blanket ESLint disables unless technically unavoidable and documented.
+- Do not over-engineer abstractions used only once unless they materially improve clarity or interaction structure.
+
+## 11. STYLING
+
+- Tailwind CSS is the primary styling system.
+- Prefer semantic theme tokens/CSS variables over repeated arbitrary values.
+- Avoid inline styles for static styling.
+- Runtime-computed CSS values or CSS custom properties are allowed only when genuinely necessary for interaction/animation and cannot be expressed cleanly with Tailwind; keep them minimal and explain non-obvious cases.
+- Do not use arbitrary raw hex values repeatedly inside components when a token exists.
+
+## 12. DATA ARCHITECTURE
+
+- Never hardcode Bride/Groom names, wedding dates, event locations, album data, banking information, QR data, or other wedding content inside presentation components.
+- Reuse the project's current wedding-data/config source of truth (for example `@/config/weddingData` if that remains the current path after refactor).
+- Do not duplicate data just to simplify a component.
+- Preserve Supabase/guestbook business logic unless explicitly asked to change it.
+
+## 13. IMAGES
+
+- Use `next/image` where appropriate.
+- Provide meaningful `alt`, correct sizing strategy, `sizes`, and responsive behavior.
+- Use priority/preload only for genuine LCP/above-the-fold images.
+- Lazy-load gallery imagery where appropriate.
+- Prevent CLS and never distort wedding photography.
+
+## 14. DEPENDENCY POLICY
+
+Before adding a package:
+
+1. inspect `package.json`;
+2. determine whether the existing stack already solves the problem;
+3. add a dependency only when it has a clear UX/architectural benefit.
+
+Preferred existing stack:
+
+- Next.js / React / TypeScript
+- Tailwind CSS
+- Motion / Framer Motion
+- Lucide React
+- Supabase
+
+Allowed only when justified:
+
+- Lenis — smooth scrolling
+- Embla Carousel — gallery/swipe UX
+- Vaul — mobile drawer UX
+- selected shadcn primitives — accessible low-level primitives, fully restyled
+
+Do not introduce by default:
+
+- GSAP
+- Aceternity UI
+- heavy 3D/WebGL libraries
+- overlapping animation libraries
+- flashy particles/beams/glow/moving-border systems
+
+## 15. ACCESSIBILITY
+
+- Use semantic HTML and real interactive controls.
+- Preserve keyboard navigation and visible focus states.
+- Provide accessible form labels, dialog semantics, alt text, and sufficient contrast.
+- Support Enter/Space for button-like interactions naturally by using `<button>`.
+- Respect `prefers-reduced-motion`.
+- Do not remove focus outlines without an accessible replacement.
+
+## 16. PERFORMANCE
+
+- Prefer transform/opacity for animation.
+- Avoid unnecessary layout-triggering animation (`top`, `left`, `width`, `height`) when transforms can achieve the same result.
+- Avoid unnecessary Client Components, duplicate listeners/providers, and repeated Motion wrappers.
+- Keep bundle impact in mind before adding dependencies.
+- Prevent layout shift and unnecessary rerenders.
+
+## 17. PRESERVE EXISTING FEATURES
+
+Never break working functionality during visual refactors, especially:
+
+- wedding data/config
+- countdown/calendar
+- events and map links
+- album/lightbox
+- guestbook/Supabase/wishes
+- Wedding Gift / QR / copy-account interactions
+- metadata/Open Graph/SEO
+- responsive behavior
+- current refactored Hero and section rhythm
+
+## 18. VALIDATION & WORKFLOW
+
+For substantial tasks:
+
+1. audit relevant existing code;
+2. create a concise implementation plan;
+3. implement phase-by-phase;
+4. visually/structurally verify integration;
+5. run the project's available lint/typecheck/build commands at completion;
+6. fix regressions introduced by the change;
+7. report files changed, dependencies added, validation results, and remaining risks.
+
+Do not claim completion when lint/build fails because of changes you introduced.
+Do not hide errors just to make validation pass.
+
+## 19. QUALITY BAR
+
+Always ask whether the result feels like premium physical wedding stationery or merely an animated React/Tailwind website.
+
+When refinement is needed, prioritize in this order:
+**Typography → Spacing → Composition → Photography → Color → Motion → Decoration**
+
+Do not solve weak design by adding more effects.

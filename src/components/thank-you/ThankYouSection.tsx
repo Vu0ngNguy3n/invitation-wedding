@@ -73,8 +73,9 @@ export function ThankYouSection() {
       id="thank-you"
       tone="forest"
       labelledBy={title ? "thank-you-heading" : undefined}
-      className="py-20 sm:py-28 lg:py-32"
+      className="py-20 sm:py-28 lg:py-36"
       containerClassName="max-w-2xl"
+      edgeTop="paper"
     >
       <MotionReveal variant="fadeReveal">
         <BotanicalDecoration density="cover" className="px-2 py-8 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
@@ -87,13 +88,14 @@ export function ThankYouSection() {
             <InvitationMonogram
               brideInitial={givenInitial(brideName)}
               groomInitial={givenInitial(groomName)}
+              framed
               className="mb-6 sm:mb-8"
             />
 
             {title ? (
               <h2
                 id="thank-you-heading"
-                className="type-script max-w-full px-1 text-4xl break-words text-accent-gold sm:text-5xl lg:text-6xl"
+                className="type-script mx-auto max-w-full px-1 text-center text-4xl break-words text-accent-gold sm:text-5xl lg:text-6xl"
               >
                 {title}
               </h2>
@@ -103,8 +105,8 @@ export function ThankYouSection() {
               <p
                 className={
                   title
-                    ? "type-body mt-6 max-w-md text-pretty sm:mt-8"
-                    : "type-body max-w-md text-pretty"
+                    ? "type-body mx-auto mt-6 max-w-md text-center text-pretty sm:mt-8"
+                    : "type-body mx-auto max-w-md text-center text-pretty"
                 }
               >
                 {message}
@@ -114,8 +116,8 @@ export function ThankYouSection() {
             <div
               className={
                 title || message
-                  ? "mt-8 w-24 sm:mt-10 sm:w-32"
-                  : "w-24 sm:w-32"
+                  ? "mx-auto mt-8 w-full max-w-xs sm:mt-10"
+                  : "mx-auto w-full max-w-xs"
               }
             >
               <DecorativeDivider />
@@ -139,23 +141,27 @@ export function ThankYouSection() {
               <p
                 className={
                   image
-                    ? "mt-10 text-balance sm:mt-12"
-                    : "mt-8 text-balance sm:mt-10"
+                    ? "mt-10 flex w-full flex-col items-center text-center text-balance sm:mt-12"
+                    : "mt-8 flex w-full flex-col items-center text-center text-balance sm:mt-10"
                 }
               >
                 {brideName && groomName ? (
                   <>
-                    <span className="type-script block break-words">{brideName}</span>
+                    <span className="type-script block max-w-full break-words">
+                      {brideName}
+                    </span>
                     <span
                       aria-hidden="true"
-                      className="type-script my-1 block text-accent-gold"
+                      className="type-script my-1 block translate-y-[-0.08em] leading-none text-accent-gold"
                     >
                       &
                     </span>
-                    <span className="type-script block break-words">{groomName}</span>
+                    <span className="type-script block max-w-full break-words">
+                      {groomName}
+                    </span>
                   </>
                 ) : (
-                  <span className="type-script block">
+                  <span className="type-script block max-w-full">
                     {brideName ?? groomName}
                   </span>
                 )}
@@ -166,12 +172,12 @@ export function ThankYouSection() {
               dateTime ? (
                 <time
                   dateTime={dateTime}
-                  className="type-overline mt-6 text-accent-gold sm:mt-8"
+                  className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8"
                 >
                   {displayedDate}
                 </time>
               ) : (
-                <p className="type-overline mt-6 text-accent-gold sm:mt-8">
+                <p className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8">
                   {displayedDate}
                 </p>
               )

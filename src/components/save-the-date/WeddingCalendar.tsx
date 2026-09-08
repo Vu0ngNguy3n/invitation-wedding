@@ -8,7 +8,7 @@ type WeddingCalendarProps = {
 export function WeddingCalendar({ month }: WeddingCalendarProps) {
   return (
     <table className="mx-auto w-full max-w-sm table-fixed border-collapse text-center">
-      <caption className="type-overline mb-5 px-1 text-accent-gold">
+      <caption className="type-overline mb-5 w-full px-1 text-center text-accent-gold">
         {month.caption}
       </caption>
       <thead>

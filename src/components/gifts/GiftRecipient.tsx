@@ -63,28 +63,13 @@ export function GiftRecipient({ gift, labels, qrAlt }: GiftRecipientProps) {
         ) : null}
 
         <div className="mt-8 flex w-full min-w-0 max-w-sm flex-col items-center gap-5 px-1">
-          {bankName ? <GiftDetail label={labels.bank} value={bankName} /> : null}
+          {bankName ? (
+            <GiftDetail label={labels.bank} value={bankName} />
+          ) : null}
           {accountName ? (
             <GiftDetail label={labels.accountName} value={accountName} />
           ) : null}
-          {accountNumber ? (
-            <GiftDetail label={labels.accountNumber} value={accountNumber} />
-          ) : null}
-          {transferNote ? (
-            <GiftDetail label={labels.transferNote} value={transferNote} />
-          ) : null}
         </div>
-
-        {accountNumber ? (
-          <div className="mt-8">
-            <GiftCopyButton
-              value={accountNumber}
-              copyLabel={labels.copy}
-              copiedLabel={labels.copied}
-              failedLabel={labels.copyFailed}
-            />
-          </div>
-        ) : null}
       </BotanicalDecoration>
     </PaperSurface>
   );

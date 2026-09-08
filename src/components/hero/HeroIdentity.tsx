@@ -44,7 +44,7 @@ export function HeroIdentity({
 
   return (
     <motion.div
-      className="flex w-full flex-col items-center"
+      className="flex w-full flex-col items-center text-center"
       variants={heroStaggerContainer}
       initial="hidden"
       animate="shown"
@@ -54,6 +54,7 @@ export function HeroIdentity({
           <InvitationMonogram
             brideInitial={brideInitial}
             groomInitial={groomInitial}
+            framed
           />
         </motion.div>
       ) : null}
@@ -62,7 +63,7 @@ export function HeroIdentity({
         <motion.p
           variants={staggerItem}
           transition={transition}
-          className="type-overline mt-6 text-accent-gold sm:mt-7"
+          className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
         >
           {title}
         </motion.p>
@@ -75,8 +76,8 @@ export function HeroIdentity({
           transition={transition}
           className={
             showTitleKicker || brideInitial || groomInitial
-              ? "mt-5 max-w-full px-1 text-balance break-words text-paper-cream sm:mt-6"
-              : "max-w-full px-1 text-balance break-words text-paper-cream"
+              ? "mt-5 w-full max-w-full px-1 text-center text-balance break-words text-paper-cream sm:mt-6"
+              : "w-full max-w-full px-1 text-center text-balance break-words text-paper-cream"
           }
         >
           {brideName && groomName ? (
@@ -84,7 +85,7 @@ export function HeroIdentity({
               <span className="type-display block">{brideName}</span>
               <span
                 aria-hidden="true"
-                className="type-script mt-1 mb-1 block text-accent-gold"
+                className="type-script mt-1 mb-1 block translate-y-[-0.08em] leading-none text-accent-gold"
               >
                 &
               </span>
@@ -104,7 +105,7 @@ export function HeroIdentity({
         <motion.p
           variants={staggerItem}
           transition={transition}
-          className="type-script mt-5 max-w-md px-1 text-pretty break-words text-paper-cream sm:mt-6"
+          className="type-body mt-5 max-w-md px-1 text-center text-pretty break-words text-paper-cream sm:mt-6"
         >
           {phrase}
         </motion.p>
@@ -116,7 +117,7 @@ export function HeroIdentity({
             dateTime={dateTime}
             variants={staggerItem}
             transition={transition}
-            className="type-overline mt-6 text-accent-gold sm:mt-7"
+            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
           >
             {displayedDate}
           </motion.time>
@@ -124,7 +125,7 @@ export function HeroIdentity({
           <motion.p
             variants={staggerItem}
             transition={transition}
-            className="type-overline mt-6 text-accent-gold sm:mt-7"
+            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
           >
             {displayedDate}
           </motion.p>

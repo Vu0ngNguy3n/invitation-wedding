@@ -1,4 +1,4 @@
-import { Leaf } from "lucide-react";
+import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { cn } from "@/utils/cn";
 
 type DecorativeDividerProps = {
@@ -9,15 +9,9 @@ export function DecorativeDivider({ className }: DecorativeDividerProps) {
   return (
     <div
       aria-hidden="true"
-      className={cn("flex items-center gap-3 text-accent-gold", className)}
+      className={cn("mx-auto w-full max-w-xs text-accent-gold/55", className)}
     >
-      <span className="h-px flex-1 bg-accent-gold/40" />
-      <Leaf
-        aria-hidden="true"
-        className="size-3 shrink-0 rotate-45"
-        strokeWidth={1.25}
-      />
-      <span className="h-px flex-1 bg-accent-gold/40" />
+      <BotanicalMark asset="divider" className="mx-auto h-6 w-full sm:h-7" />
     </div>
   );
 }

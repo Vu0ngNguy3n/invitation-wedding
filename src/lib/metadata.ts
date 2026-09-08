@@ -12,7 +12,7 @@ import {
 } from "@/utils/seo";
 
 export const invitationViewport: Viewport = {
-  themeColor: "#1B3B34",
+  themeColor: "#18392F",
   width: "device-width",
   initialScale: 1,
 };

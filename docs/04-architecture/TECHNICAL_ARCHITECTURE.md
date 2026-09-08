@@ -10,12 +10,14 @@ Default:
 - Server Components
 
 Use Client Components for:
+- invitation opening experience
 - countdown timer
 - lightbox
 - guestbook form
 - clipboard interaction
 - browser APIs
 - interactive navigation where needed
+- Lenis smooth-scroll provider
 
 ## Suggested Layers
 
