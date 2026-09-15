@@ -38,8 +38,8 @@ export function EventsSection() {
       <div
         className={
           events.length === 1
-            ? "mx-auto mt-10 max-w-md sm:mt-14"
-            : "mx-auto mt-10 grid max-w-4xl gap-6 sm:mt-14 md:grid-cols-2 md:gap-8"
+            ? "mx-auto mt-12 max-w-md sm:mt-16"
+            : "mx-auto mt-12 grid max-w-4xl gap-8 sm:mt-16 md:grid-cols-2 md:gap-10"
         }
       >
         {events.map((event, index) => (

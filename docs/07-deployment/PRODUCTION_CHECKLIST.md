@@ -27,6 +27,22 @@ Use with `docs/07-deployment/DEPLOYMENT.md`.
 - [ ] Invalid payload rejected
 - [ ] Cross-origin POST rejected
 
+## RSVP
+- [ ] `rsvp_submissions` table exists
+- [ ] RLS enabled; no public SELECT/INSERT/UPDATE/DELETE
+- [ ] Attending POST from the live site works
+- [ ] Declined POST stores `attendee_count = 0`
+- [ ] Invalid payload rejected
+- [ ] Cross-origin POST rejected
+- [ ] RSVP is not written into `guestbook_wishes`
+
+## RSVP Admin
+- [ ] `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` set on Vercel (server-only)
+- [ ] Unauthenticated visit to `/admin/rsvp` does not show guest data
+- [ ] `/admin/rsvp/export` is unauthorized without a session
+- [ ] Authorized login can open the list, filter, search, and export CSV
+- [ ] Public navigation does not link to `/admin/rsvp`
+
 ## SEO
 - [ ] `seo.title` and `seo.description` set
 - [ ] `seo.canonicalUrl` set to the public HTTPS origin

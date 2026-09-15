@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { InvitationMonogram } from "@/components/decorative/InvitationMonogram";
+import { InvitationNames } from "@/components/decorative/InvitationNames";
 import {
   fadeScale,
   heroStaggerContainer,
@@ -44,7 +45,7 @@ export function HeroIdentity({
 
   return (
     <motion.div
-      className="flex w-full flex-col items-center text-center"
+      className="invitation-stack"
       variants={heroStaggerContainer}
       initial="hidden"
       animate="shown"
@@ -76,23 +77,20 @@ export function HeroIdentity({
           transition={transition}
           className={
             showTitleKicker || brideInitial || groomInitial
-              ? "mt-5 w-full max-w-full px-1 text-center text-balance break-words text-paper-cream sm:mt-6"
-              : "w-full max-w-full px-1 text-center text-balance break-words text-paper-cream"
+              ? "mt-6 w-full max-w-full text-balance break-words sm:mt-8"
+              : "w-full max-w-full text-balance break-words"
           }
         >
           {brideName && groomName ? (
-            <>
-              <span className="type-display block">{brideName}</span>
-              <span
-                aria-hidden="true"
-                className="type-script mt-1 mb-1 block translate-y-[-0.08em] leading-none text-accent-gold"
-              >
-                &
-              </span>
-              <span className="type-display block">{groomName}</span>
-            </>
+            <InvitationNames
+              brideName={brideName}
+              groomName={groomName}
+              size="hero"
+            />
           ) : (
-            <span className="type-display block">{heading}</span>
+            <span className="type-hero-name block px-1 text-paper-cream">
+              {heading}
+            </span>
           )}
         </motion.h1>
       ) : (
@@ -101,23 +99,13 @@ export function HeroIdentity({
         </h1>
       )}
 
-      {phrase ? (
-        <motion.p
-          variants={staggerItem}
-          transition={transition}
-          className="type-body mt-5 max-w-md px-1 text-center text-pretty break-words text-paper-cream sm:mt-6"
-        >
-          {phrase}
-        </motion.p>
-      ) : null}
-
       {displayedDate ? (
         dateTime ? (
           <motion.time
             dateTime={dateTime}
             variants={staggerItem}
             transition={transition}
-            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
+            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8"
           >
             {displayedDate}
           </motion.time>
@@ -125,11 +113,21 @@ export function HeroIdentity({
           <motion.p
             variants={staggerItem}
             transition={transition}
-            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
+            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8"
           >
             {displayedDate}
           </motion.p>
         )
+      ) : null}
+
+      {phrase ? (
+        <motion.p
+          variants={staggerItem}
+          transition={transition}
+          className="type-body mt-5 max-w-md px-1 text-center text-pretty break-words text-paper-cream/90 sm:mt-6"
+        >
+          {phrase}
+        </motion.p>
       ) : null}
     </motion.div>
   );

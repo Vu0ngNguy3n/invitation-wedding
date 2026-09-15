@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
+import { InvitationNames } from "@/components/decorative/InvitationNames";
 import { Envelope } from "@/components/opening/Envelope";
 import {
   openingTiming,
@@ -98,75 +99,62 @@ export function InvitationOpening({
         />
       </div>
 
-      <div className="relative z-[1] mx-auto flex min-h-dvh w-full min-w-0 max-w-6xl flex-col items-center justify-center gap-5 overflow-x-clip px-5 py-[max(1.25rem,env(safe-area-inset-top))] sm:gap-7 sm:px-10 lg:gap-9 lg:px-16 xl:gap-10 [@media(max-height:560px)]:gap-4">
-        <DecorativeDivider className="max-w-[10rem] shrink-0 sm:max-w-xs [@media(max-height:500px)]:hidden" />
+      <div className="relative z-[1] mx-auto flex min-h-dvh w-full min-w-0 max-w-5xl flex-col items-center justify-center overflow-x-clip px-5 py-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-10 lg:max-w-6xl lg:px-16">
+        <div className="invitation-stack w-full max-w-4xl gap-6 sm:gap-8 lg:gap-10 xl:gap-12 [@media(max-height:740px)]:gap-5 [@media(max-height:620px)]:gap-4">
+          <DecorativeDivider className="max-w-[10rem] shrink-0 sm:max-w-xs [@media(max-height:480px)]:hidden" />
 
-        {brideName || groomName ? (
-          <div
-            className={cn(
-              "pointer-events-none relative flex w-full min-w-0 shrink-0 flex-col items-center pb-1 text-center transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:pb-2",
-              state === "closed" ? "z-10 opacity-100" : "opacity-0",
-              state === "cardReveal" ? "z-0" : "z-10",
-            )}
-          >
-            {brideName && groomName ? (
-              <>
-                <p className="type-opening-name max-w-full px-1 text-center text-ink">
-                  {brideName}
-                </p>
-                <span
-                  aria-hidden="true"
-                  className="font-script mt-1 mb-1 block translate-y-[-0.08em] text-[clamp(1.4rem,4vw,2.2rem)] leading-none text-gold-deep lg:mt-2 lg:mb-2 lg:text-[clamp(1.75rem,2.4vw,2.75rem)]"
-                >
-                  &
-                </span>
-                <p className="type-opening-name max-w-full px-1 text-center text-ink">
-                  {groomName}
-                </p>
-              </>
-            ) : (
-              <p className="type-opening-name max-w-full px-1 text-center text-ink">
-                {brideName ?? groomName}
-              </p>
-            )}
-          </div>
-        ) : null}
-
-        <Envelope
-          state={state}
-          reducedMotion={reducedMotion}
-          brideName={brideName}
-          groomName={groomName}
-          brideInitial={givenInitial(brideName)}
-          groomInitial={givenInitial(groomName)}
-          displayedDate={displayedDate}
-          dateTime={dateTime}
-          sealLabel={sealLabel}
-          onOpen={onOpen}
-        />
-
-        <div className="flex w-full shrink-0 flex-col items-center gap-3 text-center sm:gap-4 [@media(max-height:560px)]:gap-2">
-          <p
-            className="type-overline w-full text-center text-gold-deep/80"
-            aria-hidden={state !== "closed"}
-          >
-            {state === "closed" ? hint : "\u00a0"}
-          </p>
-
-          {displayedDate ? (
-            dateTime ? (
-              <time
-                dateTime={dateTime}
-                className="type-overline block w-full text-center text-ink-muted"
-              >
-                {displayedDate}
-              </time>
-            ) : (
-              <p className="type-overline w-full text-center text-ink-muted">
-                {displayedDate}
-              </p>
-            )
+          {brideName || groomName ? (
+            <div
+              className={cn(
+                "pointer-events-none relative w-full min-w-0 shrink-0 pb-2 text-center transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:pb-3",
+                state === "closed" ? "z-20 opacity-100" : "opacity-0",
+                state === "cardReveal" ? "z-0" : "z-20",
+              )}
+            >
+              <InvitationNames
+                brideName={brideName}
+                groomName={groomName}
+                size="opening"
+              />
+            </div>
           ) : null}
+
+          <Envelope
+            state={state}
+            reducedMotion={reducedMotion}
+            brideName={brideName}
+            groomName={groomName}
+            brideInitial={givenInitial(brideName)}
+            groomInitial={givenInitial(groomName)}
+            displayedDate={displayedDate}
+            dateTime={dateTime}
+            sealLabel={sealLabel}
+            onOpen={onOpen}
+          />
+
+          <div className="invitation-stack w-full shrink-0 gap-3 sm:gap-4 [@media(max-height:560px)]:gap-2">
+            <p
+              className="type-overline w-full text-center text-gold-deep/80"
+              aria-hidden={state !== "closed"}
+            >
+              {state === "closed" ? hint : "\u00a0"}
+            </p>
+
+            {displayedDate ? (
+              dateTime ? (
+                <time
+                  dateTime={dateTime}
+                  className="type-overline block w-full text-center text-ink-muted"
+                >
+                  {displayedDate}
+                </time>
+              ) : (
+                <p className="type-overline w-full text-center text-ink-muted">
+                  {displayedDate}
+                </p>
+              )
+            ) : null}
+          </div>
         </div>
       </div>
     </motion.div>

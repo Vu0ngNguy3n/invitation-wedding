@@ -11,6 +11,7 @@ import {
 import dynamic from "next/dynamic";
 import { AnimatePresence } from "framer-motion";
 import type { GalleryImage } from "@/types/wedding";
+import { cn } from "@/utils/cn";
 
 const GalleryLightbox = dynamic(
   () =>
@@ -95,19 +96,24 @@ type GalleryOpenButtonProps = {
   index: number;
   label: string;
   children: ReactNode;
+  className?: string;
 };
 
 export function GalleryOpenButton({
   index,
   label,
   children,
+  className,
 }: GalleryOpenButtonProps) {
   const context = useContext(GalleryViewerContext);
 
   return (
     <button
       type="button"
-      className="group foil-border block w-full overflow-hidden bg-kraft text-left"
+      className={cn(
+        "group foil-border block w-full overflow-hidden bg-kraft text-left",
+        className,
+      )}
       onClick={(event) => {
         context?.openAt(index, event.currentTarget);
       }}

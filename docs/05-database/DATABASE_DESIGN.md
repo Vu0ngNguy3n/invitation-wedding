@@ -14,6 +14,23 @@ Suggested fields:
 - `created_at`: timestamptz, server default
 - `is_approved`: boolean, optional depending on moderation strategy
 
+## Entity: rsvp_submissions
+
+Private attendance confirmations for wedding planning. This is not Guestbook.
+
+Suggested fields:
+
+- `id`: UUID primary key
+- `guest_name`: text, required, 1–80 characters
+- `attendance`: text, required, `attending` | `declined`
+- `attendee_count`: integer, required; `0` when declined, `1`–`4` when attending
+- `guest_of`: text, required, `bride` | `groom` | `both`
+- `message`: text, optional, 1–1000 characters when present
+- `created_at`: timestamptz, server default
+
+Do not store RSVP rows in `guestbook_wishes`.
+
+
 ## Recommended Constraints
 
 - name length: 1–80 characters

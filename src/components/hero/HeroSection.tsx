@@ -61,7 +61,7 @@ export function HeroSection() {
   )?.label;
 
   return (
-    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-5 py-8 sm:px-10 sm:py-10 lg:px-16 lg:py-12">
+    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-5 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-16">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-4 foil-border sm:inset-6 lg:inset-8"
@@ -73,12 +73,12 @@ export function HeroSection() {
 
       <BotanicalDecoration
         density="cover"
-        className="flex w-full min-w-0 max-w-3xl flex-col items-center px-4 py-8 text-center sm:px-8 sm:py-10"
+        className="invitation-stack w-full min-w-0 max-w-3xl px-4 py-10 sm:px-8 sm:py-12 lg:max-w-4xl lg:py-14"
       >
         <MotionReveal
           mode="enter"
           variant="fadeReveal"
-          className="mx-auto mb-8 w-full max-w-xs sm:mb-10"
+          className="mx-auto mb-9 w-full max-w-xs sm:mb-12"
         >
           <DecorativeDivider />
         </MotionReveal>
@@ -100,8 +100,8 @@ export function HeroSection() {
         <MotionReveal
           mode="enter"
           variant="imageReveal"
-          className="mt-8 w-full overflow-hidden sm:mt-10 lg:mt-12"
-          delay={invitationMotion.heroStagger * 6}
+          className="mt-10 w-full overflow-hidden sm:mt-12 lg:mt-14"
+          delay={invitationMotion.heroStagger * 7}
         >
           <HeroCover
             alt={imageAlt}
@@ -113,8 +113,8 @@ export function HeroSection() {
         <MotionReveal
           mode="enter"
           variant="fadeReveal"
-          className="mt-8 sm:mt-10"
-          delay={invitationMotion.heroStagger * 7}
+          className="mt-9 sm:mt-11"
+          delay={invitationMotion.heroStagger * 8}
         >
           <a
             href="#story"

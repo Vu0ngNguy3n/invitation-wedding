@@ -54,7 +54,7 @@ export function InvitationMonogram({
   return (
     <div
       className={cn(
-        "relative mx-auto flex size-28 items-center justify-center sm:size-36",
+        "relative mx-auto flex size-24 items-center justify-center sm:size-32",
         className,
       )}
     >

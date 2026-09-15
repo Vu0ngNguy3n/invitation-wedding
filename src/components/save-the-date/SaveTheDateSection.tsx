@@ -55,14 +55,12 @@ export function SaveTheDateSection() {
   });
   const featuredDay =
     filledText(wedding.date.day) ?? (instant ? String(instant.day) : undefined);
-  const featuredMonth =
-    filledText(wedding.date.month) ??
-    (instant
-      ? new Intl.DateTimeFormat("vi-VN", {
-          month: "long",
-          timeZone: instant.timeZone,
-        }).format(new Date(instant.targetMs))
-      : undefined);
+  const featuredMonth = instant
+    ? new Intl.DateTimeFormat("vi-VN", {
+        month: "long",
+        timeZone: instant.timeZone,
+      }).format(new Date(instant.targetMs))
+    : filledText(wedding.date.month);
   const featuredYear =
     filledText(wedding.date.year) ??
     (instant ? String(instant.year) : undefined);
@@ -115,6 +113,7 @@ export function SaveTheDateSection() {
             title={headingTitle}
             description={title ? description : undefined}
             headingId="save-the-date-heading"
+            variant={title ? "script" : "heading"}
           />
         ) : null}
 
@@ -127,22 +126,22 @@ export function SaveTheDateSection() {
 
       <MotionReveal variant="fadeScale" className="mx-auto mt-10 max-w-lg sm:mt-14">
         <PaperSurface className="px-4 py-8 sm:px-10 sm:py-12">
-          <BotanicalDecoration className="flex flex-col items-center px-2 py-4 text-center sm:px-4 sm:py-6">
+          <BotanicalDecoration className="invitation-stack px-2 py-4 sm:px-4 sm:py-6">
             {featuredDay || featuredMonth || featuredYear || displayDate ? (
-              <div className="flex w-full flex-col items-center text-center">
+              <div className="invitation-stack">
                 {featuredDay ? (
-                  <div className="relative mx-auto flex size-36 items-center justify-center sm:size-44">
+                  <div className="relative mx-auto flex size-40 items-center justify-center sm:size-48">
                     <BotanicalMark
                       asset="wreath"
                       className="absolute inset-0 h-full w-full text-botanical-green/35"
                     />
-                    <p className="relative font-display text-6xl leading-none sm:text-7xl">
+                    <p className="relative font-display text-7xl leading-none sm:text-8xl">
                       {featuredDay}
                     </p>
                   </div>
                 ) : null}
                 {featuredMonth ? (
-                  <p className="type-heading mt-3 text-center text-accent-gold">
+                  <p className="type-heading mt-4 text-center text-accent-gold">
                     {featuredMonth}
                   </p>
                 ) : null}
@@ -182,7 +181,7 @@ export function SaveTheDateSection() {
                 <a
                   href={calendarHref}
                   download="save-the-date.ics"
-                  className={cn(invitationActionClassName)}
+                  className={cn(invitationActionClassName, "border-transparent")}
                 >
                   <CalendarPlus
                     aria-hidden="true"

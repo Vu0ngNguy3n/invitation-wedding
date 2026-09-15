@@ -11,7 +11,7 @@ Examples:
 - wedding date
 - events
 - gallery
-- gifts
+- dress code
 
 ## Guestbook
 
@@ -28,6 +28,27 @@ Server Component
 → render wishes
 
 `GET /api/guestbook` remains available as an uncached JSON read path. The page UI does not call it.
+
+## RSVP
+
+Client form
+→ POST `/api/rsvp`
+→ same-origin check, size limit, validation, rate limit
+→ Supabase (server secret)
+→ in-context success state on the invitation (no public list)
+
+RSVP rows are private planning data. They must not be written to `guestbook_wishes`.
+
+## RSVP Admin
+
+Authorized admin
+→ `/admin/login` (server action, httpOnly HMAC cookie)
+→ `/admin/rsvp` (session check, then privileged list)
+→ optional `GET /admin/rsvp/export` (session check, then CSV)
+
+Unauthenticated requests never receive RSVP rows.
+
+
 
 ## Security Boundary
 

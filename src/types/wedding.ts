@@ -76,17 +76,17 @@ export interface GalleryImage {
   category?: string;
 }
 
-export type GiftPerson = "bride" | "groom";
+export interface DressCodeColor {
+  name: string;
+  value: string;
+}
 
-export interface WeddingGift {
-  id: string;
-  person: GiftPerson;
-  name?: string;
-  bankName?: string;
-  accountName?: string;
-  accountNumber?: string;
-  qrImage?: string;
-  transferNote?: string;
+export interface DressCode {
+  title: string;
+  noteVi: string;
+  noteEn: string;
+  paletteLabel: string;
+  colors: DressCodeColor[];
 }
 
 export type WeddingTimelineIcon =
@@ -172,18 +172,39 @@ export interface InvitationCopy {
     listRetry: string;
     listTitle: string;
   };
-  gift: {
+  rsvp: {
     title: string;
-    description: string;
-    bank: string;
-    accountName: string;
-    accountNumber: string;
-    transferNote: string;
-    copy: string;
-    copied: string;
-    copyFailed: string;
-    brideRole: string;
-    groomRole: string;
+    accent: string;
+    introVi: string;
+    introEn: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    nameRequired: string;
+    nameTooLong: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    messageTooLong: string;
+    attendanceLabel: string;
+    attendancePlaceholder: string;
+    attendanceRequired: string;
+    attendanceAttending: string;
+    attendanceDeclined: string;
+    attendeeCountLabel: string;
+    attendeeCountPlaceholder: string;
+    attendeeCountRequired: string;
+    guestOfLabel: string;
+    guestOfPlaceholder: string;
+    guestOfRequired: string;
+    guestOfBride: string;
+    guestOfGroom: string;
+    guestOfBoth: string;
+    submitLabel: string;
+    submittingLabel: string;
+    successAttending: string;
+    successDeclined: string;
+    errorMessage: string;
+    rateLimitMessage: string;
+    privacyNote: string;
   };
   events: {
     mapsLabel: string;
@@ -194,11 +215,14 @@ export interface InvitationCopy {
     typeReception: string;
   };
   gallery: {
+    region: string;
     close: string;
     previous: string;
     next: string;
     openLabeled: string;
     openIndexed: string;
+    selectLabeled: string;
+    selectIndexed: string;
   };
   thankYou: {
     title: string;
@@ -214,7 +238,7 @@ export interface WeddingData {
   events: WeddingEvent[];
   timeline: WeddingTimeline;
   gallery: GalleryImage[];
-  gifts: WeddingGift[];
+  dressCode: DressCode;
   navigation: NavigationItem[];
   seo: SeoConfig;
   copy: InvitationCopy;

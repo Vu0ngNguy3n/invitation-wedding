@@ -11,7 +11,7 @@ Node.js **20.9+** is required (`package.json` `engines`).
 
 1. Fill production content and image files (see `PRODUCTION_CHECKLIST.md`).
 2. Set `seo.canonicalUrl` in `src/config/weddingData.ts` to the public HTTPS origin (for example `https://www.example.com`) when the domain is known. Until then the site stays `noindex`.
-3. Apply the guestbook SQL on the **production** Supabase project (see below).
+3. Apply the guestbook SQL and the RSVP SQL on the **production** Supabase project (see below).
 4. Push the repository to GitHub.
 5. Import the project in Vercel → Framework Preset **Next.js** → Root Directory `.`
 6. Add environment variables (Production, Preview, and Development).
@@ -26,11 +26,14 @@ Do not put secrets in source files. `.env.local` stays on the machine; Vercel en
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Build + runtime | **Yes** |
 | `SUPABASE_SECRET_KEY` | Runtime (server only) | **Yes** |
+| `ADMIN_PASSWORD` | Runtime (server only) | **Yes** for `/admin/rsvp` |
+| `ADMIN_SESSION_SECRET` | Runtime (server only) | **Yes** for `/admin/rsvp` (16+ characters) |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | — | No (unused by this app) |
 
 Rules:
 
 - `SUPABASE_SECRET_KEY` must **not** start with `NEXT_PUBLIC_`.
+- `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` must **not** start with `NEXT_PUBLIC_`.
 - Copy values from the Supabase project **Settings → API**.
 - Set the same pair on **Production**, **Preview**, and **Development** in Vercel so guestbook works on preview URLs too.
 - After changing `NEXT_PUBLIC_*` values, trigger a new build.
@@ -48,9 +51,13 @@ Run the full file:
 
 `supabase/migrations/20260904000000_guestbook_wishes.sql`
 
-Equivalent copies exist in `docs/05-database/DATABASE_SCHEMA.sql` plus `docs/05-database/RLS_POLICIES.sql`. Prefer the migration file so schema and RLS stay in one apply.
+Then run:
 
-Confirm in **Table Editor** that `public.guestbook_wishes` exists.
+`supabase/migrations/20260915000000_rsvp_submissions.sql`
+
+Equivalent copies exist in `docs/05-database/DATABASE_SCHEMA.sql` plus `docs/05-database/RLS_POLICIES.sql`. Prefer the migration files so schema and RLS stay in one apply.
+
+Confirm in **Table Editor** that `public.guestbook_wishes` and `public.rsvp_submissions` exist.
 
 ## RLS requirements
 
@@ -58,6 +65,9 @@ Confirm in **Table Editor** that `public.guestbook_wishes` exists.
 - Policy **SELECT** for `anon` / `authenticated` where `is_approved = true` only.
 - **No** public INSERT / UPDATE / DELETE policies.
 - Inserts go through Next.js `/api/guestbook` using `SUPABASE_SECRET_KEY` (bypasses RLS after server validation).
+- RLS **enabled** on `public.rsvp_submissions`.
+- **No** public SELECT / INSERT / UPDATE / DELETE policies for RSVP.
+- Inserts go through Next.js `/api/rsvp` using `SUPABASE_SECRET_KEY` (bypasses RLS after server validation).
 
 ## Guestbook production architecture
 
@@ -75,7 +85,7 @@ Page / GET /api/guestbook
   → tagged cache (30s) of approved rows
 ```
 
-The browser never receives `SUPABASE_SECRET_KEY`. Client code only `fetch("/api/guestbook")`.
+The browser never receives `SUPABASE_SECRET_KEY`. Client code only `fetch("/api/guestbook")` or `fetch("/api/rsvp")`. Admin RSVP reads happen only after a server-side session check on `/admin/rsvp`.
 
 ## Static assets
 
@@ -86,7 +96,6 @@ Add production files before launch:
 - `/public/images/hero/`
 - `/public/images/couple/`
 - `/public/images/gallery/`
-- `/public/images/gift/` (QR)
 - `/public/images/og-image.webp` if `seo.ogImage` is set
 
 ## Metadata and social preview
@@ -125,6 +134,7 @@ npx vercel --prod
 - [ ] `https://<domain>/` loads over HTTPS
 - [ ] Guestbook list loads (empty or existing wishes, not a hard failure)
 - [ ] Submit a valid wish from the site; it appears after refresh
+- [ ] Submit an attending RSVP and a declined RSVP from the live origin
 - [ ] Invalid payload (empty name) is rejected
 - [ ] Direct POST from another origin is rejected (403)
 - [ ] Images that exist render; missing files do not 404 in Network
@@ -132,6 +142,9 @@ npx vercel --prod
 - [ ] `/robots.txt` and `/sitemap.xml` match whether canonical is set
 - [ ] Mobile and desktop layout
 - [ ] No `SUPABASE_SECRET_KEY` in the browser bundle (search deployed JS)
+- [ ] `/admin/rsvp` redirects unauthenticated visitors to `/admin/login`
+- [ ] `/admin/rsvp/export` does not return RSVP data without a session
+- [ ] Authorized admin can view the RSVP list and download CSV
 
 ## Production requirements
 

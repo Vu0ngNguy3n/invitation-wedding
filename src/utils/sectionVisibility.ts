@@ -1,5 +1,5 @@
 import { weddingData } from "@/config/weddingData";
-import type { WeddingEvent, WeddingGift, WeddingTimelineItem } from "@/types/wedding";
+import type { WeddingEvent, WeddingTimelineItem } from "@/types/wedding";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
 
@@ -31,17 +31,6 @@ function hasEventContent(event: WeddingEvent): boolean {
   );
 }
 
-export function hasGiftContent(gift: WeddingGift): boolean {
-  return Boolean(
-    filledText(gift.name) ||
-      filledText(gift.bankName) ||
-      filledText(gift.accountName) ||
-      filledText(gift.accountNumber) ||
-      filledText(gift.qrImage) ||
-      filledText(gift.transferNote),
-  );
-}
-
 function hasTimelineItemContent(item: WeddingTimelineItem): boolean {
   return Boolean(filledText(item.time) || filledText(item.title));
 }
@@ -51,6 +40,7 @@ export function isInvitationAnchorAvailable(id: string): boolean {
     case "home":
     case "story":
     case "guestbook":
+    case "rsvp":
       return true;
     case "save-the-date":
       return hasSaveTheDateContent();
@@ -62,8 +52,6 @@ export function isInvitationAnchorAvailable(id: string): boolean {
       return weddingData.gallery.some((image) =>
         Boolean(existingPublicAsset(image.src)),
       );
-    case "gift":
-      return weddingData.gifts.some(hasGiftContent);
     default:
       return false;
   }

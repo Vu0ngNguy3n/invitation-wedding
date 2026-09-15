@@ -4,10 +4,31 @@ You are a Senior Front-End Engineer, UI/UX Designer, Motion Designer, and AI Eng
 
 Your job is to preserve working functionality and real wedding data while improving implementation quality, visual refinement, responsiveness, accessibility, performance, and motion. Never rebuild working features blindly.
 
+## 0. CURRENT PROJECT STATUS
+
+This is NOT a greenfield build.
+
+Current status:
+
+- Master Refactor: COMPLETE.
+- Fine-Art Botanical design system: APPLIED.
+- Invitation Opening Experience: IMPLEMENTED.
+- Core wedding features and business logic: WORKING.
+- Current phase: POLISH / VISUAL QA / RESPONSIVE QA.
+
+Therefore:
+
+- Do NOT rerun or recreate the Master Refactor unless explicitly requested.
+- Do NOT rebuild the website from scratch.
+- Do NOT recreate the Opening Experience from scratch when its current structure is working.
+- Prefer fixing shared/root causes over replacing existing systems.
+- Treat visual polish requests as incremental edits unless the user explicitly asks for a redesign.
+
 ## 1. SOURCE OF TRUTH & WORKING METHOD
 
 - Read the relevant existing files before modifying code.
 - Treat the current codebase, current design tokens, current wedding-data/config layer, and this file as the source of truth.
+- Also read `CLAUDE.md`, `docs/00-project/PROJECT_STATUS.md`, and task-relevant docs when they exist before substantial changes.
 - Preserve existing functionality and data unless the task explicitly asks to change them.
 - Do not replace real data with mocks or duplicate existing data.
 - Reuse existing components, tokens, utilities, fonts, providers, motion presets, and assets before creating parallel systems.
@@ -38,6 +59,47 @@ Never let the product drift toward:
 - e-commerce/payment-gateway styling
 - generic component-library demos
 - excessive glassmorphism, glow, beams, neon, 3D cards, or flashy effects
+
+## 2A. REFERENCE WEBSITE POLICY
+
+The project may use wedding websites supplied by the user as visual references.
+
+References are inspiration, NOT a source to clone.
+
+Allowed to adapt:
+
+- composition rhythm
+- typography hierarchy
+- editorial spacing
+- image-led storytelling
+- mobile-first vertical flow
+- section sequencing
+- restrained reveal motion
+- countdown presentation
+- timeline sequencing
+- album/gallery interaction ideas
+- RSVP information hierarchy
+
+Never copy from a reference:
+
+- names
+- dates
+- addresses
+- wedding content
+- QR/banking data
+- copyrighted photography
+- exact layout coordinates
+- proprietary assets
+- page-builder implementation
+- exact visual identity
+
+When a reference conflicts with the current Fine-Art Botanical design system, preserve the CURRENT project identity and translate only the useful design principle.
+
+The current product must remain recognizably:
+
+**Fine-Art Botanical Wedding Invitation**
+
+not a replica of another wedding website.
 
 ## 3. COLOR SYSTEM
 
@@ -88,6 +150,13 @@ Rules:
 - Use a consistent spacing rhythm, but do not mechanically give every section identical padding.
 - Avoid horizontal overflow at all supported widths.
 - Touch targets should generally be at least 44x44px when interactive.
+
+- Desktop should feel like a wedding editorial, not a widened mobile layout.
+- Mobile should feel like scrolling through a sequence of premium physical stationery pieces.
+- Do not default to repetitive card-after-card composition.
+- Couple Story and Album may use controlled editorial asymmetry when it improves hierarchy.
+- Countdown should be typography-led, not styled like KPI/stat cards.
+- Wedding Events should feel like invitation inserts or an elegant timeline, not dashboard cards.
 
 ## 6. PAPER, BOTANICAL ART & SURFACES
 
@@ -145,6 +214,16 @@ Reuse centralized motion presets (for example `src/lib/motion/*`) when they exis
 
 Respect `prefers-reduced-motion`. Mobile motion must be simpler than desktop motion.
 
+Reference-inspired motion may be translated into the existing Motion system as:
+
+- fade-up → soft vertical reveal with small travel distance
+- fade-left/right → restrained editorial side reveal
+- pulse → subtle emphasis only
+- rotating photo reveal → approximately 2–6° maximum when visually justified
+- timeline reveal → incremental stagger, typically 80–150ms
+
+Never mechanically recreate page-builder animations or large ±90° rotations from a reference site.
+
 ## 8. SMOOTH SCROLL
 
 - Reuse the existing Lenis/smooth-scroll provider if the project already has one.
@@ -155,22 +234,50 @@ Respect `prefers-reduced-motion`. Mobile motion must be simpler than desktop mot
 
 ## 9. OPENING / ENVELOPE EXPERIENCE RULES
 
-When implementing an Invitation Opening Experience:
+The Invitation Opening Experience is ALREADY IMPLEMENTED.
 
-- It appears before the current Hero and must visually belong to the same refactored design system.
-- Reuse existing colors, fonts, wedding data, monogram assets, motion presets, botanical assets, and smooth-scroll provider.
-- Do not create a parallel design system for the opening screen.
-- Build the envelope as layered CSS/SVG/paper surfaces, not a generic envelope icon.
-- Required physical hierarchy: background → envelope back → invitation insert → front/side/bottom folds → flap → wax seal → interaction hint.
-- The invitation insert must genuinely appear to emerge from inside the envelope; z-index and clipping/layering must support that illusion.
-- The wax seal is the primary accessible control; use a semantic `<button>` with keyboard support and an accessible label.
-- Use a small explicit state model such as `closed → opening → cardReveal → complete`; prevent duplicate rapid triggers.
-- While closed/opening, lock background scrolling safely; always restore it on completion/unmount/error.
+Default rule: POLISH IT; do not recreate it.
+
+Preserve the existing interaction and state architecture when it works:
+
+`closed → opening → cardReveal → complete`
+
+Core experience:
+
+sealed invitation
+→ user activates wax seal
+→ flap opens
+→ invitation insert emerges from inside the envelope
+→ transition into the existing Hero
+
+Rules:
+
+- Keep it visually integrated with the current Fine-Art Botanical design system.
+- Reuse existing colors, fonts, wedding data, monogram assets, botanical assets, motion presets, and smooth-scroll provider.
+- Preserve physical layering: background → envelope back → invitation insert → front/side/bottom folds → flap → wax seal → interaction hint.
+- The invitation card must appear to physically emerge from inside the envelope.
+- The wax seal must remain a semantic, keyboard-accessible control.
+- Prevent duplicate rapid triggers.
+- While closed/opening, lock background scrolling safely and always restore it after completion/unmount/error.
+- Integrate with the existing Lenis provider if present; never create a second Lenis instance.
 - Transition into the CURRENT Hero without navigation or page reload.
-- Do not duplicate the full Hero inside the insert; the insert is only a teaser.
-- Do not add GSAP, WebGL, canvas, or a heavy 3D library for the envelope. CSS/SVG + Motion should be sufficient.
-- In reduced-motion mode, skip complex perspective/flap choreography and provide a fast functional reveal.
-- Do not add persistence/sessionStorage unless explicitly requested; predictable behavior is preferred for the first implementation.
+- In reduced-motion mode, simplify complex flap/perspective choreography while keeping the experience functional.
+- Do not add GSAP, WebGL, canvas, video, or heavy 3D libraries for this experience.
+
+Current polish hierarchy for the CLOSED state:
+
+subtle botanical ornament
+→ Bride name
+→ `&`
+→ Groom name
+→ closed envelope + wax seal
+→ opening hint
+→ wedding date
+
+Both Bride and Groom names must be fully visible before interaction.
+Do not solve overlap by shrinking the names.
+On desktop, the complete opening composition should have intentional scale and should not feel lost in the viewport.
+The envelope should support the typography hierarchy, not cover or compete with it.
 
 ## 10. CODE ARCHITECTURE
 
@@ -253,7 +360,108 @@ Do not introduce by default:
 - Keep bundle impact in mind before adding dependencies.
 - Prevent layout shift and unnecessary rerenders.
 
-## 17. PRESERVE EXISTING FEATURES
+
+## 17. RSVP / ATTENDANCE CONFIRMATION
+
+For RSVP-specific implementation work, read:
+
+- `docs/01-product/RSVP_FEATURE_SPEC.md`
+- `docs/02-ux-ui/RSVP_VISUAL_MAPPING.md`
+- task prompt: `docs/08-prompts/RSVP_IMPLEMENTATION.md`
+
+
+The RSVP / Attendance Confirmation section is a structured wedding-planning form and is distinct from Guestbook/Wishes.
+
+Placement:
+
+- RSVP belongs immediately before the final Thank You / Footer unless the user explicitly changes the page flow.
+- Thank You remains the final emotional closing section.
+
+Design:
+
+- RSVP must feel like a premium physical reply card / invitation insert.
+- Reuse the current Fine-Art Botanical palette, typography, paper surfaces, botanical assets, spacing system, button primitives, and motion architecture.
+- Prefer Warm Ivory / Paper Cream surfaces, Deep Ink / Forest typography, and restrained Champagne Gold hairline borders.
+- Do not clone a reference site's exact colors, dimensions, fonts, or page-builder styling.
+- Do not make RSVP look like SaaS, checkout, payment, banking, dashboard, or generic form UI.
+- Avoid excessive card nesting, shadows, glassmorphism, or decorative icons inside every field.
+- Keep the form visually calm, editorial, tactile, and easy to complete on mobile.
+
+Form semantics:
+
+- Use a real `<form>` with accessible labels and controls.
+- Typical fields may include guest name, attendance, attendee count, guest side, and an optional message.
+- Attendance should use stable internal values rather than visible UI labels as business-logic values.
+- Attendee count should react cleanly when attendance is declined.
+- Prevent duplicate submission.
+- Support explicit idle, validating, submitting, success, and error states.
+- Success messaging should differ appropriately between attending and declined guests.
+
+Data / backend:
+
+- RSVP and Guestbook are separate product concepts.
+- Do not silently overload Guestbook/Wishes storage for RSVP.
+- Before adding persistence, inspect the current Supabase schema, migrations, route/server-action patterns, and RLS/security conventions.
+- Reuse an existing RSVP backend if present.
+- If persistence is required and absent, add the smallest clean schema/migration consistent with the current architecture.
+- Never expose privileged Supabase credentials in client code.
+- Do not hardcode Bride/Groom names, event data, or wedding-specific copy in presentation components when they belong in the project's wedding-data/config source of truth.
+
+Motion:
+
+- Reuse centralized Motion variants/transitions.
+- RSVP should use a restrained grouped reveal or a very small stagger.
+- Do not animate every form control aggressively.
+- Respect `prefers-reduced-motion`.
+
+Responsive / accessibility:
+
+- Ensure bilingual copy and long select labels wrap without colliding with chevrons.
+- Interactive controls should generally meet ~44px touch-target guidance.
+- Keep the form comfortable from 320px upward.
+- On desktop, keep a refined readable max width instead of stretching controls across the viewport.
+- Native accessible form controls are preferred over adding new dependencies solely for styling.
+
+
+## 18. RSVP ADMIN / GUEST MANAGEMENT
+
+RSVP management is private administrative functionality.
+
+Recommended route:
+- `/admin/rsvp`, or the project's existing admin route convention.
+
+Rules:
+
+- Do not expose RSVP management in public wedding navigation.
+- Do not treat a hidden URL as authentication.
+- Authorization must be enforced server-side.
+- Never use client-only hardcoded passwords, localStorage admin flags, query-string secrets, or UI-only hiding as security.
+- Inspect and reuse the existing authentication/session architecture first.
+- Reuse existing Supabase/Auth utilities when present.
+- Public RSVP submission permission must not imply public permission to list all RSVP records.
+- Do not weaken RLS simply to make an admin page work.
+- Never expose Supabase secret/service credentials to Client Components or browser bundles.
+- If elevated server credentials are used, authorize the admin before each privileged operation.
+
+Admin features should prioritize:
+- secure RSVP listing
+- correct attendance totals
+- guest-name search
+- attendance/guest-side filters
+- CSV export
+
+Do not add edit/delete by default unless explicitly requested or already supported.
+
+The admin UI may reuse the wedding palette but should prioritize clarity over decoration.
+Avoid flashy analytics-dashboard styling, heavy animation, neon, glassmorphism, and unnecessary data-grid dependencies.
+
+For RSVP admin work, read:
+- `docs/01-product/RSVP_ADMIN_FEATURE_SPEC.md`
+- `docs/04-architecture/RSVP_ADMIN_ARCHITECTURE.md`
+- `docs/05-database/RSVP_ADMIN_DATA_ACCESS.md`
+- task prompt: `docs/08-prompts/RSVP_ADMIN_IMPLEMENTATION.md`
+
+## 19. PRESERVE EXISTING FEATURES
 
 Never break working functionality during visual refactors, especially:
 
@@ -262,12 +470,13 @@ Never break working functionality during visual refactors, especially:
 - events and map links
 - album/lightbox
 - guestbook/Supabase/wishes
+- RSVP / attendance confirmation and its persistence flow when implemented
 - Wedding Gift / QR / copy-account interactions
 - metadata/Open Graph/SEO
 - responsive behavior
 - current refactored Hero and section rhythm
 
-## 18. VALIDATION & WORKFLOW
+## 20. VALIDATION & WORKFLOW
 
 For substantial tasks:
 
@@ -282,7 +491,64 @@ For substantial tasks:
 Do not claim completion when lint/build fails because of changes you introduced.
 Do not hide errors just to make validation pass.
 
-## 19. QUALITY BAR
+## 21. POLISH & RESPONSIVE QA
+
+Current work is primarily visual polish.
+
+When fixing alignment, hierarchy, or responsive issues:
+
+- inspect shared primitives/components first;
+- fix the root cause when multiple sections share the same problem;
+- avoid scattered one-off `translateX`, negative margin, or breakpoint-specific magic-number patches;
+- achieve mathematical centering first, then apply only tiny optical correction when a glyph genuinely requires it;
+- typical optical correction should be around 1–3px, not a layout hack.
+
+Priority centered compositions include:
+
+- Opening Experience
+- Hero
+- Save The Date
+- Thank You / Footer
+- any invitation-like centered section
+
+When present in the same visual stack, align the intended center axis across:
+
+- monogram
+- section title/label
+- Bride/Groom names
+- ampersand
+- ornamental divider
+- date
+- calendar
+- countdown
+- CTA
+
+Always visually QA at least:
+
+- 320px
+- 375px
+- 390px
+- 414px
+- 768px
+- 1024px
+- 1280px
+- 1440px+
+
+Check:
+
+- no horizontal overflow
+- no clipped Vietnamese diacritics
+- no Bride/Groom overlap
+- no envelope/name collision
+- correct date and monogram alignment
+- intentional image crops
+- readable countdown
+- usable touch targets
+- functional lightbox/forms/QR/map links
+- reduced-motion behavior
+- desktop composition has appropriate scale and whitespace
+
+## 22. QUALITY BAR
 
 Always ask whether the result feels like premium physical wedding stationery or merely an animated React/Tailwind website.
 
@@ -290,3 +556,32 @@ When refinement is needed, prioritize in this order:
 **Typography → Spacing → Composition → Photography → Color → Motion → Decoration**
 
 Do not solve weak design by adding more effects.
+
+
+## ALBUM / DRESS CODE / WEDDING GIFT
+
+Current direction:
+- Wedding Album uses a focused main-image slideshow with previous/next controls and thumbnails.
+- Reuse current album data and preserve useful Lightbox behavior.
+- Do not duplicate gallery arrays or add a heavy carousel dependency without clear benefit.
+- Use the existing centralized Motion system.
+
+Dress Code:
+- belongs immediately after / visually adjacent to Album unless explicitly changed;
+- local colors: Beige `#E9D8C6`, Pastel Pink `#F1CDD3`, Pastel Blue `#CFE1E8`;
+- these local colors do not replace the global theme;
+- swatches are informational, not interactive selectors;
+- static content belongs in existing wedding data/config when appropriate.
+
+Wedding Gift / Mừng cưới:
+- is removed from the current public product;
+- do not reintroduce unless explicitly requested later;
+- remove public section/navigation/QR/bank/copy-account UI references safely;
+- delete gift-specific dead code/data/assets only after confirming they are unused;
+- preserve shared utilities used elsewhere.
+
+Read:
+- `docs/01-product/ALBUM_DRESSCODE_REFACTOR_SPEC.md`
+- `docs/02-ux-ui/ALBUM_DRESSCODE_VISUAL_SPEC.md`
+- `docs/03-content/DRESSCODE_CONTENT_SPEC.md`
+- `docs/08-prompts/ALBUM_DRESSCODE_REMOVE_GIFT.md`

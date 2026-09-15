@@ -9,11 +9,16 @@ export {
   invitationViewportTight,
 } from "@/lib/motion/viewport";
 export {
+  editorialImage,
+  editorialImageAlt,
+  editorialLeft,
+  editorialRight,
   fadeReveal,
   fadeScale,
   heroStaggerContainer,
   imageReveal,
   letterReveal,
+  lingerReveal,
   revealVariantMap,
   sectionReveal,
   softReveal,

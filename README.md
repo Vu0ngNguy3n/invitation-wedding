@@ -1,20 +1,33 @@
-# Wedding Invitation — Cursor Specification Package
+# Wedding Invitation — Project Guide
 
-This repository contains the documentation, project rules, data model, and implementation prompts for building the **Wedding Invitation** website with Cursor.
+This repository is the existing **Wedding Invitation** website.
 
-The project should be developed **phase by phase**. Do not ask Cursor to generate or redesign the entire website in a single prompt.
+The project is no longer in greenfield / initial-build mode.
+
+Current high-level state:
+
+- Master Refactor: **COMPLETE**
+- Fine-Art Botanical design system: **APPLIED**
+- Invitation Opening Experience: **IMPLEMENTED**
+- Core wedding features and business logic: **WORKING**
+- Current phase: **POLISH / VISUAL QA / RESPONSIVE QA / incremental feature additions**
+
+Do not ask Cursor to rebuild the entire website or rerun completed phases unless there is a specific reason.
+
+---
 
 ## 1. Source of truth
 
-This repository is the wedding invitation Next.js application.
-
-Keep these files and folders as the project source of truth:
+Use these files and folders as the project source of truth:
 
 - `.cursorrules`
 - `CLAUDE.md`
 - `docs/`
+- `docs/00-project/PROJECT_STATUS.md`
 - `src/config/weddingData.ts`
 - `.env.example`
+- current implementation in `src/`
+- current Supabase migrations/schema
 
 ### Wedding content
 
@@ -23,25 +36,27 @@ Keep these files and folders as the project source of truth:
 Examples:
 
 - bride and groom information
+- parents
+- initials / monogram data
 - wedding date
 - venue
 - events
 - wedding timeline
 - gallery
-- gift / bank / QR information
+- dress code
 - navigation
 - SEO content
 - invitation copy
 
-Do not hardcode wedding-specific content directly inside React components.
+Do not hardcode wedding-specific content directly inside presentation components.
 
-Components should consume wedding content from:
+Components should consume wedding content from the current project config, typically:
 
 ```ts
 @/config/weddingData
 ```
 
-Do not create duplicate data sources such as:
+Do not create duplicate static data sources such as:
 
 ```text
 timelineData.ts
@@ -51,166 +66,154 @@ wedding.json
 mockWeddingData.ts
 ```
 
-Guestbook wishes are different: they are dynamic user-generated data and must be persisted through the Guestbook API / Supabase, not stored in `weddingData.ts`.
+Dynamic user-generated or operational data is different:
 
-## 2. Cursor workflow rule
+- Guestbook wishes → persisted through Guestbook/Supabase flow
+- RSVP submissions → persisted through an RSVP-specific flow when implemented
 
-Do not ask Cursor to:
+Do not store dynamic Guestbook or RSVP records in `weddingData.ts`.
 
-```text
-Build the entire website.
-```
+---
 
-Instead, start with:
+## 2. Current Cursor workflow
 
-```text
-docs/08-prompts/00-INIT.md
-```
-
-Then execute the implementation prompts sequentially.
-
-Before each phase, Cursor should:
+For every substantial task, Cursor should:
 
 1. Read `.cursorrules`.
 2. Read `CLAUDE.md`.
-3. Read the documentation relevant to the feature.
-4. Inspect the existing implementation before modifying files.
-5. Reuse existing components and patterns where appropriate.
-6. Implement only the requested feature.
-7. Run TypeScript / ESLint validation.
-8. Report files created and modified.
+3. Read `docs/00-project/PROJECT_STATUS.md`.
+4. Read documentation relevant to the requested feature.
+5. Inspect the existing implementation before modifying files.
+6. Reuse existing components, tokens, motion presets, data sources, providers, and patterns.
+7. Implement only the requested task.
+8. Avoid silently redesigning unrelated sections.
+9. Run the project's available validation commands.
+10. Report files changed, validation results, dependencies added, and remaining risks.
 
-Do not let one phase silently redesign unrelated sections.
-
-## 3. Recommended implementation workflow
-
-Recommended order:
-
-1. Repository Audit
-2. Foundation / Data Architecture
-3. Design System
-4. Hero / Opening Invitation
-5. Bride & Groom
-6. Save the Date + Countdown
-7. Wedding Events
-8. **Wedding Timeline**
-9. Gallery
-10. Supabase / Guestbook Backend
-11. Guestbook UI
-12. Wedding Gift / QR
-13. Thank You
-14. Page Integration
-15. Responsive Review
-16. Animation Review
-17. SEO / Metadata
-18. Performance Audit
-19. Accessibility Review
-20. Final Code Review
-21. Production / Vercel
-
-Each feature should be completed and reviewed before continuing to the next one.
-
-## 4. Wedding Timeline
-
-The project includes a dedicated **Wedding Timeline** feature inspired by a premium printed wedding schedule.
-
-Timeline documentation:
+Current working cycle:
 
 ```text
-docs/09-timeline/TIMELINE_FEATURE_SPEC.md
-docs/09-timeline/TIMELINE_DATA_MODEL.md
-docs/09-timeline/TIMELINE_COMPONENT_SPEC.md
-docs/09-timeline/TIMELINE_QA_CHECKLIST.md
-```
-
-Cursor implementation prompt:
-
-```text
-docs/08-prompts/14-TIMELINE.md
-```
-
-Recommended page placement:
-
-```text
-Wedding Events
+Read rules/docs
       ↓
-Wedding Timeline
+Inspect existing code
       ↓
-Gallery
+Plan the requested change
+      ↓
+Implement incrementally
+      ↓
+Visual / responsive QA
+      ↓
+Validate
+      ↓
+Review
+      ↓
+Commit
 ```
 
-The Events section answers **where and when the wedding events happen**.
+Do not use an old "build the whole website phase-by-phase from scratch" workflow for already-completed areas.
 
-The Timeline section answers **what happens throughout the wedding day and in what order**.
+---
 
-### Timeline responsive behavior
+## 3. Current design direction
 
-Mobile-first behavior is required:
+The website should feel like a **premium physical Fine-Art Botanical Wedding Invitation**.
 
-```text
-Mobile
-→ vertical timeline
+Core qualities:
 
-Desktop
-→ horizontal timeline
-```
-
-Do not squeeze all timeline milestones into one horizontal row on small screens.
-
-### Timeline asset
-
-Add the Timeline background image at:
-
-```text
-public/images/timeline/timeline-bg.webp
-```
-
-Timeline-specific content must still be stored inside:
-
-```text
-src/config/weddingData.ts
-```
-
-Do not create a separate Timeline data file.
-
-## 5. Design direction
-
-The website should feel like a **premium physical wedding invitation**, not a generic web template or SaaS landing page.
-
-Core visual direction:
-
-- vintage
 - elegant
 - romantic
 - editorial
 - botanical
-- premium paper invitation feeling
+- timeless
+- tactile
+- handmade-paper feeling
+- restrained luxury
+- generous whitespace
+- refined organic motion
 
-Core palette:
+The product must not drift toward:
+
+- SaaS landing page
+- dashboard
+- startup website
+- checkout/payment UI
+- generic Tailwind component showcase
+- futuristic/neon styling
+- excessive animation effects
+
+### Current canonical palette
+
+Use semantic design tokens where available.
 
 ```text
-Forest Green  #1B3B34
-Gold          #E0C068
-Warm Cream    #F5F0E6
+Warm Ivory       #FAF8F3
+Paper Cream      #F3EEE4
+Soft White       #FFFEFB
+Deep Forest      #18392F
+Vintage Green    #234C3D
+Botanical Green  #527261
+Soft Sage        #B8C8B8
+Champagne Gold   #C6A15B
+Deep Ink         #26332D
 ```
 
-Avoid:
+Approximate visual balance:
 
-- SaaS-style cards
-- dashboard layouts
-- excessive rounded corners
-- heavy shadows
-- neon colors
-- excessive animation
+```text
+55–65%  Warm Ivory / Paper Cream / Soft White
+20–30%  Deep / Vintage Forest Green
+5–10%   Sage / Botanical Green
+<=5%    Champagne Gold
+```
 
-## 6. Technical stack
+Champagne Gold is an accent, not a dominant UI color.
+
+Do not use cold pure white as the main page surface when a warm paper tone is more appropriate.
+
+---
+
+## 4. Reference website policy
+
+Reference wedding websites may be used to learn:
+
+- composition rhythm
+- typography hierarchy
+- editorial spacing
+- mobile-first storytelling
+- image-led layout
+- section sequencing
+- restrained reveal motion
+- countdown presentation
+- timeline sequencing
+- gallery interaction
+- RSVP information hierarchy
+
+Do not clone:
+
+- names
+- dates
+- addresses
+- QR/banking data
+- wedding content
+- copyrighted photography
+- exact coordinates/layout
+- proprietary assets
+- page-builder code
+- exact visual identity
+
+When a reference conflicts with the current Fine-Art Botanical design system, preserve the current project identity and adapt only the useful design principle.
+
+---
+
+## 5. Technical stack
 
 Primary stack:
 
 - Next.js App Router
+- React
 - TypeScript
 - Tailwind CSS
-- Framer Motion
+- Motion / Framer Motion
 - lucide-react
 - Supabase
 - Vercel
@@ -220,31 +223,178 @@ General rules:
 - Mobile-first.
 - Prefer Server Components.
 - Use Client Components only when interactivity requires them.
-- Use `next/image` for website imagery where appropriate.
-- Use `lucide-react` for icons.
-- Do not install another icon package without a strong reason.
-- Avoid inline styles; use Tailwind CSS classes.
-- Keep components modular and reusable without over-engineering.
+- Keep client boundaries small.
+- Use `next/image` where appropriate.
+- Reuse the existing Motion architecture.
+- Reuse the existing Lenis provider if present; never create a second instance.
+- Use `lucide-react` for functional icons only.
+- Use custom SVG/image assets for botanical decoration.
+- Do not install another package without a clear UX/architecture benefit.
 
-## 7. Supabase / Guestbook
+---
 
-Guestbook wishes are persistent data and must not be stored in LocalStorage, static JSON, or `weddingData.ts`.
+## 6. Completed / preserved areas
 
-Review:
+The following should be treated as existing working systems unless a task explicitly targets them:
+
+- Master Refactor
+- Fine-Art Botanical design system
+- Opening Experience
+- Hero
+- Bride & Groom / Couple Story
+- Save The Date / Countdown
+- Wedding Events
+- Wedding Timeline
+- Gallery / Lightbox / Album slider
+- Dress Code
+- Guestbook / Supabase / Wishes
+- Thank You / Footer
+- SEO / Metadata / Open Graph
+- Responsive layout
+- centralized motion system
+
+Do not recreate these features blindly during polish work.
+
+---
+
+## 7. RSVP / Attendance Confirmation
+
+The project may include a structured RSVP section immediately before the final Thank You / Footer.
+
+RSVP is different from Guestbook:
 
 ```text
-supabase/migrations/20260904000000_guestbook_wishes.sql
-docs/05-database/DATABASE_DESIGN.md
-docs/05-database/API_SPECIFICATION.md
-docs/05-database/RLS_POLICIES.sql
+Guestbook
+→ wedding wishes / messages
+
+RSVP
+→ structured attendance confirmation for planning
 ```
 
-Preferred architecture:
+Recommended page placement:
+
+```text
+... existing content
+      ↓
+RSVP / Xác nhận tham dự
+      ↓
+Thank You / Footer
+```
+
+Thank You remains the final emotional closing section.
+
+For RSVP implementation, read:
+
+```text
+docs/01-product/RSVP_FEATURE_SPEC.md
+docs/02-ux-ui/RSVP_VISUAL_MAPPING.md
+```
+
+If a task-specific Cursor prompt exists, use it only for the RSVP implementation task; do not convert it into permanent global rules.
+
+RSVP visual direction:
+
+- physical reply-card feeling
+- Warm Ivory / Paper Cream
+- Deep Ink / Forest text
+- restrained Champagne Gold hairline borders
+- current serif typography
+- subtle botanical identity
+- no SaaS / checkout / banking appearance
+
+Before adding RSVP persistence:
+
+1. inspect current Supabase schema and migrations;
+2. inspect Guestbook architecture;
+3. check whether RSVP persistence already exists;
+4. keep RSVP data semantically separate from Guestbook unless the current schema intentionally models both.
+
+---
+
+
+## 8. RSVP Admin / Guest Management
+
+RSVP submissions are private planning data.
+
+The project may expose a private authorized management route, recommended:
+
+```text
+/admin/rsvp
+```
+
+This route must NOT appear in public wedding navigation.
+
+Read:
+
+```text
+docs/01-product/RSVP_ADMIN_FEATURE_SPEC.md
+docs/04-architecture/RSVP_ADMIN_ARCHITECTURE.md
+docs/05-database/RSVP_ADMIN_DATA_ACCESS.md
+docs/08-prompts/RSVP_ADMIN_IMPLEMENTATION.md
+```
+
+Core admin capabilities:
+
+- total RSVP summary
+- attending / declined counts
+- expected attendee total
+- guest-side summary
+- RSVP list
+- search
+- filters
+- CSV export
+
+Security is mandatory.
+
+Do not use client-only hiding, localStorage admin flags, hardcoded browser passwords, or unrestricted public RSVP reads.
+
+Authorization must be enforced server-side and must follow the project's existing auth/Supabase architecture.
+
+## 9. Wedding Timeline
+
+The project includes a dedicated **Wedding Timeline** feature.
+
+Existing timeline documentation may include:
+
+```text
+docs/09-timeline/TIMELINE_FEATURE_SPEC.md
+docs/09-timeline/TIMELINE_DATA_MODEL.md
+docs/09-timeline/TIMELINE_COMPONENT_SPEC.md
+docs/09-timeline/TIMELINE_QA_CHECKLIST.md
+```
+
+Timeline-specific static content must remain in:
+
+```text
+src/config/weddingData.ts
+```
+
+Do not create a separate Timeline data file.
+
+Recommended responsive behavior remains:
+
+```text
+Mobile
+→ vertical timeline
+
+Desktop
+→ horizontal / editorial timeline when the current design supports it
+```
+
+Do not squeeze all milestones into a single horizontal row on narrow screens.
+
+---
+
+## 10. Supabase / dynamic data
+
+Guestbook wishes and RSVP submissions are dynamic data.
+
+Preferred architecture when consistent with the current implementation:
 
 ```text
 Browser
    ↓
-Next.js Route Handler
+Next.js Route Handler / Server Action
    ↓
 Server-side validation
    ↓
@@ -255,7 +405,7 @@ PostgreSQL
 
 Use `.env.local` for local credentials.
 
-Expected environment variables:
+Typical environment variables:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
@@ -272,11 +422,13 @@ Never:
 - hardcode credentials;
 - commit `.env.local`.
 
-Configure the required environment variables in Vercel before production deployment.
+Follow the current project's actual Supabase client and security architecture if it differs from these examples.
 
-## 8. Project state
+---
 
-Keep this file updated after every completed phase:
+## 11. Project status
+
+Keep this file updated after substantial completed work:
 
 ```text
 docs/00-project/PROJECT_STATUS.md
@@ -284,98 +436,135 @@ docs/00-project/PROJECT_STATUS.md
 
 Record at minimum:
 
-- completed phase;
+- completed task/feature;
 - important architecture decisions;
 - files/features added;
+- migrations/schema changes;
 - known issues;
-- next recommended phase.
+- next recommended task.
 
-This helps Cursor understand the current state instead of re-implementing completed work.
+This prevents Cursor from re-implementing already-completed work.
 
-## 9. Validation
+---
 
-At the end of each implementation phase, validate the affected feature.
+## 12. Validation
+
+After substantial changes, validate the affected feature.
 
 At minimum:
 
 ```text
-TypeScript
+TypeScript / typecheck when configured
 ESLint
 Responsive behavior
 Accessibility basics
 ```
 
-Before production, additionally validate:
+At completion, run when configured:
 
-```text
-Production build
-SEO / metadata
-Performance
-Accessibility
-Environment variables
-Supabase security
-Guestbook API
-Image paths
+```bash
+npm run lint
+npm run build
 ```
 
-For responsive features, review at least:
+Also run the project's separate typecheck command if one exists.
+
+For responsive work, review at least:
 
 ```text
+320px
 375px
 390px
-430px
+414px
 768px
 1024px
-1440px
+1280px
+1440px+
 ```
 
-## 10. Git workflow
+Before production, additionally verify:
 
-Create a Git commit after each successful feature or phase.
+- production build
+- SEO / metadata
+- performance
+- accessibility
+- environment variables
+- Supabase security
+- Guestbook flow
+- RSVP flow when implemented
+- image paths
+- reduced motion
+- mobile scroll / Opening Experience
+
+---
+
+## 13. Git workflow
+
+Create focused commits after successful features or polish tasks.
 
 Examples:
 
 ```bash
 git add .
-git commit -m "feat: implement wedding hero"
+git commit -m "fix: polish opening and global alignment"
 
 git add .
-git commit -m "feat: add wedding events"
+git commit -m "feat: add RSVP attendance section"
 
 git add .
-git commit -m "feat: add wedding timeline section"
+git commit -m "fix: refine RSVP responsive layout"
 
 git add .
-git commit -m "feat: add wedding gallery"
-
-git add .
-git commit -m "feat: implement guestbook"
+git commit -m "chore: update project documentation"
 ```
 
-Small phase-based commits make it much easier to review or revert problematic AI-generated changes.
+Small focused commits make AI-assisted changes easier to review and revert.
 
-## 11. Current development principle
+---
 
-When working with Cursor Agent, use this cycle:
+## 14. Current development principle
 
-```text
-Read rules/docs
-      ↓
-Inspect existing code
-      ↓
-Plan the requested feature
-      ↓
-Implement only that feature
-      ↓
-Validate
-      ↓
-Review result
-      ↓
-Commit
-      ↓
-Continue to next phase
-```
+The current priority is not speed or maximum visual effects.
 
-The goal is not to generate the website as quickly as possible.
+The goal is to keep the project:
 
-The goal is to keep the project **consistent, maintainable, responsive, visually coherent, and easy to update through `weddingData.ts`**.
+- consistent
+- maintainable
+- responsive
+- accessible
+- visually coherent
+- data-driven
+- easy to update
+- faithful to the Fine-Art Botanical stationery direction
+
+When refinement is needed, prioritize:
+
+**Typography → Spacing → Composition → Photography → Color → Motion → Decoration**
+
+Every major design decision should answer:
+
+> Does this feel like premium physical wedding stationery?
+
+rather than:
+
+> Does this look like a cool React animation?
+
+
+## Album Slider + Dress Code / Wedding Gift Removal
+
+Current product direction:
+- Wedding Album uses a large-image slideshow with previous/next controls and a thumbnail strip.
+- Dress Code sits directly after / visually adjacent to Album.
+- Dress Code local colors:
+  - Beige `#E9D8C6`
+  - Pastel Pink `#F1CDD3`
+  - Pastel Blue `#CFE1E8`
+- Wedding Gift / Mừng cưới is removed from the public website.
+
+Read:
+- `docs/01-product/ALBUM_DRESSCODE_REFACTOR_SPEC.md`
+- `docs/02-ux-ui/ALBUM_DRESSCODE_VISUAL_SPEC.md`
+- `docs/03-content/DRESSCODE_CONTENT_SPEC.md`
+- `docs/08-prompts/ALBUM_DRESSCODE_REMOVE_GIFT.md`
+
+The pastel Dress Code palette is local to that section and does not replace the global Fine-Art Botanical palette.

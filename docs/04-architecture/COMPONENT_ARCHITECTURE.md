@@ -14,6 +14,7 @@ src/components/
 ├── events/
 ├── gallery/
 ├── guestbook/
+├── rsvp/
 ├── gifts/
 └── thank-you/
 

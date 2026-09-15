@@ -53,6 +53,7 @@ export function GuestbookWishList({
 
   return (
     <div className="flex flex-col">
+      <p className="type-overline mb-8 text-accent-gold">{labels.listTitle}</p>
       {loadFailed ? (
         <p className="type-caption mb-6 text-error" role="alert">
           {labels.listError}
@@ -69,7 +70,7 @@ export function GuestbookWishList({
           {wishes.map((wish) => (
             <li
               key={wish.id}
-              className="border-t border-accent-gold/25 py-8 first:border-t-0 first:pt-0"
+              className="border-t border-accent-gold/20 py-7 first:border-t-0 first:pt-0 sm:py-8"
             >
               <GuestbookWishEntry
                 wish={wish}
