@@ -7,6 +7,7 @@ import {
   invitationMotion,
   invitationTransition,
   invitationViewportTight,
+  staggerContainer,
   staggerItem,
 } from "@/lib/motion";
 
@@ -19,9 +20,10 @@ export function TimelineList({ items }: TimelineListProps) {
   const lineTransition = invitationTransition(prefersReducedMotion, {
     duration: invitationMotion.duration,
   });
+  const itemTransition = invitationTransition(prefersReducedMotion);
 
   return (
-    <div className="relative mt-12 sm:mt-14 lg:mt-16">
+    <div className="relative mt-14 sm:mt-16 lg:mt-20">
       <motion.span
         aria-hidden="true"
         className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-accent-gold/40 lg:hidden"
@@ -39,23 +41,24 @@ export function TimelineList({ items }: TimelineListProps) {
         transition={lineTransition}
       />
 
-      <ol className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-6 xl:gap-8">
-        {items.map((item, index) => (
+      <motion.ol
+        className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-6 xl:gap-8"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="shown"
+        viewport={invitationViewportTight}
+      >
+        {items.map((item) => (
           <motion.li
             key={item.id}
-            className="relative flex min-w-0 gap-5 lg:flex-1 lg:flex-col lg:items-center lg:gap-4 lg:text-center"
+            className="relative flex min-w-0 gap-5 lg:flex-1 lg:flex-col lg:items-center lg:gap-5 lg:text-center"
             variants={staggerItem}
-            initial="hidden"
-            whileInView="shown"
-            viewport={invitationViewportTight}
-            transition={invitationTransition(prefersReducedMotion, {
-              delay: invitationMotion.stagger * index,
-            })}
+            transition={itemTransition}
           >
             <TimelineItem item={item} />
           </motion.li>
         ))}
-      </ol>
+      </motion.ol>
     </div>
   );
 }

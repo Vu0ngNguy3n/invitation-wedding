@@ -27,7 +27,7 @@ export function CoupleSection() {
         </div>
       </MotionReveal>
 
-      <div className="mt-14 flex flex-col gap-20 sm:mt-20 lg:mt-28 lg:gap-32">
+      <div className="mt-16 flex flex-col gap-24 sm:mt-24 lg:mt-32 lg:gap-40">
         <CoupleProfile profile={bride} />
         <CoupleProfile profile={groom} reverse />
       </div>

@@ -46,8 +46,8 @@ export function Envelope({
   return (
     <motion.div
       className={cn(
-        "relative w-[min(88vw,22rem)] shrink-0 select-none sm:w-[min(68vw,28rem)] lg:w-[min(42vw,34rem)] xl:w-[min(34vw,36rem)]",
-        "[@media(max-height:700px)]:w-[min(72vw,22rem)] [@media(max-height:560px)]:w-[min(64vw,18.5rem)]",
+        "relative w-[min(84vw,21rem)] max-w-[min(100%,calc(40svh*1.5))] shrink-0 select-none sm:w-[min(64vw,26rem)] lg:w-[min(42vw,34rem)] xl:w-[min(38vw,38rem)]",
+        "[@media(max-height:740px)]:w-[min(70vw,20rem)] [@media(max-height:620px)]:w-[min(60vw,17rem)]",
       )}
       initial={false}
       animate={mounted ? { y: revealed ? 10 : 0 } : undefined}

@@ -31,13 +31,17 @@ export function MotionReveal({
   const duration =
     mode === "enter"
       ? invitationMotion.heroDuration
-      : variant === "imageReveal"
+      : variant === "imageReveal" ||
+          variant === "editorialImage" ||
+          variant === "editorialImageAlt"
         ? invitationMotion.imageDuration
         : variant === "fadeReveal"
           ? 0.7
           : variant === "fadeScale"
             ? 0.85
-            : invitationMotion.duration;
+            : variant === "lingerReveal"
+              ? invitationMotion.heroDuration
+              : invitationMotion.duration;
   const transition = invitationTransition(prefersReducedMotion, {
     delay,
     duration,

@@ -65,18 +65,22 @@
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
   font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.15rem);
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.16;
   letter-spacing: 0.045em;
   margin-inline-end: -0.045em;
+  overflow: visible;
+  padding-block: 0.05em;
 }
 
 @utility type-heading {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
   font-size: clamp(1.65rem, 1.05rem + 2.1vw, 2.55rem);
   font-weight: 500;
-  line-height: 1.22;
+  line-height: 1.28;
   letter-spacing: 0.06em;
   margin-inline-end: -0.06em;
+  overflow: visible;
+  padding-block: 0.04em;
 }
 
 @utility type-body {
@@ -118,16 +122,43 @@
 
 @utility type-opening-name {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
-  font-size: clamp(2.25rem, 10vw, 3.6rem);
+  font-size: clamp(2.5rem, 8.6vw, 3.7rem);
   font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: 0.06em;
-  margin-inline-end: -0.06em;
+  line-height: 1.16;
+  letter-spacing: 0.05em;
+  margin-inline-end: -0.05em;
+  overflow: visible;
+  padding-block: 0.08em;
   text-wrap: balance;
 
   @variant lg {
-    font-size: clamp(3.25rem, 5vw, 5.5rem);
+    font-size: clamp(3.75rem, 5.1vw, 5.85rem);
   }
+}
+
+@utility type-hero-name {
+  font-family: var(--font-cormorant), ui-serif, Georgia, serif;
+  font-size: clamp(2.55rem, 8.2vw, 3.9rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: 0.05em;
+  margin-inline-end: -0.05em;
+  overflow: visible;
+  padding-block: 0.06em;
+  text-wrap: balance;
+
+  @variant lg {
+    font-size: clamp(3.6rem, 5vw, 5.75rem);
+  }
+}
+
+@utility invitation-stack {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 @utility foil-border {
@@ -162,6 +193,33 @@
 
 @utility foil-border-dashed {
   border: 1px dashed color-mix(in srgb, var(--gold-foil) 46%, transparent);
+}
+
+@utility stationery-field {
+  min-height: 2.75rem;
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--gold-foil) 62%, transparent);
+  background-color: color-mix(in srgb, var(--soft-white) 48%, transparent);
+  padding-block: 0.55rem;
+  padding-inline: 0.95rem;
+  color: var(--ink);
+  line-height: 1.5;
+
+  &::placeholder {
+    color: var(--ink-muted);
+    opacity: 0.78;
+  }
+
+  @variant hover {
+    border-color: color-mix(in srgb, var(--gold-foil) 82%, transparent);
+  }
+
+  @variant disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
 @utility invitation-action {

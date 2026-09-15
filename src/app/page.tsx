@@ -1,12 +1,13 @@
 import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { CoupleSection } from "@/components/couple/CoupleSection";
+import { DressCodeSection } from "@/components/dress-code/DressCodeSection";
 import { EventsSection } from "@/components/events/EventsSection";
 import { GallerySection } from "@/components/gallery/GallerySection";
-import { GiftSection } from "@/components/gifts/GiftSection";
 import { GuestbookSection } from "@/components/guestbook/GuestbookSection";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { InvitationNav } from "@/components/layout/InvitationNav";
 import { OpeningExperience } from "@/components/opening/OpeningExperience";
+import { RsvpSection } from "@/components/rsvp/RsvpSection";
 import { SaveTheDateSection } from "@/components/save-the-date/SaveTheDateSection";
 import { ThankYouSection } from "@/components/thank-you/ThankYouSection";
 import { TimelineSection } from "@/components/timeline/TimelineSection";
@@ -38,8 +39,9 @@ export default function Home() {
         <EventsSection />
         <TimelineSection />
         <GallerySection />
+        <DressCodeSection />
         <GuestbookSection />
-        <GiftSection />
+        <RsvpSection />
         <ThankYouSection />
       </main>
     </OpeningExperience>

@@ -157,12 +157,12 @@ export function GuestbookForm({ labels, onCreated }: GuestbookFormProps) {
   }
 
   return (
-    <PaperSurface as="div" className="min-w-0 px-5 py-8 sm:px-9 sm:py-10">
+    <PaperSurface as="div" className="min-w-0 px-5 py-9 sm:px-10 sm:py-12">
       <form
         noValidate
         onSubmit={handleSubmit}
         aria-busy={submitting}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-7"
       >
         <div className="flex flex-col gap-2">
           <label htmlFor={nameId} className="type-overline text-accent-gold">

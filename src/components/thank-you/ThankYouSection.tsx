@@ -3,6 +3,7 @@ import { weddingData } from "@/config/weddingData";
 import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
 import { InvitationMonogram } from "@/components/decorative/InvitationMonogram";
+import { InvitationNames } from "@/components/decorative/InvitationNames";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { invitationDocumentTitle } from "@/utils/seo";
@@ -75,11 +76,11 @@ export function ThankYouSection() {
       labelledBy={title ? "thank-you-heading" : undefined}
       className="py-20 sm:py-28 lg:py-36"
       containerClassName="max-w-2xl"
-      edgeTop="paper"
+      edgeTop="ivory"
     >
-      <MotionReveal variant="fadeReveal">
+      <MotionReveal variant="lingerReveal">
         <BotanicalDecoration density="cover" className="px-2 py-8 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
-          <div className="relative flex flex-col items-center px-3 py-10 text-center sm:px-8 sm:py-14">
+          <div className="invitation-stack relative px-3 py-12 sm:px-8 sm:py-16">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 border border-accent-gold/25"
@@ -141,30 +142,15 @@ export function ThankYouSection() {
               <p
                 className={
                   image
-                    ? "mt-10 flex w-full flex-col items-center text-center text-balance sm:mt-12"
-                    : "mt-8 flex w-full flex-col items-center text-center text-balance sm:mt-10"
+                    ? "mt-10 w-full text-balance sm:mt-12"
+                    : "mt-8 w-full text-balance sm:mt-10"
                 }
               >
-                {brideName && groomName ? (
-                  <>
-                    <span className="type-script block max-w-full break-words">
-                      {brideName}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="type-script my-1 block translate-y-[-0.08em] leading-none text-accent-gold"
-                    >
-                      &
-                    </span>
-                    <span className="type-script block max-w-full break-words">
-                      {groomName}
-                    </span>
-                  </>
-                ) : (
-                  <span className="type-script block max-w-full">
-                    {brideName ?? groomName}
-                  </span>
-                )}
+                <InvitationNames
+                  brideName={brideName}
+                  groomName={groomName}
+                  size="closing"
+                />
               </p>
             ) : null}
 

@@ -25,3 +25,9 @@ using (is_approved = true);
 -- protection can be applied consistently.
 
 -- Never create public UPDATE/DELETE policies for a public guestbook.
+
+-- RSVP submissions are private planning records.
+-- Enable RLS and do not add public SELECT/INSERT/UPDATE/DELETE policies.
+-- Inserts go through Next.js `/api/rsvp` using `SUPABASE_SECRET_KEY`.
+alter table public.rsvp_submissions enable row level security;
+

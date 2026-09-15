@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
-import { GUESTBOOK_CACHE_TAG } from "@/lib/guestbook/constants";
+import { isSameOriginPost } from "@/lib/http/origin";
 import {
   clientRateLimitKey,
   consumePostRateLimit,
-} from "@/lib/guestbook/rate-limit";
+} from "@/lib/http/rate-limit";
+import { GUESTBOOK_CACHE_TAG } from "@/lib/guestbook/constants";
 import {
   isGuestbookBodyTooLarge,
   validateContentLength,
@@ -27,34 +28,6 @@ function errorResponse(
 ) {
   const body: GuestbookErrorResponse = { error: { code, message } };
   return NextResponse.json(body, { status });
-}
-
-function hostnameFrom(value: string | undefined): string | undefined {
-  const raw = value?.split(",")[0]?.trim();
-  if (!raw) {
-    return undefined;
-  }
-
-  try {
-    const url = raw.includes("://") ? new URL(raw) : new URL(`https://${raw}`);
-    const hostname = url.hostname.trim().toLowerCase();
-    return hostname.length > 0 ? hostname : undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-function isSameOriginPost(request: Request): boolean {
-  const originHost = hostnameFrom(request.headers.get("origin") ?? undefined);
-  if (!originHost) {
-    return false;
-  }
-
-  return [
-    hostnameFrom(request.headers.get("x-forwarded-host") ?? undefined),
-    hostnameFrom(request.headers.get("host") ?? undefined),
-    hostnameFrom(request.url),
-  ].some((candidate) => candidate === originHost);
 }
 
 export async function GET() {
@@ -82,7 +55,7 @@ export async function POST(request: Request) {
     }
 
     const key = clientRateLimitKey(request);
-    if (!key || !consumePostRateLimit(key)) {
+    if (!key || !consumePostRateLimit(`guestbook:${key}`)) {
       return errorResponse(
         429,
         "RATE_LIMITED",

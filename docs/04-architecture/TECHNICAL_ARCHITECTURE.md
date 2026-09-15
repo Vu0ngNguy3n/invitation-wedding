@@ -14,6 +14,7 @@ Use Client Components for:
 - countdown timer
 - lightbox
 - guestbook form
+- RSVP form
 - clipboard interaction
 - browser APIs
 - interactive navigation where needed
@@ -53,6 +54,16 @@ Browser
 → PostgreSQL
 
 Do not expose server secrets.
+
+## RSVP
+
+Browser
+→ `/api/rsvp`
+→ validation
+→ Supabase server client
+→ PostgreSQL `rsvp_submissions`
+
+Do not store RSVP submissions in Guestbook. Do not expose server secrets.
 
 ## Error Strategy
 

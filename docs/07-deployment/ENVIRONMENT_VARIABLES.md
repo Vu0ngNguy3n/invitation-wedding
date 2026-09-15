@@ -5,12 +5,16 @@
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 SUPABASE_SECRET_KEY=
+ADMIN_PASSWORD=
+ADMIN_SESSION_SECRET=
 ```
 
 | Variable | Where it is read | Notes |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Server only (`src/lib/supabase/server.ts`) | Project URL, e.g. `https://xxxx.supabase.co`. Prefix `NEXT_PUBLIC_` because Next inlines it at **build** time. |
 | `SUPABASE_SECRET_KEY` | Server only | Dashboard secret / service key. **Never** prefix with `NEXT_PUBLIC_`. |
+| `ADMIN_PASSWORD` | Server only | Shared password for `/admin/rsvp`. **Never** prefix with `NEXT_PUBLIC_`. |
+| `ADMIN_SESSION_SECRET` | Server only | HMAC secret for the admin session cookie. Use a long random string (16+ characters). **Never** prefix with `NEXT_PUBLIC_`. |
 
 ## Unused by this app
 

@@ -6,6 +6,7 @@ type SectionHeadingProps = {
   title: ReactNode;
   description?: ReactNode;
   align?: "center" | "left";
+  variant?: "heading" | "script";
   className?: string;
   headingId?: string;
 };
@@ -15,14 +16,15 @@ export function SectionHeading({
   title,
   description,
   align = "center",
+  variant = "heading",
   className,
   headingId,
 }: SectionHeadingProps) {
   return (
     <header
       className={cn(
-        "flex w-full max-w-2xl flex-col gap-4 px-1",
-        align === "center" && "mx-auto items-center text-center",
+        "invitation-stack max-w-2xl gap-4 px-1",
+        align === "center" && "mx-auto",
         align === "left" && "items-start text-left",
         className,
       )}
@@ -33,7 +35,10 @@ export function SectionHeading({
       <h2
         id={headingId}
         className={cn(
-          "type-heading text-balance text-current",
+          "text-balance",
+          variant === "script"
+            ? "type-script text-accent-gold"
+            : "type-heading text-current",
           align === "center" && "w-full text-center",
         )}
       >

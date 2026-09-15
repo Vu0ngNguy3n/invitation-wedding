@@ -1,10 +1,12 @@
 import type { WeddingData } from "@/types/wedding";
 import { GUESTBOOK_MESSAGE_MAX, GUESTBOOK_NAME_MAX } from "@/types/guestbook";
+import { RSVP_MESSAGE_MAX, RSVP_NAME_MAX } from "@/types/rsvp";
 
 export type {
   Couple,
+  DressCode,
+  DressCodeColor,
   GalleryImage,
-  GiftPerson,
   InvitationCopy,
   NavigationItem,
   ParentNames,
@@ -16,7 +18,6 @@ export type {
   WeddingDetails,
   WeddingEvent,
   WeddingEventType,
-  WeddingGift,
   WeddingTimeline,
   WeddingTimelineIcon,
   WeddingTimelineItem,
@@ -26,7 +27,8 @@ export type {
 /**
  * Single source of truth for static wedding content.
  * UI components must import from `@/config/weddingData` only.
- * Guestbook wishes are persisted in Supabase and must not live here.
+ * Guestbook wishes and RSVP submissions are persisted in Supabase
+ * and must not live here.
  */
 export const weddingData: WeddingData = {
   couple: {
@@ -279,28 +281,17 @@ export const weddingData: WeddingData = {
     },
   ],
 
-  gifts: [
-    {
-      id: "gift-bride",
-      person: "bride",
-      name: "Nguyễn Yến Vy",
-      bankName: "Vietinbank",
-      accountNumber: "100872095048",
-      accountName: "NGUYEN YEN VY",
-      qrImage: "/images/gift/bride-qr.png",
-      transferNote: "Mung cuoi Yen Vy",
-    },
-    {
-      id: "gift-groom",
-      person: "groom",
-      name: "Nguyễn Nhật Song",
-      bankName: "Vietinbank",
-      accountNumber: "100872095048",
-      accountName: "NGUYEN NHAT SONG",
-      qrImage: "/images/gift/groom-qr.png",
-      transferNote: "Mung cuoi Nhat Song",
-    },
-  ],
+  dressCode: {
+    title: "DRESS CODE",
+    noteVi: "Nam: Xin vui lòng mặc vest",
+    noteEn: "Gentlemen: Kindly wear a suit",
+    paletteLabel: "Màu gợi ý: Beige · Pastel Pink · Pastel Blue",
+    colors: [
+      { name: "Beige", value: "#E9D8C6" },
+      { name: "Pastel Pink", value: "#F1CDD3" },
+      { name: "Pastel Blue", value: "#CFE1E8" },
+    ],
+  },
 
   navigation: [
     { id: "home", label: "Trang chủ", href: "#home" },
@@ -310,7 +301,7 @@ export const weddingData: WeddingData = {
     { id: "timeline", label: "Timeline", href: "#timeline" },
     { id: "gallery", label: "Album", href: "#gallery" },
     { id: "guestbook", label: "Lời chúc", href: "#guestbook" },
-    { id: "gift", label: "Mừng cưới", href: "#gift" },
+    { id: "rsvp", label: "Xác nhận", href: "#rsvp" },
   ],
 
   seo: {
@@ -374,19 +365,44 @@ export const weddingData: WeddingData = {
       listRetry: "Thử mở lại",
       listTitle: "Những lời đã ghi",
     },
-    gift: {
-      title: "Mừng cưới",
-      description:
-        "Nếu muốn gửi một món quà nhỏ, xin chuyển khoản theo thông tin dưới đây.",
-      bank: "Ngân hàng",
-      accountName: "Chủ tài khoản",
-      accountNumber: "Số tài khoản",
-      transferNote: "Nội dung chuyển khoản",
-      copy: "Sao chép số tài khoản",
-      copied: "Đã sao chép số tài khoản.",
-      copyFailed: "Không sao chép được. Vui lòng chọn số tài khoản.",
-      brideRole: "Cô dâu",
-      groomRole: "Chú rể",
+    rsvp: {
+      title: "Xác nhận tham dự",
+      accent: "RSVP",
+      introVi:
+        "Hãy xác nhận sự có mặt của bạn để chúng mình chuẩn bị đón tiếp một cách chu đáo nhất.\nTrân trọng!",
+      introEn:
+        "Please confirm your attendance so that we can prepare to welcome you.\nSincerely!",
+      nameLabel: "Tên khách mời / Guest name",
+      namePlaceholder: "Họ và tên của bạn",
+      nameRequired: "Vui lòng nhập tên khách mời.",
+      nameTooLong: `Tên khách mời tối đa ${RSVP_NAME_MAX} ký tự.`,
+      messageLabel: "Lời nhắn đến cô dâu chú rể / Message to the bride and groom",
+      messagePlaceholder: "Lời nhắn tùy chọn...",
+      messageTooLong: `Lời nhắn tối đa ${RSVP_MESSAGE_MAX} ký tự.`,
+      attendanceLabel: "Bạn sẽ tham dự chứ? / Will you join us?",
+      attendancePlaceholder: "Chọn câu trả lời / Choose a reply",
+      attendanceRequired: "Vui lòng chọn bạn sẽ tham dự hay không.",
+      attendanceAttending: "Mình chắc chắn sẽ đến / Accept with pleasure",
+      attendanceDeclined: "Xin lỗi, mình không thể tham dự / Decline with regret",
+      attendeeCountLabel: "Số người tham dự / Number of attendees",
+      attendeeCountPlaceholder: "Chọn số người / Choose a number",
+      attendeeCountRequired: "Vui lòng chọn số người tham dự.",
+      guestOfLabel: "Bạn là khách mời của ai? / Are you a guest of the bride or groom?",
+      guestOfPlaceholder: "Chọn nhà cô dâu hoặc chú rể / Choose a side",
+      guestOfRequired: "Vui lòng chọn bạn là khách của ai.",
+      guestOfBride: "Khách nhà gái / Guest of the bride",
+      guestOfGroom: "Khách nhà trai / Guest of the groom",
+      guestOfBoth: "Khách của cả hai / Guest of both",
+      submitLabel: "Send · Xác nhận",
+      submittingLabel: "Đang gửi...",
+      successAttending:
+        "Cảm ơn bạn đã xác nhận.\nChúng mình rất mong được gặp bạn trong ngày đặc biệt này.",
+      successDeclined:
+        "Cảm ơn bạn đã phản hồi.\nChúng mình rất trân trọng tình cảm của bạn.",
+      errorMessage: "Chưa gửi được xác nhận. Vui lòng thử lại sau.",
+      rateLimitMessage: "Bạn gửi hơi nhanh. Vui lòng thử lại sau một lát.",
+      privacyNote:
+        "Phản hồi này giúp chúng mình chuẩn bị đón tiếp và không hiển thị công khai.",
     },
     events: {
       mapsLabel: "Xem bản đồ",
@@ -397,11 +413,14 @@ export const weddingData: WeddingData = {
       typeReception: "Tiệc cưới",
     },
     gallery: {
+      region: "Album cưới",
       close: "Đóng album",
       previous: "Ảnh trước",
       next: "Ảnh tiếp",
       openLabeled: "Xem ảnh lớn: ",
       openIndexed: "Xem ảnh lớn ",
+      selectLabeled: "Chọn ảnh: ",
+      selectIndexed: "Chọn ảnh ",
     },
     thankYou: {
       title: "Thank You",

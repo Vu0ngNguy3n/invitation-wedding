@@ -11,8 +11,9 @@ export const invitationMotion = {
   y: 10,
   scaleFrom: 0.985,
   imageScaleFrom: 1.03,
-  stagger: 0.09,
-  heroStagger: 0.11,
+  stagger: 0.11,
+  heroStagger: 0.12,
+  editorialX: 14,
 } as const;
 
 type InvitationTransition = {

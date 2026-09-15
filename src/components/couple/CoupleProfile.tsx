@@ -37,9 +37,9 @@ export function CoupleProfile({
   return (
     <Root className="grid min-w-0 grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
       <MotionReveal
-        variant="imageReveal"
+        variant={reverse ? "editorialImageAlt" : "editorialImage"}
         className={cn(
-          "mx-auto w-full max-w-[min(100%,280px)] overflow-hidden sm:max-w-[340px] lg:col-span-5 lg:max-w-none",
+          "mx-auto w-full max-w-[min(100%,300px)] overflow-hidden sm:max-w-[380px] lg:col-span-5 lg:max-w-none xl:col-span-5",
           reverse && "lg:order-2 lg:col-start-8",
         )}
       >
@@ -49,7 +49,7 @@ export function CoupleProfile({
               src={photo}
               alt={imageAlt}
               fill
-              sizes="(max-width: 639px) 280px, (max-width: 1023px) 340px, 36vw"
+              sizes="(max-width: 639px) 300px, (max-width: 1023px) 380px, 38vw"
               className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
             />
           ) : null}
@@ -57,13 +57,13 @@ export function CoupleProfile({
       </MotionReveal>
 
       <MotionReveal
-        variant="softReveal"
+        variant={reverse ? "editorialLeft" : "editorialRight"}
         delay={0.12}
         className={cn(
           "flex min-w-0 flex-col items-center px-1 text-center lg:col-span-6",
           reverse
-            ? "lg:col-start-1 lg:row-start-1 lg:items-end lg:pr-4 lg:text-right"
-            : "lg:col-start-7 lg:items-start lg:pl-4 lg:text-left",
+            ? "lg:col-start-1 lg:row-start-1 lg:items-end lg:pr-6 lg:text-right xl:pr-10"
+            : "lg:col-start-7 lg:items-start lg:pl-6 lg:text-left xl:pl-10",
         )}
       >
         {displayName ? (
@@ -89,7 +89,9 @@ export function CoupleProfile({
 
         {quote ? (
           <blockquote className="mt-8 max-w-sm">
-            <p className="type-script break-words text-accent-gold">{quote}</p>
+            <p className="type-body text-pretty break-words text-accent-gold italic">
+              {quote}
+            </p>
           </blockquote>
         ) : null}
       </MotionReveal>

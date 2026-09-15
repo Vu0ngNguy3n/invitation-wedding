@@ -40,9 +40,9 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
   return (
     <PaperSurface
       as="article"
-      className="flex h-full min-w-0 flex-col items-center px-5 py-9 text-center sm:px-8 sm:py-11"
+      className="invitation-stack h-full min-w-0 px-5 py-10 sm:px-8 sm:py-12"
     >
-      <BotanicalDecoration className="flex w-full flex-col items-center px-1 py-2">
+      <BotanicalDecoration className="invitation-stack w-full px-1 py-2">
         {title ? (
           <>
             <p className="type-overline text-accent-gold">{typeLabel}</p>
@@ -57,7 +57,7 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
         {when ? (
           <time
             dateTime={when.dateTime}
-            className="mt-5 flex flex-col items-center gap-1"
+            className="mt-6 flex flex-col items-center gap-1.5"
           >
             {when.timeLine ? (
               <span className="font-display text-xl tracking-wide text-ink sm:text-2xl">
@@ -106,7 +106,9 @@ export function WeddingEventItem({ event }: WeddingEventItemProps) {
         ) : null}
 
         {dressCode ? (
-          <p className="type-caption mt-4 text-ink-muted">{dressCode}</p>
+          <p className="type-caption mt-5 max-w-xs text-ink-muted">
+            {dressCode}
+          </p>
         ) : null}
 
         {mapsUrl ? (

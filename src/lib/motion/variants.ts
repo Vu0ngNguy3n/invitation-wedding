@@ -54,6 +54,51 @@ export const staggerItem: Variants = {
   shown: { opacity: 1, y: 0 },
 };
 
+export const editorialLeft: Variants = {
+  hidden: { opacity: 0, x: -invitationMotion.editorialX },
+  shown: { opacity: 1, x: 0 },
+};
+
+export const editorialRight: Variants = {
+  hidden: { opacity: 0, x: invitationMotion.editorialX },
+  shown: { opacity: 1, x: 0 },
+};
+
+export const editorialImage: Variants = {
+  hidden: {
+    opacity: 0,
+    clipPath: "inset(6% 6% 6% 6%)",
+    scale: invitationMotion.imageScaleFrom,
+    rotate: -2.8,
+  },
+  shown: {
+    opacity: 1,
+    clipPath: "inset(0% 0% 0% 0%)",
+    scale: 1,
+    rotate: 0,
+  },
+};
+
+export const editorialImageAlt: Variants = {
+  hidden: {
+    opacity: 0,
+    clipPath: "inset(6% 6% 6% 6%)",
+    scale: invitationMotion.imageScaleFrom,
+    rotate: 2.8,
+  },
+  shown: {
+    opacity: 1,
+    clipPath: "inset(0% 0% 0% 0%)",
+    scale: 1,
+    rotate: 0,
+  },
+};
+
+export const lingerReveal: Variants = {
+  hidden: { opacity: 0, y: 8 },
+  shown: { opacity: 1, y: 0 },
+};
+
 export const heroStaggerContainer: Variants = {
   hidden: {},
   shown: {
@@ -72,6 +117,11 @@ export const revealVariantMap = {
   sectionReveal,
   letterReveal,
   staggerItem,
+  editorialLeft,
+  editorialRight,
+  editorialImage,
+  editorialImageAlt,
+  lingerReveal,
 } as const;
 
 export type RevealVariantName = keyof typeof revealVariantMap;
