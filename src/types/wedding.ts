@@ -141,6 +141,10 @@ export interface InvitationCopy {
     hint: string;
     sealLabel: string;
   };
+  story: {
+    brideRole: string;
+    groomRole: string;
+  };
   saveTheDate: {
     title: string;
     description: string;

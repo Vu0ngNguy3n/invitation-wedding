@@ -1,11 +1,9 @@
 import { ChevronDown } from "lucide-react";
 import { weddingData } from "@/config/weddingData";
 import { BotanicalDecoration } from "@/components/decorative/BotanicalDecoration";
-import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
 import { HeroCover } from "@/components/hero/HeroCover";
 import { HeroIdentity } from "@/components/hero/HeroIdentity";
 import { MotionReveal } from "@/components/ui/MotionReveal";
-import { invitationMotion } from "@/lib/motion";
 import { invitationDocumentTitle } from "@/utils/seo";
 import { filledText, givenInitial } from "@/utils/text";
 
@@ -61,28 +59,21 @@ export function HeroSection() {
   )?.label;
 
   return (
-    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-5 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-16">
+    <div className="relative flex w-full flex-1 flex-col items-center justify-center px-5 py-8 sm:px-10 sm:py-9 lg:px-16 lg:pt-10 lg:pb-9">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-4 foil-border sm:inset-6 lg:inset-8"
+        className="pointer-events-none absolute inset-4 border border-accent-gold/22 sm:inset-6 lg:inset-7"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-5 border border-accent-gold/20 sm:inset-7 lg:inset-9"
+        className="pointer-events-none absolute inset-5 border border-accent-gold/10 sm:inset-7 lg:inset-8"
       />
 
       <BotanicalDecoration
         density="cover"
-        className="invitation-stack w-full min-w-0 max-w-3xl px-4 py-10 sm:px-8 sm:py-12 lg:max-w-4xl lg:py-14"
+        ornamentInsetClassName="lg:inset-[6%]"
+        className="invitation-stack w-full min-w-0 max-w-3xl px-4 py-7 sm:px-8 sm:py-8 lg:max-w-4xl lg:py-9"
       >
-        <MotionReveal
-          mode="enter"
-          variant="fadeReveal"
-          className="mx-auto mb-9 w-full max-w-xs sm:mb-12"
-        >
-          <DecorativeDivider />
-        </MotionReveal>
-
         <HeroIdentity
           title={title}
           heading={heading}
@@ -100,8 +91,9 @@ export function HeroSection() {
         <MotionReveal
           mode="enter"
           variant="imageReveal"
-          className="mt-10 w-full overflow-hidden sm:mt-12 lg:mt-14"
-          delay={invitationMotion.heroStagger * 7}
+          className="mt-7 w-full overflow-hidden sm:mt-8 lg:mt-9"
+          delay={0.36}
+          duration={0.9}
         >
           <HeroCover
             alt={imageAlt}
@@ -113,17 +105,18 @@ export function HeroSection() {
         <MotionReveal
           mode="enter"
           variant="fadeReveal"
-          className="mt-9 sm:mt-11"
-          delay={invitationMotion.heroStagger * 8}
+          className="mt-6 sm:mt-7"
+          delay={0.44}
+          duration={0.7}
         >
           <a
             href="#story"
-            className="invitation-action inline-flex min-h-11 flex-col items-center justify-center text-accent-gold/70 hover:text-accent-gold hover:opacity-100"
+            className="inline-flex min-h-11 flex-col items-center justify-center text-accent-gold/55 hover:text-accent-gold/85"
             aria-label={storyLabel ?? "story"}
           >
             <ChevronDown
               aria-hidden="true"
-              className="size-5"
+              className="hero-scroll-hint size-5"
               strokeWidth={1.15}
             />
           </a>

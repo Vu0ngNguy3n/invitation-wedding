@@ -1,10 +1,8 @@
 import { weddingData } from "@/config/weddingData";
-import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
+import { GalleryReveal } from "@/components/gallery/GalleryReveal";
 import { GallerySlider } from "@/components/gallery/GallerySlider";
 import { GalleryViewer } from "@/components/gallery/GalleryViewer";
-import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
 
@@ -28,25 +26,15 @@ export function GallerySection() {
       tone="gallery"
       labelledBy={heading ? "gallery-heading" : undefined}
     >
-      <MotionReveal variant="fadeReveal">
-        {heading ? (
-          <SectionHeading title={heading} headingId="gallery-heading" />
-        ) : null}
-
-        <div className="mx-auto mt-6 max-w-xs sm:mt-8">
-          <DecorativeDivider />
-        </div>
-      </MotionReveal>
-
-      <MotionReveal variant="sectionReveal" className="mt-10 sm:mt-16">
-        <GalleryViewer
-          images={images}
-          labels={{
-            close: galleryCopy.close,
-            previous: galleryCopy.previous,
-            next: galleryCopy.next,
-          }}
-        >
+      <GalleryViewer
+        images={images}
+        labels={{
+          close: galleryCopy.close,
+          previous: galleryCopy.previous,
+          next: galleryCopy.next,
+        }}
+      >
+        <GalleryReveal heading={heading}>
           <GallerySlider
             images={images}
             labels={{
@@ -59,8 +47,8 @@ export function GallerySection() {
               selectIndexed: galleryCopy.selectIndexed,
             }}
           />
-        </GalleryViewer>
-      </MotionReveal>
+        </GalleryReveal>
+      </GalleryViewer>
     </SectionContainer>
   );
 }

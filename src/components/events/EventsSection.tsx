@@ -1,14 +1,14 @@
 import { weddingData } from "@/config/weddingData";
-import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
-import { WeddingEventItem } from "@/components/events/WeddingEventItem";
-import { MotionReveal } from "@/components/ui/MotionReveal";
+import { EventsReveal } from "@/components/events/EventsReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { invitationMotion } from "@/lib/motion";
+import { existingPublicAsset } from "@/utils/publicAsset";
 import { hasEventContent } from "@/utils/sectionVisibility";
 
 export function EventsSection() {
-  const events = weddingData.events.filter(hasEventContent);
+  const events = weddingData.events.filter(hasEventContent).map((event) => ({
+    event,
+    image: existingPublicAsset(event.image),
+  }));
   const heading = weddingData.navigation.find(
     (item) => item.id === "events",
   )?.label;
@@ -25,33 +25,7 @@ export function EventsSection() {
       edgeTop="paper"
       edgeBottom="mist"
     >
-      <MotionReveal variant="fadeReveal">
-        {heading ? (
-          <SectionHeading title={heading} headingId="events-heading" />
-        ) : null}
-
-        <div className="mx-auto mt-6 max-w-xs sm:mt-8">
-          <DecorativeDivider />
-        </div>
-      </MotionReveal>
-
-      <div
-        className={
-          events.length === 1
-            ? "mx-auto mt-12 max-w-md sm:mt-16"
-            : "mx-auto mt-12 grid max-w-4xl gap-8 sm:mt-16 md:grid-cols-2 md:gap-10"
-        }
-      >
-        {events.map((event, index) => (
-          <MotionReveal
-            key={event.id}
-            variant="softReveal"
-            delay={invitationMotion.stagger * index}
-          >
-            <WeddingEventItem event={event} />
-          </MotionReveal>
-        ))}
-      </div>
+      <EventsReveal heading={heading} events={events} />
     </SectionContainer>
   );
 }

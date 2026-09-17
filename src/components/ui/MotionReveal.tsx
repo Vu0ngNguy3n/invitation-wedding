@@ -15,6 +15,7 @@ type MotionRevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  duration?: number;
   mode?: "view" | "enter";
   variant?: RevealVariantName;
 };
@@ -23,25 +24,40 @@ export function MotionReveal({
   children,
   className,
   delay = 0,
+  duration: durationOverride,
   mode = "view",
   variant = "softReveal",
 }: MotionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const variants = revealVariantMap[variant];
+  const variants =
+    prefersReducedMotion === true
+      ? revealVariantMap.fadeReveal
+      : revealVariantMap[variant];
   const duration =
-    mode === "enter"
+    durationOverride ??
+    (mode === "enter"
       ? invitationMotion.heroDuration
       : variant === "imageReveal" ||
           variant === "editorialImage" ||
           variant === "editorialImageAlt"
         ? invitationMotion.imageDuration
-        : variant === "fadeReveal"
-          ? 0.7
-          : variant === "fadeScale"
-            ? 0.85
-            : variant === "lingerReveal"
-              ? invitationMotion.heroDuration
-              : invitationMotion.duration;
+        : variant === "storyPhotoLeft" || variant === "storyPhotoRight"
+          ? invitationMotion.enterDuration
+          : variant === "storyHeading"
+            ? 0.9
+            : variant === "storyNameReveal"
+              ? 0.8
+              : variant === "dressCodeReveal"
+                ? 0.9
+                : variant === "dressCodeCopy"
+                  ? 0.8
+                  : variant === "fadeReveal"
+                    ? 0.7
+                    : variant === "fadeScale"
+                      ? 0.85
+                      : variant === "lingerReveal"
+                        ? invitationMotion.heroDuration
+        : invitationMotion.duration);
   const transition = invitationTransition(prefersReducedMotion, {
     delay,
     duration,

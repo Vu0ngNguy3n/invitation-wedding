@@ -1,10 +1,7 @@
 import Image from "next/image";
 import { weddingData } from "@/config/weddingData";
-import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
 import { TimelineList } from "@/components/timeline/TimelineList";
-import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SectionContainer } from "@/components/ui/SectionContainer";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
 
@@ -45,23 +42,12 @@ export function TimelineSection() {
         ) : undefined
       }
     >
-      <MotionReveal variant="fadeReveal">
-        {title ? (
-          <SectionHeading
-            title={title}
-            description={subtitle}
-            headingId="timeline-heading"
-          />
-        ) : null}
-
-        {title ? (
-          <div className="mx-auto mt-6 max-w-xs sm:mt-8">
-            <DecorativeDivider />
-          </div>
-        ) : null}
-      </MotionReveal>
-
-      <TimelineList items={items} />
+      <TimelineList
+        items={items}
+        title={title}
+        subtitle={subtitle}
+        headingId={title ? "timeline-heading" : undefined}
+      />
     </SectionContainer>
   );
 }

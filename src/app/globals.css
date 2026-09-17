@@ -140,15 +140,16 @@
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
   font-size: clamp(2.55rem, 8.2vw, 3.9rem);
   font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: 0.05em;
-  margin-inline-end: -0.05em;
+  line-height: 1.04;
+  letter-spacing: 0.04em;
+  margin-inline-end: -0.04em;
   overflow: visible;
-  padding-block: 0.06em;
+  padding-block: 0.04em;
   text-wrap: balance;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
 
   @variant lg {
-    font-size: clamp(3.6rem, 5vw, 5.75rem);
+    font-size: clamp(3.85rem, 5.3vw, 6.15rem);
   }
 }
 
@@ -163,6 +164,59 @@
 
 @utility foil-border {
   border: 1px solid color-mix(in srgb, var(--gold-foil) 34%, transparent);
+}
+
+/*
+ * Monogram alignment.
+ * Optical offsets below are derived from the ink boxes of the two fonts:
+ * Cormorant caps sit ~0.02em right of their advance box, and the Great Vibes
+ * ampersand sits 0.111em high inside its line box while overhanging to the
+ * right of its advance width. The wrapper carries the letter font-size so
+ * every offset scales with the monogram instead of needing breakpoint values.
+ */
+@utility monogram-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  translate: 0.02em 0;
+}
+
+@utility monogram-letter {
+  display: inline-block;
+  line-height: 1;
+}
+
+@utility monogram-amp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  translate: -0.027em 0.118em;
+}
+
+/* Stacked script ampersand between two name lines. */
+@utility script-ampersand {
+  display: block;
+  line-height: 1;
+  translate: -0.07em 0.111em;
+}
+
+@utility date-medallion {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/*
+ * Cormorant renders old-style figures, so the digits sit 0.115em below the
+ * centre of their line box.
+ */
+@utility date-numeral {
+  display: block;
+  margin: 0;
+  line-height: 1;
+  translate: 0 -0.115em;
 }
 
 @keyframes seal-breathe {
@@ -193,6 +247,35 @@
 
 @utility foil-border-dashed {
   border: 1px dashed color-mix(in srgb, var(--gold-foil) 46%, transparent);
+}
+
+@keyframes hero-scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@utility hero-scroll-hint {
+  animation: hero-scroll-hint 2.75s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 }
 
 @utility stationery-field {

@@ -5,7 +5,7 @@ import { existingPublicAsset } from "@/utils/publicAsset";
 // Art-direction via getImageProps + <picture>, not two priority next/image nodes.
 
 const HERO_SIZES =
-  "(max-width: 639px) 260px, (max-width: 1023px) 320px, 380px";
+  "(max-width: 639px) 260px, (max-width: 1023px) 320px, 415px";
 
 type HeroCoverProps = {
   alt: string;
@@ -19,10 +19,10 @@ export function HeroCover({ alt, mobileSrc, desktopSrc }: HeroCoverProps) {
 
   if (!mobileAsset && !desktopAsset) {
     return (
-      <figure className="mx-auto w-full max-w-[min(100%,260px)] sm:max-w-[320px] lg:max-w-[380px]">
+      <figure className="mx-auto w-full max-w-[min(100%,260px)] sm:max-w-[320px] lg:max-w-[415px]">
         <div
           aria-hidden="true"
-          className="foil-border relative aspect-[3/4] overflow-hidden bg-vintage-card sm:aspect-[4/5]"
+          className="relative aspect-[3/4] overflow-hidden bg-vintage-card ring-1 ring-accent-gold/25 sm:aspect-[4/5]"
         />
       </figure>
     );
@@ -69,8 +69,8 @@ export function HeroCover({ alt, mobileSrc, desktopSrc }: HeroCoverProps) {
   }
 
   return (
-    <figure className="mx-auto w-full max-w-[min(100%,260px)] sm:max-w-[320px] lg:max-w-[380px]">
-      <div className="foil-border relative aspect-[3/4] overflow-hidden bg-vintage-card sm:aspect-[4/5]">
+    <figure className="mx-auto w-full max-w-[min(100%,260px)] sm:max-w-[320px] lg:max-w-[415px]">
+      <div className="relative aspect-[3/4] overflow-hidden bg-vintage-card ring-1 ring-accent-gold/25 sm:aspect-[4/5]">
         <picture>
           {desktopSrcSet ? (
             <source

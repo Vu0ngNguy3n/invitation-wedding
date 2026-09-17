@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useRef,
   useState,
   type ReactNode,
@@ -22,11 +23,16 @@ const GalleryLightbox = dynamic(
 
 type GalleryViewerContextValue = {
   openAt: (index: number, trigger: HTMLButtonElement) => void;
+  isOpen: boolean;
 };
 
 const GalleryViewerContext = createContext<GalleryViewerContextValue | null>(
   null,
 );
+
+export function useGalleryViewerOpen(): boolean {
+  return useContext(GalleryViewerContext)?.isOpen ?? false;
+}
 
 type GalleryViewerProps = {
   images: GalleryImage[];
@@ -72,8 +78,13 @@ export function GalleryViewer({ images, children, labels }: GalleryViewerProps) 
     });
   }, [images.length]);
 
+  const contextValue = useMemo<GalleryViewerContextValue>(
+    () => ({ openAt, isOpen: index !== null }),
+    [index, openAt],
+  );
+
   return (
-    <GalleryViewerContext.Provider value={{ openAt }}>
+    <GalleryViewerContext.Provider value={contextValue}>
       {children}
 
       <AnimatePresence>

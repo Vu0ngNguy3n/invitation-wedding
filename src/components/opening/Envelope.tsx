@@ -96,7 +96,7 @@ export function Envelope({
               reducedMotion
                 ? { duration: 0 }
                 : {
-                    duration: openingTiming.card + openingTiming.forward,
+                    duration: openingTiming.card,
                     ease: openingEase,
                   }
             }

@@ -17,10 +17,9 @@ const nameClassName: Record<InvitationNamesSize, string> = {
 
 const ampersandClassName: Record<InvitationNamesSize, string> = {
   opening:
-    "font-script mt-1 mb-1 block translate-x-px translate-y-[-0.08em] text-[clamp(1.5rem,4.2vw,2.35rem)] leading-none text-gold-foil lg:mt-2 lg:mb-2 lg:text-[clamp(1.85rem,2.5vw,2.85rem)]",
-  hero: "type-script mt-1 mb-1 block translate-x-px translate-y-[-0.08em] leading-none text-accent-gold",
-  closing:
-    "type-script my-1 block translate-x-px translate-y-[-0.08em] leading-none text-accent-gold",
+    "script-ampersand font-script mt-1 mb-1 text-[clamp(1.5rem,4.2vw,2.35rem)] leading-none text-gold-foil lg:mt-2 lg:mb-2 lg:text-[clamp(1.85rem,2.5vw,2.85rem)]",
+  hero: "script-ampersand type-script mt-[0.11em] mb-[0.11em] text-[clamp(1.15rem,3vw,1.55rem)] leading-none text-accent-gold lg:text-[clamp(1.35rem,1.8vw,1.85rem)]",
+  closing: "script-ampersand type-script my-1 leading-none text-accent-gold",
 };
 
 export function InvitationNames({

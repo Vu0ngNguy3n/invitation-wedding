@@ -22,27 +22,21 @@ export function InvitationMonogram({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex items-center justify-center text-accent-gold",
-        framed && "relative z-[1]",
+        "monogram-text font-display text-2xl text-accent-gold sm:text-3xl",
+        framed && "z-[1] col-start-1 row-start-1",
         !framed && className,
       )}
     >
       {brideInitial && groomInitial ? (
         <>
-          <span className="font-display text-2xl leading-none sm:text-3xl">
-            {brideInitial}
-          </span>
-          <span className="font-script mx-1.5 translate-y-[-0.08em] text-xl leading-none sm:mx-2 sm:text-2xl">
+          <span className="monogram-letter">{brideInitial}</span>
+          <span className="monogram-amp font-script mx-[0.33em] text-[0.8em]">
             &
           </span>
-          <span className="font-display text-2xl leading-none sm:text-3xl">
-            {groomInitial}
-          </span>
+          <span className="monogram-letter">{groomInitial}</span>
         </>
       ) : (
-        <span className="font-display text-2xl leading-none sm:text-3xl">
-          {brideInitial ?? groomInitial}
-        </span>
+        <span className="monogram-letter">{brideInitial ?? groomInitial}</span>
       )}
     </span>
   );
@@ -52,15 +46,10 @@ export function InvitationMonogram({
   }
 
   return (
-    <div
-      className={cn(
-        "relative mx-auto flex size-24 items-center justify-center sm:size-32",
-        className,
-      )}
-    >
+    <div className={cn("mx-auto grid size-24 place-items-center sm:size-32", className)}>
       <BotanicalMark
         asset="wreath"
-        className="absolute inset-0 h-full w-full text-accent-gold/40"
+        className="col-start-1 row-start-1 h-full w-full text-accent-gold/40"
       />
       {letters}
     </div>

@@ -37,7 +37,7 @@ export function EnvelopeFlap({ state, reducedMotion }: EnvelopeFlapProps) {
             ? { duration: 0 }
             : {
                 duration: openingTiming.flap,
-                delay: openingTiming.press + openingTiming.seal,
+                delay: openingTiming.flapDelay,
                 ease: openingEase,
               }
         }
