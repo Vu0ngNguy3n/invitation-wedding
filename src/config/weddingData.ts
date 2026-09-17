@@ -332,6 +332,10 @@ export const weddingData: WeddingData = {
       hint: "Chạm để mở thiệp",
       sealLabel: "Mở thiệp cưới",
     },
+    story: {
+      brideRole: "The Bride",
+      groomRole: "The Groom",
+    },
     saveTheDate: {
       title: "Save the Date",
       description:

@@ -27,7 +27,10 @@ export function MotionReveal({
   variant = "softReveal",
 }: MotionRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const variants = revealVariantMap[variant];
+  const variants =
+    prefersReducedMotion === true
+      ? revealVariantMap.fadeReveal
+      : revealVariantMap[variant];
   const duration =
     mode === "enter"
       ? invitationMotion.heroDuration
@@ -35,13 +38,23 @@ export function MotionReveal({
           variant === "editorialImage" ||
           variant === "editorialImageAlt"
         ? invitationMotion.imageDuration
-        : variant === "fadeReveal"
-          ? 0.7
-          : variant === "fadeScale"
-            ? 0.85
-            : variant === "lingerReveal"
-              ? invitationMotion.heroDuration
-              : invitationMotion.duration;
+        : variant === "storyPhotoLeft" || variant === "storyPhotoRight"
+          ? invitationMotion.enterDuration
+          : variant === "storyHeading"
+            ? 0.9
+            : variant === "storyNameReveal"
+              ? 0.8
+              : variant === "dressCodeReveal"
+                ? 0.9
+                : variant === "dressCodeCopy"
+                  ? 0.8
+                  : variant === "fadeReveal"
+                    ? 0.7
+                    : variant === "fadeScale"
+                      ? 0.85
+                      : variant === "lingerReveal"
+                        ? invitationMotion.heroDuration
+                        : invitationMotion.duration;
   const transition = invitationTransition(prefersReducedMotion, {
     delay,
     duration,

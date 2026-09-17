@@ -1,98 +1,77 @@
-import Image from "next/image";
 import type { PersonProfile } from "@/types/wedding";
+import { StoryPhotoFrame } from "@/components/couple/StoryPhotoFrame";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { cn } from "@/utils/cn";
 import { existingPublicAsset } from "@/utils/publicAsset";
 import { filledText } from "@/utils/text";
 
-function parentLine(parents: PersonProfile["parents"]): string | undefined {
-  const father = filledText(parents?.father);
-  const mother = filledText(parents?.mother);
-
-  if (father && mother) {
-    return `${father} & ${mother}`;
-  }
-
-  return father ?? mother;
-}
+type CouplePlacement = "bride" | "groom";
 
 type CoupleProfileProps = {
   profile: PersonProfile;
-  reverse?: boolean;
+  placement: CouplePlacement;
+  roleLabel?: string;
 };
 
 export function CoupleProfile({
   profile,
-  reverse = false,
+  placement,
+  roleLabel,
 }: CoupleProfileProps) {
   const displayName = filledText(profile.fullName) ?? filledText(profile.name);
-  const description = filledText(profile.description);
-  const quote = filledText(profile.quote);
-  const family = parentLine(profile.parents);
+  const role = filledText(roleLabel);
   const imageAlt = displayName ?? "";
   const photo = existingPublicAsset(profile.photo);
-
+  const isGroom = placement === "groom";
   const Root = displayName ? "article" : "div";
 
   return (
-    <Root className="grid min-w-0 grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
+    <Root className="grid min-w-0 grid-cols-1 items-center gap-14 sm:gap-16 lg:grid-cols-12 lg:gap-x-20 lg:gap-y-0 xl:gap-x-28">
       <MotionReveal
-        variant={reverse ? "editorialImageAlt" : "editorialImage"}
+        variant={isGroom ? "storyPhotoRight" : "storyPhotoLeft"}
         className={cn(
-          "mx-auto w-full max-w-[min(100%,300px)] overflow-hidden sm:max-w-[380px] lg:col-span-5 lg:max-w-none xl:col-span-5",
-          reverse && "lg:order-2 lg:col-start-8",
+          "mx-auto w-full min-w-0 px-3 py-4 sm:px-4 sm:py-5 lg:col-span-6 lg:max-w-none lg:px-5 lg:py-6",
+          isGroom && "lg:order-2 lg:col-start-7",
         )}
       >
-        <figure className="group foil-border relative aspect-[3/4] overflow-hidden bg-kraft">
-          {photo ? (
-            <Image
-              src={photo}
-              alt={imageAlt}
-              fill
-              sizes="(max-width: 639px) 300px, (max-width: 1023px) 380px, 38vw"
-              className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
-            />
-          ) : null}
-        </figure>
+        <StoryPhotoFrame
+          photo={photo}
+          alt={imageAlt}
+          restRotateClassName={
+            isGroom
+              ? "rotate-[1.4deg] lg:rotate-[3.2deg]"
+              : "-rotate-[1.4deg] lg:-rotate-[3.2deg]"
+          }
+        />
       </MotionReveal>
 
       <MotionReveal
-        variant={reverse ? "editorialLeft" : "editorialRight"}
-        delay={0.12}
+        variant="storyNameReveal"
+        delay={0.18}
         className={cn(
-          "flex min-w-0 flex-col items-center px-1 text-center lg:col-span-6",
-          reverse
-            ? "lg:col-start-1 lg:row-start-1 lg:items-end lg:pr-6 lg:text-right xl:pr-10"
-            : "lg:col-start-7 lg:items-start lg:pl-6 lg:text-left xl:pl-10",
+          "flex min-w-0 flex-col items-center self-center overflow-visible px-2 text-center lg:col-span-5",
+          isGroom
+            ? "lg:col-start-1 lg:row-start-1 lg:items-start lg:pr-2 lg:text-left xl:pr-4"
+            : "lg:col-start-8 lg:items-end lg:pl-2 lg:text-right xl:pl-4",
         )}
       >
+        {role ? (
+          <p className="font-script max-w-full overflow-visible px-[0.5em] py-[0.28em] text-[clamp(2.2rem,9.8vw,3.35rem)] leading-[1.42] text-accent-gold lg:text-[clamp(3.05rem,4.5vw,4.65rem)]">
+            {role}
+          </p>
+        ) : null}
+
+        {role && displayName ? (
+          <span
+            aria-hidden="true"
+            className="mt-5 mb-6 block h-px w-8 bg-accent-gold/70 lg:mt-6 lg:mb-8"
+          />
+        ) : null}
+
         {displayName ? (
-          <h3 className="type-heading text-balance break-words">
+          <h3 className="font-display max-w-full overflow-visible px-1 py-[0.12em] text-[clamp(1.5rem,6vw,2rem)] font-medium tracking-[0.05em] text-balance break-words text-deep-forest [margin-inline-end:-0.05em] lg:text-[clamp(1.85rem,2.5vw,2.75rem)]">
             {displayName}
           </h3>
-        ) : null}
-
-        {family ? (
-          <p className="type-caption mt-4 max-w-sm text-muted">{family}</p>
-        ) : null}
-
-        {description
-          ? description.split(". ")?.map((sentence, index) => (
-              <p
-                key={index}
-                className="type-body mt-5 max-w-md text-pretty text-muted"
-              >
-                {sentence}
-              </p>
-            ))
-          : null}
-
-        {quote ? (
-          <blockquote className="mt-8 max-w-sm">
-            <p className="type-body text-pretty break-words text-accent-gold italic">
-              {quote}
-            </p>
-          </blockquote>
         ) : null}
       </MotionReveal>
     </Root>

@@ -32,13 +32,13 @@ POLISH / VISUAL QA / RESPONSIVE QA / incremental feature additions
 
 ## Known Issues
 
-- Wedding content in `src/config/weddingData.ts` is still placeholder-only, so Hero and Couple currently show ornamentation and empty image frames without names, parents, stories, or quotes.
+- Couple names and photos now render in Story; parent/biography/quote fields remain in `weddingData.couple` for possible later use but are no longer shown in that section.
 - Save the Date / countdown do not render until `wedding.date.iso` or day/month/year is filled.
 - Events section does not render until `weddingData.events` has at least one item.
 - Gallery section does not render until `weddingData.gallery` has at least one item whose file exists in `public/`.
 - Dress Code does not render until `weddingData.dressCode` has a title, notes, or at least one named color.
 - Thank You names and date stay hidden until couple names and wedding date are filled; the optional closing photo renders only when `copy.thankYou.image` points to a file that exists.
-- Referenced images (`/images/hero/*`, `/images/couple/*`, `/images/og-image.webp`) are not in the repo yet. Missing files no longer 404; frames stay empty until assets are added.
+- Referenced images such as `/images/og-image.webp` may still be missing. Missing files no longer 404; frames stay empty until assets are added. Couple photos are present under `/images/couple/`.
 - SEO metadata is generated from `weddingData.seo` (with couple/wedding fallbacks). Absolute Open Graph URLs, indexing, and the sitemap require `seo.canonicalUrl` to be set to the production domain. Until then the site is `noindex`.
 - The guestbook and RSVP server clients read `SUPABASE_SECRET_KEY` and `NEXT_PUBLIC_SUPABASE_URL` only. Publishable/anon keys in env files are unused.
 - `.env.example` must stay empty. Live keys belong only in `.env.local` / Vercel.
@@ -83,11 +83,12 @@ POLISH / VISUAL QA / RESPONSIVE QA / incremental feature additions
 - Same-origin POST checks and in-memory rate limiting live in `src/lib/http/` and are reused by Guestbook and RSVP with namespaced keys
 - Hero is a Server Component; sequential entrance lives in `HeroIdentity`, scroll motion uses `MotionReveal` with tokens in `src/lib/motion/`
 - The invitation opening is a client overlay (`OpeningExperience`) that scroll-locks with the existing Lenis provider, then fades into the current Hero without routing
-- Couple introduction uses a shared `CoupleProfile` with an editorial mirrored layout on desktop
+- Couple / Story (`#story`) is a photo-and-name editorial composition in `CoupleSection` / `CoupleProfile`. Parents, biography, and quotes stay in `weddingData.couple` but are not rendered in this section. Optional role labels live in `weddingData.copy.story`.
 - Countdown is an isolated Client Component; it receives a UTC timestamp and does not import wedding content
 - Calendar math uses `wedding.timezone` (`Asia/Ho_Chi_Minh` by default)
 - Gallery markup lives in a Server Component; the album slider and lightbox are isolated Client Components reusing `weddingData.gallery`
 - Dress Code is a local attire insert after Album; pastel swatch hex values stay in `weddingData.dressCode` and do not enter the global palette
+- Dress Code composition is a single centered axis: heading, divider, overlapping swatches, attire copy, and palette line. Lower copy uses `w-full mx-auto text-center` with `max-w-lg` (~512px). Content and hex values (`#E9D8C6` / `#F1CDD3` / `#CFE1E8`) are unchanged.
 - Missing `public/` image files are skipped (empty frames) instead of requesting 404 URLs
 - Until `seo.canonicalUrl` is set, metadata and `robots.txt` stay `noindex`
 - Guestbook wishes are server-rendered from a tagged 30s cache; `GET /api/guestbook` uses the same cache; the form POSTs and revalidates the tag
@@ -121,3 +122,45 @@ POLISH / VISUAL QA / RESPONSIVE QA / incremental feature additions
 - Album: one large editorial image, previous/next buttons, looping thumbnail strip, existing lightbox on the main image. No carousel package.
 - Dress Code: ivory insert immediately after Album (`#dress-code`). Local swatches Beige `#E9D8C6`, Pastel Pink `#F1CDD3`, Pastel Blue `#CFE1E8`.
 - Public Wedding Gift / Mừng cưới removed (section, nav, QR, copy-account). Event-level `dressCode` strings on wedding events are unchanged.
+
+## Album motion / interaction polish notes (2026-09-16)
+
+- Entrance: scroll reveal once (`albumViewport` amount 0.18). Sequence: heading → divider → main image → arrows → caption → thumbnail strip. Shared Motion easing `[0.16, 1, 0.3, 1]`.
+- Main image change: overlapping crossfade (~420ms), scale 1.01 → 1 in / 1 → 0.995 out, optional ±10px X from next/previous direction. Desktop hover scale ~1.015 on fine pointer only.
+- Thumbnails: capped stagger (total delay ≤ ~420ms), active Champagne Gold hairline + opacity/scale 1.02, inactive ~0.7. Strip scrollbar hidden (`scrollbar-none`); overflow-x/touch scroll kept. Active thumb scrolls inside the strip only when clipped.
+- Mobile: smaller Y travel (image ~12px, thumbs ~7px), thumb width 56–64px, snap-proximity, no page-level horizontal overflow.
+- Reduced motion: opacity-only reveals, no scale/X/stagger; navigation and lightbox unchanged.
+- Lightbox: preserved (`GalleryViewer` / `GalleryLightbox`); main-image open, keyboard, close, and swipe still wired.
+- Files: `src/components/gallery/GallerySection.tsx`, `GalleryReveal.tsx`, `GallerySlider.tsx`, `src/lib/motion/variants.ts`, `viewport.ts`, `index.ts`, `src/app/globals.css`.
+- Remaining visual QA: 320–1440px overflow, entrance once-on-scroll, crossfade, hidden scrollbar, active-thumb auto-scroll, lightbox, reduced-motion.
+
+## Story / Couple presentation notes (2026-09-15)
+
+- Public Story heading remains **Câu chuyện**. Visible content is now heading, Bride photo, Nguyễn Yến Vy, Groom photo, Nguyễn Nhật Song, plus optional script labels `The Bride` / `The Groom`.
+- Removed from Story UI only: parent lines, descriptive paragraphs, italic quotes. Underlying `couple.bride` / `couple.groom` biography fields are preserved in `weddingData.ts` (not used elsewhere).
+- Layout: one continuous Warm Ivory editorial composition. Desktop is asymmetric (Bride photo left / name right; Groom name left / photo right). Mobile stacks photo → identity. No profile cards, timeline blocks, or chapter numbers.
+- Photos: Soft White printed-photo mats, hairline foil border, contact shadow, restrained rotation (~1.4° mobile, ~3.2° desktop). `StoryPhotoFrame` plays a slow one-shot wobble relative to that rest angle (~0.8° hover / ~1.0° tap, 1050–1150ms). Hover on fine-pointer devices, tap on touch. Reduced motion: scale `1 → 1.005 → 1` only, no rotation.
+- Typography polish: script role labels `The Bride` / `The Groom` scale to `clamp(2.2rem, 9.8vw, 3.35rem)` / `lg: clamp(3.05rem, 4.5vw, 4.65rem)`. Names use `clamp(1.5rem, 6vw, 2rem)` / `lg: clamp(1.85rem, 2.5vw, 2.75rem)` so the script remains the larger accent.
+- Motion: existing Motion system. Added `storyHeading`, `storyPhotoLeft`, `storyPhotoRight`, `storyNameReveal`. Reduced motion uses opacity-only `fadeReveal` inside `MotionReveal`.
+- Files: `src/components/couple/CoupleSection.tsx`, `src/components/couple/CoupleProfile.tsx`, `src/lib/motion/variants.ts`, `src/lib/motion/transitions.ts`, `src/lib/motion/index.ts`, `src/components/ui/MotionReveal.tsx`, `src/config/weddingData.ts`, `src/types/wedding.ts`.
+- Remaining visual QA: 320–1440px rotation overflow, Vietnamese diacritics on names, photo crop, and spacing before Save the Date.
+
+## Dress Code alignment + reveal notes (2026-09-16)
+
+- Alignment: bottom attire/palette copy was a centered `max-w-md` block with default left-aligned paragraphs. The insert now uses one centered inner column (`items-center text-center`); copy is `w-full mx-auto text-center max-w-lg`.
+- Motion: scroll reveal once (`dressCodeViewport` amount 0.2). Sequence via existing `staggerContainer` (~110ms): heading → divider → swatch group → attire group → palette line. Swatches map from `weddingData.dressCode.colors` with `dressCodeSwatchGroup` / `dressCodeSwatch` (Beige → Pastel Pink → Pastel Blue, ~100ms, scale 0.9, opacity + transform only).
+- Responsive: swatches stay a nowrap row; diameter `clamp(4rem, 15vw, 4.75rem)` / `lg:size-24`; overlap tightens on narrow viewports (`-ml-2.5` → `lg:-ml-5`). Reveal travel uses CSS vars (mobile ~10–12px, desktop ~14–22px).
+- Reduced motion: opacity-only `fadeReveal`, no Y/scale, stagger delays zeroed. Layout unchanged.
+- Files: `src/components/dress-code/DressCodeSection.tsx`, `src/lib/motion/variants.ts`, `src/lib/motion/viewport.ts`, `src/lib/motion/index.ts`, `src/components/ui/MotionReveal.tsx`.
+- Remaining visual QA: 320–1440px overflow, optical centering vs Album/Guestbook, sequential reveal on device, reduced-motion.
+
+## Opening + Events + Timeline motion notes (2026-09-16)
+
+- Opening: same `closed → opening → cardReveal → complete` flow. Dead time removed (`pause` 200ms gone; seal delay 200ms → 0; flap no longer waits for the seal to finish). Card now starts at ~720ms while the flap is about 65% open. Approximate tap → overlay exit start: **1.67s** (was ~2.96s). Overlay fade 0.58s (was 0.9s).
+- Previous opening timings: press 0.2, seal 0.32, flap 0.86, pause 0.2, card 0.96, forward 0.42, overlayExit 0.9; state timeouts 1580ms + 1380ms.
+- New opening timings: press 0.12 (whileTap), seal 0.24, flapDelay 0.26, flap 0.7, cardStart 0.72, card 0.82, forward 0.34, overlayExit 0.58; state timeouts 720ms + 950ms.
+- Events (`#events`): heading/divider first (`eventHeading`), then Nhà Gái from the left and Nhà Trai from the right (`eventCardLeft` / `eventCardRight`, 60px desktop / Y-only mobile). Card copy reveals in two groups. Map links unchanged.
+- Timeline: heading first, then connecting line (`scaleY` mobile / `scaleX` desktop), then chronological milestones (~120ms) with marker scale and time → title → description (~80ms).
+- Reduced motion: Opening still completes immediately on tap. Events/Timeline use opacity-only `fadeReveal` and zeroed stagger; line growth skipped.
+- Files: `src/components/opening/openingMotion.ts`, `WaxSeal.tsx`, `EnvelopeFlap.tsx`, `Envelope.tsx`, `InvitationOpening.tsx`, `src/components/events/EventsSection.tsx`, `EventsReveal.tsx`, `WeddingEventItem.tsx`, `src/components/timeline/TimelineSection.tsx`, `TimelineList.tsx`, `TimelineItem.tsx`, `src/lib/motion/variants.ts`, `viewport.ts`, `index.ts`.
+- Remaining visual QA: Opening tap on device (immediate seal, flap/card overlap, no stuck lock), Events inward cards at md+, Timeline line growth, reduced-motion, 320–1440 overflow.

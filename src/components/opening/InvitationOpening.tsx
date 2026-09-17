@@ -106,7 +106,7 @@ export function InvitationOpening({
           {brideName || groomName ? (
             <div
               className={cn(
-                "pointer-events-none relative w-full min-w-0 shrink-0 pb-2 text-center transition-opacity duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:pb-3",
+                "pointer-events-none relative w-full min-w-0 shrink-0 pb-2 text-center transition-opacity duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] sm:pb-3",
                 state === "closed" ? "z-20 opacity-100" : "opacity-0",
                 state === "cardReveal" ? "z-0" : "z-20",
               )}

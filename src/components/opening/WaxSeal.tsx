@@ -29,7 +29,7 @@ export function WaxSeal({
   const opening = mounted && state !== "closed";
   const transition: Transition = reducedMotion
     ? { duration: 0 }
-    : { duration: openingTiming.press + openingTiming.seal, ease: openingEase };
+    : { duration: openingTiming.seal, ease: openingEase };
 
   return (
     <div className="absolute top-[50%] left-1/2 z-[6] -translate-x-1/2 -translate-y-1/2">
@@ -52,10 +52,7 @@ export function WaxSeal({
             ? { scale: 0.9, opacity: 0, y: 8, rotate: 2 }
             : undefined
         }
-        transition={{
-          ...transition,
-          delay: opening ? openingTiming.press : 0,
-        }}
+        transition={transition}
         whileTap={interactive && !reducedMotion ? { scale: 0.97 } : undefined}
       >
         <span
