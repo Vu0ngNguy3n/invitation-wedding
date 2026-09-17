@@ -59,7 +59,7 @@ export function InvitationCard({
             </span>
             <span
               aria-hidden="true"
-              className="font-script mt-0.5 mb-0.5 block translate-y-[-0.08em] text-xl leading-none text-gold-deep"
+              className="script-ampersand font-script mt-0.5 mb-0.5 text-xl leading-none text-gold-deep"
             >
               &
             </span>

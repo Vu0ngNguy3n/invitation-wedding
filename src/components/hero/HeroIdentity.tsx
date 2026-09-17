@@ -1,15 +1,43 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { InvitationMonogram } from "@/components/decorative/InvitationMonogram";
 import { InvitationNames } from "@/components/decorative/InvitationNames";
-import {
-  fadeScale,
-  heroStaggerContainer,
-  invitationMotion,
-  invitationTransition,
-  staggerItem,
-} from "@/lib/motion";
+
+const heroEase = [0.22, 1, 0.36, 1] as const;
+
+const heroStagger: Variants = {
+  hidden: {},
+  shown: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.04,
+    },
+  },
+};
+
+const crestReveal: Variants = {
+  hidden: { opacity: 0, scale: 0.96 },
+  shown: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.7, ease: heroEase },
+  },
+};
+
+const textReveal: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  shown: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: heroEase },
+  },
+};
+
+const reducedReveal: Variants = {
+  hidden: { opacity: 0 },
+  shown: { opacity: 1, transition: { duration: 0.01 } },
+};
 
 type HeroIdentityProps = {
   title?: string;
@@ -39,32 +67,32 @@ export function HeroIdentity({
   documentTitle,
 }: HeroIdentityProps) {
   const prefersReducedMotion = useReducedMotion();
-  const transition = invitationTransition(prefersReducedMotion, {
-    duration: invitationMotion.heroDuration,
-  });
+  const reduceMotion = prefersReducedMotion === true;
+  const item = reduceMotion ? reducedReveal : textReveal;
+  const crest = reduceMotion ? reducedReveal : crestReveal;
 
   return (
     <motion.div
       className="invitation-stack"
-      variants={heroStaggerContainer}
+      variants={reduceMotion ? reducedReveal : heroStagger}
       initial="hidden"
       animate="shown"
     >
       {brideInitial || groomInitial ? (
-        <motion.div variants={fadeScale} transition={transition}>
+        <motion.div variants={crest}>
           <InvitationMonogram
             brideInitial={brideInitial}
             groomInitial={groomInitial}
             framed
+            className="size-[6.6rem] sm:size-[8.8rem]"
           />
         </motion.div>
       ) : null}
 
       {showTitleKicker ? (
         <motion.p
-          variants={staggerItem}
-          transition={transition}
-          className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-7"
+          variants={item}
+          className="mt-4 block w-full text-center text-[0.5625rem] font-medium tracking-[0.22em] text-accent-gold/90 uppercase sm:mt-5 sm:text-[0.6875rem] sm:tracking-[0.24em]"
         >
           {title}
         </motion.p>
@@ -73,11 +101,10 @@ export function HeroIdentity({
       {heading ? (
         <motion.h1
           id="home-heading"
-          variants={staggerItem}
-          transition={transition}
+          variants={item}
           className={
             showTitleKicker || brideInitial || groomInitial
-              ? "mt-6 w-full max-w-full text-balance break-words sm:mt-8"
+              ? "mt-3 w-full max-w-full text-balance break-words sm:mt-4"
               : "w-full max-w-full text-balance break-words"
           }
         >
@@ -103,17 +130,15 @@ export function HeroIdentity({
         dateTime ? (
           <motion.time
             dateTime={dateTime}
-            variants={staggerItem}
-            transition={transition}
-            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8"
+            variants={item}
+            className="mt-3.5 block w-full text-center text-[0.5625rem] font-medium tracking-[0.18em] text-accent-gold/88 uppercase sm:mt-4 sm:text-[0.6875rem] sm:tracking-[0.2em]"
           >
             {displayedDate}
           </motion.time>
         ) : (
           <motion.p
-            variants={staggerItem}
-            transition={transition}
-            className="type-overline mt-6 block w-full text-center text-accent-gold sm:mt-8"
+            variants={item}
+            className="mt-3.5 block w-full text-center text-[0.5625rem] font-medium tracking-[0.18em] text-accent-gold/88 uppercase sm:mt-4 sm:text-[0.6875rem] sm:tracking-[0.2em]"
           >
             {displayedDate}
           </motion.p>
@@ -122,9 +147,8 @@ export function HeroIdentity({
 
       {phrase ? (
         <motion.p
-          variants={staggerItem}
-          transition={transition}
-          className="type-body mt-5 max-w-md px-1 text-center text-pretty break-words text-paper-cream/90 sm:mt-6"
+          variants={item}
+          className="font-display mt-3 max-w-md px-1 text-center text-[1.0625rem] font-normal leading-[1.7] text-pretty break-words text-paper-cream/88 italic sm:mt-3.5 sm:text-[1.125rem]"
         >
           {phrase}
         </motion.p>

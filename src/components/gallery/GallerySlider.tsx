@@ -1,15 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import Image from "next/image";
 import {
   AnimatePresence,
   motion,
+  useInView,
   useReducedMotion,
   type Variants,
 } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { GalleryOpenButton } from "@/components/gallery/GalleryViewer";
+import { GalleryArrow } from "@/components/gallery/GalleryArrow";
+import {
+  GalleryOpenButton,
+  useGalleryViewerOpen,
+} from "@/components/gallery/GalleryViewer";
+import { useGalleryAutoplay } from "@/components/gallery/useGalleryAutoplay";
 import {
   albumArrowLeft,
   albumArrowRight,
@@ -19,7 +33,6 @@ import {
   albumStage,
   albumThumbnail,
   fadeReveal,
-  invitationEase,
   invitationTransition,
   reducedStagger,
 } from "@/lib/motion";
@@ -40,6 +53,14 @@ type GallerySliderProps = {
   };
 };
 
+type PointerOrigin = {
+  id: number;
+  x: number;
+  y: number;
+};
+
+const swipeThreshold = 48;
+
 function navigationDirection(from: number, to: number, total: number): number {
   const forward = (to - from + total) % total;
   const backward = (from - to + total) % total;
@@ -50,14 +71,21 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
   const regionId = useId();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isGesturing, setIsGesturing] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLUListElement>(null);
   const thumbRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const pointerOriginRef = useRef<PointerOrigin | null>(null);
+  const swipedRef = useRef(false);
   const prefersReducedMotion = useReducedMotion();
   const reduceMotion = prefersReducedMotion === true;
+  const stageInView = useInView(stageRef, { amount: 0.25 });
+  const viewerOpen = useGalleryViewerOpen();
   const total = images.length;
   const current = images[index];
   const photoTransition = invitationTransition(prefersReducedMotion, {
-    duration: 0.42,
+    duration: 0.5,
   });
   const captionTransition = invitationTransition(prefersReducedMotion, {
     duration: 0.3,
@@ -111,6 +139,124 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
     goTo(index + 1);
   }, [goTo, index]);
 
+  const { isActive: autoplayActive, reset: resetAutoplay } = useGalleryAutoplay(
+    {
+      enabled: total > 1 && !reduceMotion,
+      paused: isHovered || isGesturing || viewerOpen || !stageInView,
+      slideKey: index,
+      onAdvance: showNext,
+    },
+  );
+
+  const selectPrev = useCallback(() => {
+    showPrev();
+    resetAutoplay();
+  }, [resetAutoplay, showPrev]);
+
+  const selectNext = useCallback(() => {
+    showNext();
+    resetAutoplay();
+  }, [resetAutoplay, showNext]);
+
+  const selectIndex = useCallback(
+    (nextIndex: number) => {
+      goTo(nextIndex);
+      resetAutoplay();
+    },
+    [goTo, resetAutoplay],
+  );
+
+  const endGesture = useCallback(() => {
+    pointerOriginRef.current = null;
+    setIsGesturing(false);
+  }, []);
+
+  const handlePointerEnter = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (event.pointerType === "mouse") {
+        setIsHovered(true);
+      }
+    },
+    [],
+  );
+
+  const handlePointerDown = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      swipedRef.current = false;
+
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      pointerOriginRef.current = {
+        id: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+      };
+      setIsGesturing(true);
+    },
+    [],
+  );
+
+  const handlePointerUp = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const origin = pointerOriginRef.current;
+      endGesture();
+
+      if (!origin || origin.id !== event.pointerId) {
+        return;
+      }
+
+      const deltaX = event.clientX - origin.x;
+      const deltaY = event.clientY - origin.y;
+
+      if (
+        total > 1 &&
+        Math.abs(deltaX) >= swipeThreshold &&
+        Math.abs(deltaX) > Math.abs(deltaY)
+      ) {
+        swipedRef.current = true;
+
+        if (deltaX < 0) {
+          showNext();
+        } else {
+          showPrev();
+        }
+      }
+
+      resetAutoplay();
+    },
+    [endGesture, resetAutoplay, showNext, showPrev, total],
+  );
+
+  const handlePointerLeave = useCallback(() => {
+    setIsHovered(false);
+
+    if (pointerOriginRef.current) {
+      endGesture();
+      resetAutoplay();
+    }
+  }, [endGesture, resetAutoplay]);
+
+  const handlePointerCancel = useCallback(() => {
+    endGesture();
+    resetAutoplay();
+  }, [endGesture, resetAutoplay]);
+
+  // A completed swipe must not also open the lightbox.
+  const handleClickCapture = useCallback(
+    (event: ReactMouseEvent<HTMLDivElement>) => {
+      if (!swipedRef.current) {
+        return;
+      }
+
+      swipedRef.current = false;
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    [],
+  );
+
   useEffect(() => {
     const thumb = thumbRefs.current[index];
     const strip = stripRef.current;
@@ -161,10 +307,10 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
 
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          showPrev();
+          selectPrev();
         } else if (event.key === "ArrowRight") {
           event.preventDefault();
-          showNext();
+          selectNext();
         }
       }}
     >
@@ -172,92 +318,80 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
         {labels.region}
       </p>
 
-      <motion.div
-        variants={imageVariants}
-        className="relative aspect-[3/4] w-full overflow-hidden bg-kraft sm:aspect-[4/5] lg:aspect-[3/4]"
+      <div
+        ref={stageRef}
+        className="relative w-full min-w-0 touch-pan-y"
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
+        onClickCapture={handleClickCapture}
       >
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={current.id}
-            className="absolute inset-0"
-            initial={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, scale: 1.01, x: direction * 10 }
-            }
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={
-              reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.995 }
-            }
-            transition={photoTransition}
-          >
-            <GalleryOpenButton
-              index={index}
-              label={openLabel}
-              className="absolute inset-0 h-full w-full"
-            >
-              <Image
-                src={current.src}
-                alt={current.alt}
-                fill
-                sizes="(max-width: 639px) 92vw, (max-width: 1023px) 70vw, 720px"
-                className="object-cover motion-safe:transition-transform motion-safe:duration-1000 motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.015]"
-              />
-            </GalleryOpenButton>
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
-
-      {total > 1 ? (
         <motion.div
-          variants={arrowsVariants}
-          className="pointer-events-none absolute inset-x-0 top-0 z-10 aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4]"
+          variants={imageVariants}
+          className="relative aspect-[3/4] w-full overflow-hidden bg-kraft sm:aspect-[4/5] lg:aspect-[3/4]"
         >
-          <div className="pointer-events-auto absolute top-1/2 left-2 -translate-y-1/2 sm:left-3">
-            <motion.button
-              type="button"
-              variants={arrowLeftVariants}
-              onClick={showPrev}
-              whileHover={reduceMotion ? undefined : { x: -2, opacity: 1 }}
-              whileFocus={reduceMotion ? undefined : { x: -2, opacity: 1 }}
-              transition={{ duration: 0.24, ease: invitationEase }}
-              className="foil-border flex size-11 items-center justify-center bg-ivory/90 text-vintage-green opacity-90 transition-[background-color] duration-300 hover:bg-ivory focus-visible:opacity-100"
-              aria-label={labels.previous}
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={current.id}
+              className="absolute inset-0"
+              initial={
+                reduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 1.01, x: direction * 10 }
+              }
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={
+                reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.995 }
+              }
+              transition={photoTransition}
             >
-              <ChevronLeft
-                aria-hidden="true"
-                className="size-5"
-                strokeWidth={1.25}
-              />
-            </motion.button>
-          </div>
-          <div className="pointer-events-auto absolute top-1/2 right-2 -translate-y-1/2 sm:right-3">
-            <motion.button
-              type="button"
-              variants={arrowRightVariants}
-              onClick={showNext}
-              whileHover={reduceMotion ? undefined : { x: 2, opacity: 1 }}
-              whileFocus={reduceMotion ? undefined : { x: 2, opacity: 1 }}
-              transition={{ duration: 0.24, ease: invitationEase }}
-              className="foil-border flex size-11 items-center justify-center bg-ivory/90 text-vintage-green opacity-90 transition-[background-color] duration-300 hover:bg-ivory focus-visible:opacity-100"
-              aria-label={labels.next}
-            >
-              <ChevronRight
-                aria-hidden="true"
-                className="size-5"
-                strokeWidth={1.25}
-              />
-            </motion.button>
-          </div>
+              <GalleryOpenButton
+                index={index}
+                label={openLabel}
+                className="absolute inset-0 h-full w-full"
+              >
+                <Image
+                  src={current.src}
+                  alt={current.alt}
+                  fill
+                  draggable={false}
+                  sizes="(max-width: 639px) 92vw, (max-width: 1023px) 70vw, 720px"
+                  className="object-cover motion-safe:transition-transform motion-safe:duration-1000 motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.015]"
+                />
+              </GalleryOpenButton>
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
-      ) : null}
+
+        {total > 1 ? (
+          <motion.div
+            variants={arrowsVariants}
+            className="pointer-events-none absolute inset-0 z-10"
+          >
+            <GalleryArrow
+              direction="prev"
+              label={labels.previous}
+              variants={arrowLeftVariants}
+              onActivate={selectPrev}
+            />
+            <GalleryArrow
+              direction="next"
+              label={labels.next}
+              variants={arrowRightVariants}
+              onActivate={selectNext}
+            />
+          </motion.div>
+        ) : null}
+      </div>
 
       <motion.div variants={captionVariants} className="relative mt-4 min-h-[1.65em]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={current.id}
             className="type-caption text-center text-pretty text-muted"
-            aria-live="polite"
+            aria-live={autoplayActive ? "off" : "polite"}
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
@@ -291,7 +425,7 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
                   ref={(node) => {
                     thumbRefs.current[imageIndex] = node;
                   }}
-                  onClick={() => goTo(imageIndex)}
+                  onClick={() => selectIndex(imageIndex)}
                   aria-label={selectLabel}
                   aria-current={selected ? "true" : undefined}
                   className={cn(

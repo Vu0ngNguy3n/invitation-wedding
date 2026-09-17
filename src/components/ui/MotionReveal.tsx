@@ -15,6 +15,7 @@ type MotionRevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  duration?: number;
   mode?: "view" | "enter";
   variant?: RevealVariantName;
 };
@@ -23,6 +24,7 @@ export function MotionReveal({
   children,
   className,
   delay = 0,
+  duration: durationOverride,
   mode = "view",
   variant = "softReveal",
 }: MotionRevealProps) {
@@ -32,7 +34,8 @@ export function MotionReveal({
       ? revealVariantMap.fadeReveal
       : revealVariantMap[variant];
   const duration =
-    mode === "enter"
+    durationOverride ??
+    (mode === "enter"
       ? invitationMotion.heroDuration
       : variant === "imageReveal" ||
           variant === "editorialImage" ||
@@ -54,7 +57,7 @@ export function MotionReveal({
                       ? 0.85
                       : variant === "lingerReveal"
                         ? invitationMotion.heroDuration
-                        : invitationMotion.duration;
+        : invitationMotion.duration);
   const transition = invitationTransition(prefersReducedMotion, {
     delay,
     duration,

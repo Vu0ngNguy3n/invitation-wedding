@@ -6,12 +6,14 @@ type BotanicalDecorationProps = {
   children: ReactNode;
   className?: string;
   density?: "frame" | "cover";
+  ornamentInsetClassName?: string;
 };
 
 export function BotanicalDecoration({
   children,
   className,
   density = "frame",
+  ornamentInsetClassName,
 }: BotanicalDecorationProps) {
   const markClassName =
     density === "cover"
@@ -22,7 +24,10 @@ export function BotanicalDecoration({
     <div className={cn("relative", className)}>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 text-accent-gold/40"
+        className={cn(
+          "pointer-events-none absolute inset-0 text-accent-gold/40",
+          ornamentInsetClassName,
+        )}
       >
         <BotanicalMark
           asset="corner"

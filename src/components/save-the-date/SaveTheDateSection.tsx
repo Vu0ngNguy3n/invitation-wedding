@@ -130,12 +130,12 @@ export function SaveTheDateSection() {
             {featuredDay || featuredMonth || featuredYear || displayDate ? (
               <div className="invitation-stack">
                 {featuredDay ? (
-                  <div className="relative mx-auto flex size-40 items-center justify-center sm:size-48">
+                  <div className="date-medallion mx-auto size-40 sm:size-48">
                     <BotanicalMark
                       asset="wreath"
-                      className="absolute inset-0 h-full w-full text-botanical-green/35"
+                      className="col-start-1 row-start-1 h-full w-full text-botanical-green/35"
                     />
-                    <p className="relative font-display text-7xl leading-none sm:text-8xl">
+                    <p className="date-numeral font-display col-start-1 row-start-1 text-7xl sm:text-8xl">
                       {featuredDay}
                     </p>
                   </div>
