@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
@@ -18,18 +19,74 @@ import { formatEventWhen } from "@/utils/datetime";
 import { filledText } from "@/utils/text";
 import { cn } from "@/utils/cn";
 
+export type EventCardReserve = {
+  intro: boolean;
+  when: boolean;
+  venueLabel: boolean;
+  venue: boolean;
+  maps: boolean;
+};
+
 type WeddingEventItemProps = {
   event: WeddingEvent;
   image?: string;
   entrance: "left" | "right";
   reduceMotion: boolean;
+  paired?: boolean;
+  reserve?: EventCardReserve;
 };
+
+export function collectEventCardReserve(
+  events: { event: WeddingEvent; image?: string }[],
+): EventCardReserve {
+  return {
+    intro: events.some(({ event }) => Boolean(filledText(event.intro))),
+    when: events.some(
+      ({ event }) =>
+        Boolean(filledText(event.date)) || Boolean(filledText(event.time)),
+    ),
+    venueLabel: events.some(({ event }) => Boolean(filledText(event.venueLabel))),
+    venue: events.some(({ event }) => Boolean(filledText(event.venue))),
+    maps: events.some(({ event }) => Boolean(filledText(event.mapsUrl))),
+  };
+}
+
+function EventCardSlot({
+  show,
+  reserveOnDesktop,
+  className,
+  as: Component = "div",
+  children,
+}: {
+  show: boolean;
+  reserveOnDesktop: boolean;
+  className?: string;
+  as?: "div" | "p";
+  children?: ReactNode;
+}) {
+  if (show) {
+    return <Component className={className}>{children}</Component>;
+  }
+
+  if (reserveOnDesktop) {
+    return (
+      <div
+        aria-hidden="true"
+        className={cn(className, "invisible max-md:hidden")}
+      />
+    );
+  }
+
+  return null;
+}
 
 export function WeddingEventItem({
   event,
   image,
   entrance,
   reduceMotion,
+  paired = false,
+  reserve,
 }: WeddingEventItemProps) {
   const copy = weddingData.copy.events;
   const eventTypeLabel: Record<WeddingEventType, string> = {
@@ -39,11 +96,13 @@ export function WeddingEventItem({
     reception: copy.typeReception,
   };
   const title = filledText(event.title);
+  const intro = filledText(event.intro);
   const when = formatEventWhen(
     event.date,
     event.time,
     weddingData.wedding.timezone,
   );
+  const venueLabel = filledText(event.venueLabel);
   const venue = filledText(event.venue);
   const address = filledText(event.address);
   const description = filledText(event.description);
@@ -57,41 +116,67 @@ export function WeddingEventItem({
       ? eventCardLeft
       : eventCardRight;
   const copyVariants = reduceMotion ? fadeReveal : eventCardCopy;
-  const hasIdentity = Boolean(title || when);
+  const reserveOnDesktop = paired;
+  const hasIdentity = Boolean(title || intro || when);
   const hasDetails = Boolean(
-    image || venue || address || description || dressCode || mapsUrl,
+    image ||
+      venueLabel ||
+      venue ||
+      address ||
+      description ||
+      dressCode ||
+      mapsUrl,
   );
+  const showIdentity =
+    hasIdentity ||
+    (reserveOnDesktop &&
+      Boolean(reserve?.intro || reserve?.when || title));
+  const showDetails =
+    hasDetails ||
+    (reserveOnDesktop &&
+      Boolean(reserve?.venueLabel || reserve?.venue || reserve?.maps));
 
   return (
     <motion.div className="h-full min-w-0" variants={cardVariants}>
       <PaperSurface
         as="article"
-        className="invitation-stack h-full min-w-0 px-5 py-10 sm:px-8 sm:py-12"
+        className="invitation-stack h-full min-w-0 px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-12"
       >
-        <BotanicalDecoration className="invitation-stack w-full px-1 py-2">
-          {hasIdentity ? (
+        <BotanicalDecoration className="invitation-stack h-full w-full px-1 pt-8 pb-5 sm:px-2 sm:pt-10 sm:pb-7">
+          {showIdentity ? (
             <motion.div
               variants={copyVariants}
               className="invitation-stack w-full"
             >
               {title ? (
-                <>
-                  <p className="type-overline text-accent-gold">{typeLabel}</p>
-                  <h3 className="type-heading mt-3 max-w-full text-balance break-words text-ink">
-                    {title}
-                  </h3>
-                </>
+                <h3 className="type-heading max-w-full text-balance break-words text-ink text-[clamp(1.7rem,0.95rem+1.6vw,2.2rem)]">
+                  {title}
+                </h3>
               ) : (
-                <h3 className="type-overline text-accent-gold">{typeLabel}</h3>
+                <h3 className="sr-only">{typeLabel}</h3>
               )}
+
+              <EventCardSlot
+                as="p"
+                show={Boolean(intro)}
+                reserveOnDesktop={Boolean(reserveOnDesktop && reserve?.intro)}
+                className="type-caption mt-5 min-h-[1lh] w-full max-w-sm text-pretty text-ink-muted"
+              >
+                {intro}
+              </EventCardSlot>
 
               {when ? (
                 <time
                   dateTime={when.dateTime}
-                  className="mt-6 flex flex-col items-center gap-1.5"
+                  className={cn(
+                    "flex min-h-[calc(2lh+0.375rem)] w-full flex-col items-center justify-center gap-1.5",
+                    intro || (reserveOnDesktop && reserve?.intro)
+                      ? "mt-2"
+                      : "mt-5",
+                  )}
                 >
                   {when.timeLine ? (
-                    <span className="font-display text-xl tracking-wide text-ink sm:text-2xl">
+                    <span className="font-display numeral-lining text-xl tracking-wide text-ink sm:text-2xl">
                       {when.timeLine}
                     </span>
                   ) : null}
@@ -101,18 +186,26 @@ export function WeddingEventItem({
                     </span>
                   ) : null}
                 </time>
+              ) : reserveOnDesktop && reserve?.when ? (
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    "invisible flex min-h-[calc(2lh+0.375rem)] w-full max-md:hidden",
+                    reserve.intro ? "mt-2" : "mt-5",
+                  )}
+                />
               ) : null}
             </motion.div>
           ) : null}
 
-          {hasDetails ? (
+          {showDetails ? (
             <motion.div
               variants={copyVariants}
-              className="invitation-stack w-full"
+              className="invitation-stack w-full flex-1"
             >
               <span
                 aria-hidden="true"
-                className="mt-6 h-px w-12 bg-accent-gold/50"
+                className="mt-8 h-px w-12 bg-accent-gold/50"
               />
 
               {image ? (
@@ -127,10 +220,37 @@ export function WeddingEventItem({
                 </figure>
               ) : null}
 
-              {venue ? (
-                <p className="type-body mt-6 max-w-full text-pretty break-words text-ink">
-                  {venue}
-                </p>
+              {venueLabel ||
+              venue ||
+              (reserveOnDesktop && (reserve?.venueLabel || reserve?.venue)) ? (
+                <div className="mt-6 invitation-stack w-full">
+                  <EventCardSlot
+                    as="p"
+                    show={Boolean(venueLabel)}
+                    reserveOnDesktop={Boolean(
+                      reserveOnDesktop && reserve?.venueLabel,
+                    )}
+                    className="type-overline min-h-[1lh] text-accent-gold"
+                  >
+                    {venueLabel}
+                  </EventCardSlot>
+                  <EventCardSlot
+                    as="p"
+                    show={Boolean(venue)}
+                    reserveOnDesktop={Boolean(
+                      reserveOnDesktop && reserve?.venue,
+                    )}
+                    className={cn(
+                      "type-body max-w-full text-pretty break-words text-ink",
+                      paired && "md:min-h-[2lh]",
+                      (venueLabel ||
+                        (reserveOnDesktop && reserve?.venueLabel)) &&
+                        "mt-2",
+                    )}
+                  >
+                    {venue}
+                  </EventCardSlot>
+                </div>
               ) : null}
 
               {address ? (
@@ -151,22 +271,28 @@ export function WeddingEventItem({
                 </p>
               ) : null}
 
-              {mapsUrl ? (
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(invitationActionClassName, "mt-7")}
-                >
-                  <MapPin
-                    aria-hidden="true"
-                    className="size-4"
-                    strokeWidth={1.25}
-                  />
-                  <span className="type-overline">{copy.mapsLabel}</span>
-                  <span className="sr-only">{copy.mapsNewTab}</span>
-                </a>
-              ) : null}
+              <EventCardSlot
+                show={Boolean(mapsUrl)}
+                reserveOnDesktop={Boolean(reserveOnDesktop && reserve?.maps)}
+                className="mt-auto flex min-h-11 items-center justify-center pt-8"
+              >
+                {mapsUrl ? (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={invitationActionClassName}
+                  >
+                    <MapPin
+                      aria-hidden="true"
+                      className="size-4"
+                      strokeWidth={1.25}
+                    />
+                    <span className="type-overline">{copy.mapsLabel}</span>
+                    <span className="sr-only">{copy.mapsNewTab}</span>
+                  </a>
+                ) : null}
+              </EventCardSlot>
             </motion.div>
           ) : null}
         </BotanicalDecoration>

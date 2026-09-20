@@ -61,6 +61,16 @@
   --shadow-insert: 0 6px 18px rgb(24 57 47 / 0.07);
 }
 
+@utility numeral-lining {
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
+}
+
+@utility numeral-tabular {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1, "onum" 0, "pnum" 0;
+}
+
 @utility type-display {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
   font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.15rem);
@@ -70,6 +80,8 @@
   margin-inline-end: -0.045em;
   overflow: visible;
   padding-block: 0.05em;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 @utility type-heading {
@@ -81,6 +93,8 @@
   margin-inline-end: -0.06em;
   overflow: visible;
   padding-block: 0.04em;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 @utility type-body {
@@ -88,6 +102,8 @@
   font-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
   font-weight: 400;
   line-height: 1.8;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 @utility type-caption {
@@ -96,6 +112,8 @@
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: 0.02em;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 @utility type-overline {
@@ -106,6 +124,8 @@
   letter-spacing: 0.18em;
   margin-inline-end: -0.18em;
   text-transform: uppercase;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 
   @variant sm {
     letter-spacing: 0.24em;
@@ -130,6 +150,8 @@
   overflow: visible;
   padding-block: 0.08em;
   text-wrap: balance;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 
   @variant lg {
     font-size: clamp(3.75rem, 5.1vw, 5.85rem);
@@ -147,6 +169,8 @@
   padding-block: 0.04em;
   text-wrap: balance;
   text-shadow: 0 1px 0 rgb(0 0 0 / 0.06);
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 
   @variant lg {
     font-size: clamp(3.85rem, 5.3vw, 6.15rem);
@@ -208,15 +232,12 @@
   place-items: center;
 }
 
-/*
- * Cormorant renders old-style figures, so the digits sit 0.115em below the
- * centre of their line box.
- */
 @utility date-numeral {
   display: block;
   margin: 0;
   line-height: 1;
-  translate: 0 -0.115em;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 @keyframes seal-breathe {
@@ -448,6 +469,8 @@ body {
   font-family: var(--font-lora), ui-serif, Georgia, "Times New Roman", serif;
   overflow-x: clip;
   text-rendering: optimizeLegibility;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1, "onum" 0;
 }
 
 body::before {

@@ -131,14 +131,14 @@ export function HeroIdentity({
           <motion.time
             dateTime={dateTime}
             variants={item}
-            className="mt-3.5 block w-full text-center text-[0.5625rem] font-medium tracking-[0.18em] text-accent-gold/88 uppercase sm:mt-4 sm:text-[0.6875rem] sm:tracking-[0.2em]"
+            className="type-overline mt-3.5 block w-full text-center text-accent-gold/88 sm:mt-4"
           >
             {displayedDate}
           </motion.time>
         ) : (
           <motion.p
             variants={item}
-            className="mt-3.5 block w-full text-center text-[0.5625rem] font-medium tracking-[0.18em] text-accent-gold/88 uppercase sm:mt-4 sm:text-[0.6875rem] sm:tracking-[0.2em]"
+            className="type-overline mt-3.5 block w-full text-center text-accent-gold/88 sm:mt-4"
           >
             {displayedDate}
           </motion.p>

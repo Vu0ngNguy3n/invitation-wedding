@@ -58,7 +58,7 @@ export const rsvpAdminLabels: RsvpAdminLabels = {
   guestOfBride: "Nhà gái",
   guestOfGroom: "Nhà trai",
   guestOfBoth: "Cả hai",
-  exportCsv: "Xuất CSV",
+  exportCsv: "Xuất danh sách",
   showing: "Đang hiện",
   empty: "Chưa có phản hồi RSVP.",
   emptyHint: "Các xác nhận mới sẽ xuất hiện tại đây.",

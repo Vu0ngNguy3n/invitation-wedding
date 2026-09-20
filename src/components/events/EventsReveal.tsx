@@ -2,7 +2,10 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { DecorativeDivider } from "@/components/decorative/DecorativeDivider";
-import { WeddingEventItem } from "@/components/events/WeddingEventItem";
+import {
+  collectEventCardReserve,
+  WeddingEventItem,
+} from "@/components/events/WeddingEventItem";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   eventCardGroup,
@@ -28,6 +31,8 @@ export function EventsReveal({ heading, events }: EventsRevealProps) {
   const sectionVariants = reduceMotion ? reducedStagger : eventSection;
   const headingVariants = reduceMotion ? fadeReveal : eventHeading;
   const cardGroupVariants = reduceMotion ? reducedStagger : eventCardGroup;
+  const paired = events.length > 1;
+  const reserve = collectEventCardReserve(events);
 
   return (
     <motion.div
@@ -62,6 +67,8 @@ export function EventsReveal({ heading, events }: EventsRevealProps) {
             image={image}
             entrance={index % 2 === 0 ? "left" : "right"}
             reduceMotion={reduceMotion}
+            paired={paired}
+            reserve={reserve}
           />
         ))}
       </motion.div>

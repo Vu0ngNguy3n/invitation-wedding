@@ -69,13 +69,13 @@ export function CountdownTimer({ targetMs, labels }: CountdownTimerProps) {
             {index > 0 ? (
               <span
                 aria-hidden="true"
-                className="font-display mt-[0.15em] px-0.5 text-xl leading-none text-accent-gold/45 sm:px-2 sm:text-3xl"
+                className="font-display numeral-tabular px-0.5 text-[1.7rem] leading-none text-accent-gold/45 sm:px-2 sm:text-3xl lg:text-[2.85rem]"
               >
                 :
               </span>
             ) : null}
             <div className="flex min-w-0 flex-col items-center px-1 sm:px-3">
-              <span className="font-display text-[1.7rem] tabular-nums tracking-wide sm:text-3xl lg:text-[2.85rem]">
+              <span className="font-display numeral-tabular text-[1.7rem] leading-none tracking-wide sm:text-3xl lg:text-[2.85rem]">
                 {unit.value}
               </span>
               <span className="type-overline mt-2 text-center text-accent-gold">

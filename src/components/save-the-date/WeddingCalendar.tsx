@@ -32,7 +32,7 @@ export function WeddingCalendar({ month }: WeddingCalendarProps) {
                 {cell ? (
                   <span
                     className={cn(
-                      "mx-auto flex size-7 items-center justify-center text-xs sm:size-9 sm:text-base",
+                      "mx-auto flex size-7 items-center justify-center font-display numeral-tabular text-xs sm:size-9 sm:text-base",
                       cell.isWeddingDay
                         ? "foil-border text-accent-gold"
                         : "opacity-80",

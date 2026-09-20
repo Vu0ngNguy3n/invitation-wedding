@@ -206,10 +206,10 @@ Avoid exposing service credentials in the browser.
 Suggested filename:
 
 ```text
-wedding-rsvp-YYYY-MM-DD.csv
+Danh sách khách tham dự tiệc cưới.xls
 ```
 
-Excel/XLSX is not required unless explicitly requested later.
+Export is Excel-openable SpreadsheetML with a title block, Vietnamese columns, and submitted time as `HH:mm dd/MM/yyyy` (no seconds).
 
 ---
 

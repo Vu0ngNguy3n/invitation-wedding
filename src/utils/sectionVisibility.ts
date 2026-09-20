@@ -22,6 +22,8 @@ function hasEventContent(event: WeddingEvent): boolean {
     filledText(event.title) ||
       filledText(event.date) ||
       filledText(event.time) ||
+      filledText(event.intro) ||
+      filledText(event.venueLabel) ||
       filledText(event.venue) ||
       filledText(event.address) ||
       filledText(event.description) ||

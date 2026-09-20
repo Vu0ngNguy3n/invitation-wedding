@@ -61,6 +61,10 @@ export interface WeddingEvent {
   time: string;
   venue: string;
   address: string;
+  /** Invitation lead-in shown above the date/time, e.g. ceremony wording. */
+  intro?: string;
+  /** Quiet label above the venue name, e.g. "Địa điểm" or "Tại nhà thờ". */
+  venueLabel?: string;
   description?: string;
   image?: string;
   mapsUrl?: string;
