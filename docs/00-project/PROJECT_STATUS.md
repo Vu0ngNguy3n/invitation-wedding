@@ -19,7 +19,7 @@ POLISH / VISUAL QA / RESPONSIVE QA / incremental feature additions
 - [x] Gallery
 - [x] Guestbook
 - [x] RSVP / Attendance Confirmation (dedicated section before Thank You; private `rsvp_submissions` table)
-- [x] RSVP Admin (`/admin/rsvp` — server-authorized guest list, summary, search, filters, CSV export)
+- [x] RSVP Admin (`/admin/rsvp` — server-authorized guest list, summary, search, filters, Excel export)
 - [x] Album slider + Dress Code; Wedding Gift / Mừng cưới removed from the public site
 - [x] Thank You
 - [x] Animation audit (shared motion tokens, reduced-motion, one reveal per section)
