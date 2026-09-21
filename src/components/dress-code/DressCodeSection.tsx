@@ -121,12 +121,12 @@ export function DressCodeSection() {
             className="mx-auto mt-8 w-full max-w-2xl text-center sm:mt-9"
           >
             {vietnameseNote ? (
-              <p className="type-body text-pretty text-center text-ink">
+              <p className="type-body whitespace-pre-line text-pretty text-center text-ink">
                 {vietnameseNote}
               </p>
             ) : null}
             {englishNote ? (
-              <p className="type-body mt-2 text-pretty text-center text-ink-muted">
+              <p className="type-body mt-2 whitespace-pre-line text-pretty text-center text-ink-muted">
                 {englishNote}
               </p>
             ) : null}

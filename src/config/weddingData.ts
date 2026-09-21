@@ -279,7 +279,8 @@ export const weddingData: WeddingData = {
 
   dressCode: {
     title: "DRESS CODE",
-    noteVi: "Gentlemen: Formal / Suit | Ladies: Beige / Pastel Pink / Pastel Blue",
+    noteVi:
+      "Gentlemen: Formal / Suit\nLadies: Beige / Pastel Pink / Pastel Blue",
     noteEn: "",
     paletteLabel: "Beige · Pastel Pink · Pastel Blue",
     colors: [
@@ -380,7 +381,7 @@ export const weddingData: WeddingData = {
     },
     rsvp: {
       title: "Xác nhận tham dự",
-      accent: "RSVP",
+      accent: "",
       introVi:
         "Hãy xác nhận sự có mặt của bạn để chúng mình chuẩn bị đón tiếp một cách chu đáo nhất.\nTrân trọng!",
       introEn:
