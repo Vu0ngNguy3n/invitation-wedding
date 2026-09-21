@@ -2,6 +2,10 @@
 
 import { AnimatePresence, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  BackgroundMusic,
+  type BackgroundMusicHandle,
+} from "@/components/music/BackgroundMusic";
 import { InvitationOpening } from "@/components/opening/InvitationOpening";
 import {
   openingDurationMs,
@@ -17,14 +21,20 @@ export function OpeningExperience({ children }: OpeningExperienceProps) {
   const prefersReducedMotion = useReducedMotion();
   const [state, setState] = useState<OpeningState>("closed");
   const startedRef = useRef(false);
+  const musicRef = useRef<BackgroundMusicHandle>(null);
   const isLocked = state !== "complete";
 
   useOpeningScrollLock({ state });
 
+  const playMusic = useCallback(() => {
+    musicRef.current?.playIfIntended();
+  }, []);
+
   const completeOpening = useCallback(() => {
     startedRef.current = true;
+    playMusic();
     setState("complete");
-  }, []);
+  }, [playMusic]);
 
   const handleOpen = useCallback(() => {
     if (startedRef.current) {
@@ -32,6 +42,7 @@ export function OpeningExperience({ children }: OpeningExperienceProps) {
     }
 
     startedRef.current = true;
+    playMusic();
 
     if (prefersReducedMotion) {
       setState("complete");
@@ -39,7 +50,7 @@ export function OpeningExperience({ children }: OpeningExperienceProps) {
     }
 
     setState("opening");
-  }, [prefersReducedMotion]);
+  }, [playMusic, prefersReducedMotion]);
 
   useEffect(() => {
     if (state !== "opening") {
@@ -106,6 +117,7 @@ export function OpeningExperience({ children }: OpeningExperienceProps) {
 
   return (
     <>
+      <BackgroundMusic ref={musicRef} />
       <AnimatePresence>
         {isLocked ? (
           <InvitationOpening

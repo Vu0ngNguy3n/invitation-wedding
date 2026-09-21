@@ -118,7 +118,7 @@ export function DressCodeSection() {
         {vietnameseNote || englishNote ? (
           <motion.div
             variants={copyVariants}
-            className="mx-auto mt-8 w-full max-w-lg text-center sm:mt-9"
+            className="mx-auto mt-8 w-full max-w-2xl text-center sm:mt-9"
           >
             {vietnameseNote ? (
               <p className="type-body text-pretty text-center text-ink">
@@ -133,7 +133,7 @@ export function DressCodeSection() {
           </motion.div>
         ) : null}
 
-        {accessiblePalette ? (
+        {accessiblePalette && !vietnameseNote && !englishNote ? (
           <motion.p
             variants={copyVariants}
             className="type-caption mx-auto mt-5 w-full max-w-lg text-pretty text-center text-muted sm:mt-6"

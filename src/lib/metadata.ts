@@ -51,11 +51,16 @@ export function buildInvitationMetadata(): Metadata {
     "/icons/favicon.ico",
     "/icons/icon.png",
   ]);
+  const pngIcon = firstExistingIcon(["/icon.png", "/icons/icon.png"]);
   const appleIcon = firstExistingIcon([
     weddingData.seo.appleIcon,
     "/apple-touch-icon.png",
     "/icons/apple-touch-icon.png",
   ]);
+  const iconEntries = [
+    ...(pngIcon ? [{ url: pngIcon, type: "image/png", sizes: "192x192" }] : []),
+    ...(favicon && favicon !== pngIcon ? [{ url: favicon }] : []),
+  ];
   const allowIndex = Boolean(canonical);
 
   return {
@@ -93,9 +98,9 @@ export function buildInvitationMetadata(): Metadata {
       title,
     },
     icons:
-      favicon || appleIcon
+      iconEntries.length > 0 || appleIcon
         ? {
-            ...(favicon ? { icon: favicon } : {}),
+            ...(iconEntries.length > 0 ? { icon: iconEntries } : {}),
             ...(appleIcon ? { apple: appleIcon } : {}),
           }
         : undefined,

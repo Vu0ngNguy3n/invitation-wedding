@@ -8,6 +8,7 @@ export type {
   DressCodeColor,
   GalleryImage,
   InvitationCopy,
+  InvitationMusic,
   NavigationItem,
   ParentNames,
   PersonProfile,
@@ -34,7 +35,7 @@ export const weddingData: WeddingData = {
   couple: {
     bride: {
       name: "Yến Vy",
-      fullName: "Nguyễn Yến Vy",
+      fullName: "Nguyễn Thị Yến Vy",
       photo: "/images/couple/bride.jpg",
       parents: {
         father: "Nguyễn Ngọc Sỹ",
@@ -46,7 +47,7 @@ export const weddingData: WeddingData = {
     },
     groom: {
       name: "Nhật Song",
-      fullName: "Nguyễn Nhật Song",
+      fullName: "Nguyễn Lâm Nhật Song",
       photo: "/images/couple/groom.jpg",
       parents: {
         father: "Nguyễn Văn Thành",
@@ -60,7 +61,7 @@ export const weddingData: WeddingData = {
 
   wedding: {
     title: "Lễ Thành Hôn",
-    phrase: "Từ đây, hai ta một nhà.",
+    phrase: "Chúng mình sẽ kết hôn",
     timezone: "Asia/Tokyo",
     date: {
       iso: "2026-10-31",
@@ -87,7 +88,7 @@ export const weddingData: WeddingData = {
       id: "event-bride",
       type: "bride",
       title: "Thánh lễ hôn phối",
-      intro: "Hôn lễ được tổ chức vào hồi",
+      intro: "Hôn lễ được tổ chức vào lúc",
       date: "2026-10-31",
       time: "15:00",
       venueLabel: "Tại nhà thờ",
@@ -278,14 +279,23 @@ export const weddingData: WeddingData = {
 
   dressCode: {
     title: "DRESS CODE",
-    noteVi: "Nam: Xin vui lòng mặc vest",
-    noteEn: "Gentlemen: Kindly wear a suit",
-    paletteLabel: "Màu gợi ý: Beige · Pastel Pink · Pastel Blue",
+    noteVi: "Gentlemen: Formal / Suit | Ladies: Beige / Pastel Pink / Pastel Blue",
+    noteEn: "",
+    paletteLabel: "Beige · Pastel Pink · Pastel Blue",
     colors: [
       { name: "Beige", value: "#E9D8C6" },
       { name: "Pastel Pink", value: "#F1CDD3" },
       { name: "Pastel Blue", value: "#CFE1E8" },
     ],
+  },
+
+  music: {
+    src: "/audio/wedding.mp3",
+    startAtSeconds: 77,
+    label: "Click Music",
+    playLabel: "Phát nhạc nền",
+    pauseLabel: "Tạm dừng nhạc nền",
+    discImage: "/images/music/disc.jpg",
   },
 
   navigation: [
@@ -295,8 +305,8 @@ export const weddingData: WeddingData = {
     { id: "events", label: "Sự kiện", href: "#events" },
     { id: "timeline", label: "Timeline", href: "#timeline" },
     { id: "gallery", label: "Album", href: "#gallery" },
-    { id: "guestbook", label: "Lời chúc", href: "#guestbook" },
     { id: "rsvp", label: "Xác nhận", href: "#rsvp" },
+    { id: "guestbook", label: "Lời chúc", href: "#guestbook" },
   ],
 
   seo: {
@@ -327,14 +337,18 @@ export const weddingData: WeddingData = {
       hint: "Chạm để mở thiệp",
       sealLabel: "Mở thiệp cưới",
     },
+    hero: {
+      kicker: "We are\ngetting married",
+    },
     story: {
+      title: "Chúng mình sẽ kết hôn",
       brideRole: "The Bride",
       groomRole: "The Groom",
     },
     saveTheDate: {
-      title: "Save the Date",
+      title: "Save The Date",
       description:
-        "Hãy dành ngày này để cùng chúng mình lưu giữ một kỷ niệm thật đẹp.",
+        "Ngày ấy đang dần đến gần!\nChúng mình mong được gặp lại những người thân thương, cùng nhau tạm gác những bộn bề ngoài kia để cùng chia sẻ niềm vui và viết tiếp câu chuyện của chúng mình",
       countdownDays: "Ngày",
       countdownHours: "Giờ",
       countdownMinutes: "Phút",
@@ -416,6 +430,8 @@ export const weddingData: WeddingData = {
     },
     gallery: {
       region: "Album cưới",
+      description:
+        "Hạt giống niềm tin ngày ấy, qua bao mùa yêu thương, nay đã chín thành trái ngọt.\nHôn nhân - hành trình tươi đẹp nhất mà anh và em mong đợi.",
       close: "Đóng album",
       previous: "Ảnh trước",
       next: "Ảnh tiếp",
@@ -427,7 +443,7 @@ export const weddingData: WeddingData = {
     thankYou: {
       title: "Thank You",
       message:
-        "Cảm ơn bạn đã dành thời gian hiện diện, chứng kiến và sẻ chia niềm vui trong ngày đặc biệt của chúng mình.",
+        "Nhật Song, Yến Vy xin chân thành cảm ơn và hẹn gặp bạn trong ngày trọng đại.",
       image: "/images/thank-you/thank-you.jpg",
       imageAlt: "Yến Vy và Nhật Song trong ngày cưới",
     },

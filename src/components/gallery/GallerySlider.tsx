@@ -28,7 +28,6 @@ import {
   albumArrowLeft,
   albumArrowRight,
   albumArrows,
-  albumCaption,
   albumMainImage,
   albumStage,
   albumThumbnail,
@@ -87,12 +86,8 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
   const photoTransition = invitationTransition(prefersReducedMotion, {
     duration: 0.5,
   });
-  const captionTransition = invitationTransition(prefersReducedMotion, {
-    duration: 0.3,
-  });
   const stageVariants = reduceMotion ? reducedStagger : albumStage;
   const imageVariants = reduceMotion ? fadeReveal : albumMainImage;
-  const captionVariants = reduceMotion ? fadeReveal : albumCaption;
   const arrowsVariants = reduceMotion ? reducedStagger : albumArrows;
   const arrowLeftVariants = reduceMotion ? fadeReveal : albumArrowLeft;
   const arrowRightVariants = reduceMotion ? fadeReveal : albumArrowRight;
@@ -139,7 +134,7 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
     goTo(index + 1);
   }, [goTo, index]);
 
-  const { isActive: autoplayActive, reset: resetAutoplay } = useGalleryAutoplay(
+  const { reset: resetAutoplay } = useGalleryAutoplay(
     {
       enabled: total > 1 && !reduceMotion,
       paused: isHovered || isGesturing || viewerOpen || !stageInView,
@@ -289,13 +284,10 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
   const openLabel = filledText(current.alt)
     ? `${labels.openLabeled}${current.alt}`
     : `${labels.openIndexed}${index + 1}`;
-  const caption = current.alt
-    ? `${current.alt} · ${index + 1} / ${total}`
-    : `${index + 1} / ${total}`;
 
   return (
     <motion.div
-      className="relative mx-auto mt-10 w-full min-w-0 max-w-3xl sm:mt-16 lg:max-w-4xl"
+      className="relative mx-auto mt-8 w-full min-w-0 max-w-[min(42rem,calc(72svh*0.8))] sm:mt-12"
       variants={stageVariants}
       role="region"
       aria-roledescription="carousel"
@@ -330,7 +322,7 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
       >
         <motion.div
           variants={imageVariants}
-          className="relative aspect-[3/4] w-full overflow-hidden bg-kraft sm:aspect-[4/5] lg:aspect-[3/4]"
+          className="relative aspect-[3/4] w-full overflow-hidden bg-kraft sm:aspect-[4/5]"
         >
           <AnimatePresence initial={false}>
             <motion.div
@@ -357,7 +349,8 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
                   alt={current.alt}
                   fill
                   draggable={false}
-                  sizes="(max-width: 639px) 92vw, (max-width: 1023px) 70vw, 720px"
+                  quality={85}
+                  sizes="(max-width: 639px) 92vw, min(672px, 58vh)"
                   className="object-cover motion-safe:transition-transform motion-safe:duration-1000 motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.015]"
                 />
               </GalleryOpenButton>
@@ -386,27 +379,15 @@ export function GallerySlider({ images, labels }: GallerySliderProps) {
         ) : null}
       </div>
 
-      <motion.div variants={captionVariants} className="relative mt-4 min-h-[1.65em]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={current.id}
-            className="type-caption text-center text-pretty text-muted"
-            aria-live={autoplayActive ? "off" : "polite"}
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={captionTransition}
-          >
-            {caption}
-          </motion.p>
-        </AnimatePresence>
-      </motion.div>
+      <p className="sr-only" aria-live="polite">
+        {`${index + 1} / ${total}`}
+      </p>
 
       {total > 1 ? (
         <motion.ul
           ref={stripRef}
           variants={reduceMotion ? reducedStagger : thumbContainerVariants}
-          className="scrollbar-none mt-5 flex max-w-full gap-2 overflow-x-auto overscroll-x-contain px-1 touch-pan-x snap-x snap-proximity sm:mt-6 sm:gap-2.5"
+          className="scrollbar-none mt-6 flex max-w-full gap-2 overflow-x-auto overscroll-x-contain px-1 touch-pan-x snap-x snap-proximity sm:mt-7 sm:gap-2.5"
         >
           {images.map((image, imageIndex) => {
             const selected = imageIndex === index;

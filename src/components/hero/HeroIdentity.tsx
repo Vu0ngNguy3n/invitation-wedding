@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { InvitationMonogram } from "@/components/decorative/InvitationMonogram";
+import { BotanicalMark } from "@/components/decorative/BotanicalMark";
 import { InvitationNames } from "@/components/decorative/InvitationNames";
 
 const heroEase = [0.22, 1, 0.36, 1] as const;
@@ -10,18 +10,9 @@ const heroStagger: Variants = {
   hidden: {},
   shown: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.04,
+      staggerChildren: 0.1,
+      delayChildren: 0.06,
     },
-  },
-};
-
-const crestReveal: Variants = {
-  hidden: { opacity: 0, scale: 0.96 },
-  shown: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.7, ease: heroEase },
   },
 };
 
@@ -30,7 +21,7 @@ const textReveal: Variants = {
   shown: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: heroEase },
+    transition: { duration: 0.8, ease: heroEase },
   },
 };
 
@@ -40,61 +31,44 @@ const reducedReveal: Variants = {
 };
 
 type HeroIdentityProps = {
-  title?: string;
+  kicker?: string;
   heading?: string;
   brideName?: string;
   groomName?: string;
-  brideInitial?: string;
-  groomInitial?: string;
-  phrase?: string;
   displayedDate?: string;
   dateTime?: string;
-  showTitleKicker: boolean;
   documentTitle: string;
 };
 
+const dateClassName =
+  "type-overline mt-5 block w-full text-center text-[0.7rem] tracking-[0.3em] text-paper-cream/88 sm:mt-6 sm:text-[0.78rem] lg:text-[0.82rem]";
+
 export function HeroIdentity({
-  title,
+  kicker,
   heading,
   brideName,
   groomName,
-  brideInitial,
-  groomInitial,
-  phrase,
   displayedDate,
   dateTime,
-  showTitleKicker,
   documentTitle,
 }: HeroIdentityProps) {
   const prefersReducedMotion = useReducedMotion();
   const reduceMotion = prefersReducedMotion === true;
   const item = reduceMotion ? reducedReveal : textReveal;
-  const crest = reduceMotion ? reducedReveal : crestReveal;
 
   return (
     <motion.div
-      className="invitation-stack"
+      className="invitation-stack max-w-xl [text-shadow:0_1px_16px_rgb(12_28_23/0.45)]"
       variants={reduceMotion ? reducedReveal : heroStagger}
       initial="hidden"
       animate="shown"
     >
-      {brideInitial || groomInitial ? (
-        <motion.div variants={crest}>
-          <InvitationMonogram
-            brideInitial={brideInitial}
-            groomInitial={groomInitial}
-            framed
-            className="size-[6.6rem] sm:size-[8.8rem]"
-          />
-        </motion.div>
-      ) : null}
-
-      {showTitleKicker ? (
+      {kicker ? (
         <motion.p
           variants={item}
-          className="mt-4 block w-full text-center text-[0.5625rem] font-medium tracking-[0.22em] text-accent-gold/90 uppercase sm:mt-5 sm:text-[0.6875rem] sm:tracking-[0.24em]"
+          className="font-display block self-center text-center text-[clamp(1.05rem,4.9vw,1.5rem)] leading-[1.45] font-normal tracking-[0.15em] whitespace-pre-line text-paper-cream uppercase [margin-inline-end:-0.15em] sm:text-[1.55rem] sm:tracking-[0.17em] lg:text-[1.7rem]"
         >
-          {title}
+          {kicker}
         </motion.p>
       ) : null}
 
@@ -102,17 +76,24 @@ export function HeroIdentity({
         <motion.h1
           id="home-heading"
           variants={item}
-          className={
-            showTitleKicker || brideInitial || groomInitial
-              ? "mt-3 w-full max-w-full text-balance break-words sm:mt-4"
-              : "w-full max-w-full text-balance break-words"
-          }
+          className="mt-6 w-full max-w-full text-balance break-words sm:mt-7"
         >
           {brideName && groomName ? (
             <InvitationNames
               brideName={brideName}
               groomName={groomName}
               size="hero"
+              separator={
+                <span
+                  aria-hidden="true"
+                  className="my-1.5 block w-full max-w-[9rem] text-paper-cream/55 sm:my-2 sm:max-w-[11rem]"
+                >
+                  <BotanicalMark
+                    asset="divider"
+                    className="h-6 w-full sm:h-7"
+                  />
+                </span>
+              }
             />
           ) : (
             <span className="type-hero-name block px-1 text-paper-cream">
@@ -131,27 +112,15 @@ export function HeroIdentity({
           <motion.time
             dateTime={dateTime}
             variants={item}
-            className="type-overline mt-3.5 block w-full text-center text-accent-gold/88 sm:mt-4"
+            className={dateClassName}
           >
             {displayedDate}
           </motion.time>
         ) : (
-          <motion.p
-            variants={item}
-            className="type-overline mt-3.5 block w-full text-center text-accent-gold/88 sm:mt-4"
-          >
+          <motion.p variants={item} className={dateClassName}>
             {displayedDate}
           </motion.p>
         )
-      ) : null}
-
-      {phrase ? (
-        <motion.p
-          variants={item}
-          className="font-display mt-3 max-w-md px-1 text-center text-[1.0625rem] font-normal leading-[1.7] text-pretty break-words text-paper-cream/88 italic sm:mt-3.5 sm:text-[1.125rem]"
-        >
-          {phrase}
-        </motion.p>
       ) : null}
     </motion.div>
   );

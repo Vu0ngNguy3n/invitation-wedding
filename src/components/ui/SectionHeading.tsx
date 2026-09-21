@@ -45,7 +45,7 @@ export function SectionHeading({
         {title}
       </h2>
       {description ? (
-        <p className="type-body max-w-[38rem] text-pretty text-muted">
+        <p className="type-body max-w-[38rem] whitespace-pre-line text-pretty text-muted">
           {description}
         </p>
       ) : null}

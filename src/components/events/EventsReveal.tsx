@@ -6,7 +6,6 @@ import {
   collectEventCardReserve,
   WeddingEventItem,
 } from "@/components/events/WeddingEventItem";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   eventCardGroup,
   eventHeading,
@@ -44,19 +43,19 @@ export function EventsReveal({ heading, events }: EventsRevealProps) {
     >
       <motion.div variants={headingVariants}>
         {heading ? (
-          <SectionHeading title={heading} headingId="events-heading" />
+          <h2 id="events-heading" className="sr-only">
+            {heading}
+          </h2>
         ) : null}
 
-        <div className="mx-auto mt-6 max-w-xs sm:mt-8">
-          <DecorativeDivider />
-        </div>
+        <DecorativeDivider />
       </motion.div>
 
       <motion.div
         className={
           events.length === 1
-            ? "mx-auto mt-12 max-w-md sm:mt-16"
-            : "mx-auto mt-12 grid max-w-4xl gap-8 sm:mt-16 md:grid-cols-2 md:gap-10"
+            ? "mx-auto mt-10 max-w-md sm:mt-12"
+            : "mx-auto mt-10 grid max-w-4xl gap-8 sm:mt-12 md:grid-cols-2 md:gap-10"
         }
         variants={cardGroupVariants}
       >

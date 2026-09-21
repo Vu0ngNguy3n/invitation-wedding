@@ -49,14 +49,14 @@ export function CoupleProfile({
         variant="storyNameReveal"
         delay={0.18}
         className={cn(
-          "flex min-w-0 flex-col items-center self-center overflow-visible px-2 text-center lg:col-span-5",
+          "flex w-full min-w-0 flex-col items-center self-center overflow-visible px-2 text-center lg:col-span-5",
           isGroom
-            ? "lg:col-start-1 lg:row-start-1 lg:items-start lg:pr-2 lg:text-left xl:pr-4"
-            : "lg:col-start-8 lg:items-end lg:pl-2 lg:text-right xl:pl-4",
+            ? "lg:col-start-1 lg:row-start-1 lg:items-start lg:pr-4 lg:pl-2 lg:text-left xl:pr-6"
+            : "lg:col-start-8 lg:items-end lg:pl-4 lg:pr-8 lg:text-right xl:pl-6 xl:pr-10",
         )}
       >
         {role ? (
-          <p className="font-script max-w-full overflow-visible px-[0.5em] py-[0.28em] text-[clamp(2.2rem,9.8vw,3.35rem)] leading-[1.42] text-accent-gold lg:text-[clamp(3.05rem,4.5vw,4.65rem)]">
+          <p className="font-script max-w-full overflow-visible px-[0.35em] py-[0.28em] text-[clamp(2.2rem,9.8vw,3.35rem)] leading-[1.42] text-accent-gold lg:text-[clamp(2.85rem,3.6vw,4rem)]">
             {role}
           </p>
         ) : null}
@@ -69,7 +69,7 @@ export function CoupleProfile({
         ) : null}
 
         {displayName ? (
-          <h3 className="font-display max-w-full overflow-visible px-1 py-[0.12em] text-[clamp(1.5rem,6vw,2rem)] font-medium tracking-[0.05em] text-balance break-words text-deep-forest [margin-inline-end:-0.05em] lg:text-[clamp(1.85rem,2.5vw,2.75rem)]">
+          <h3 className="font-display max-w-full overflow-visible px-1 py-[0.14em] text-[clamp(1.35rem,4.8vw,1.85rem)] leading-[1.28] font-medium tracking-[0.035em] text-pretty break-words text-deep-forest lg:text-[clamp(1.7rem,2.15vw,2.4rem)]">
             {displayName}
           </h3>
         ) : null}
