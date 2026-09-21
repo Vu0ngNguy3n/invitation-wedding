@@ -144,8 +144,10 @@ export function GalleryLightbox({
         className="relative flex max-h-full w-full max-w-5xl flex-col items-center justify-center pt-12"
         onClick={(event) => event.stopPropagation()}
       >
-        <p id={titleId} className="sr-only">
-          {image.alt || `Ảnh ${index + 1} / ${total}`}
+        <p id={titleId} className="sr-only" aria-live="polite">
+          {image.alt
+            ? `${image.alt} · ${index + 1} / ${total}`
+            : `${index + 1} / ${total}`}
         </p>
 
         <button
@@ -202,12 +204,6 @@ export function GalleryLightbox({
             </motion.div>
           </AnimatePresence>
         </div>
-
-        <p className="type-caption mt-4 max-w-lg px-4 text-center text-pretty text-sage-light sm:mt-5 sm:px-16" aria-live="polite">
-          {image.alt
-            ? `${image.alt} · ${index + 1} / ${total}`
-            : `${index + 1} / ${total}`}
-        </p>
       </div>
     </motion.div>
   );
