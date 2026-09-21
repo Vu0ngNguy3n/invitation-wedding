@@ -93,6 +93,15 @@ export interface DressCode {
   colors: DressCodeColor[];
 }
 
+export interface InvitationMusic {
+  src: string;
+  startAtSeconds: number;
+  label: string;
+  playLabel: string;
+  pauseLabel: string;
+  discImage: string;
+}
+
 export type WeddingTimelineIcon =
   | "church"
   | "camera"
@@ -145,7 +154,11 @@ export interface InvitationCopy {
     hint: string;
     sealLabel: string;
   };
+  hero: {
+    kicker: string;
+  };
   story: {
+    title?: string;
     brideRole: string;
     groomRole: string;
   };
@@ -224,6 +237,7 @@ export interface InvitationCopy {
   };
   gallery: {
     region: string;
+    description?: string;
     close: string;
     previous: string;
     next: string;
@@ -247,6 +261,7 @@ export interface WeddingData {
   timeline: WeddingTimeline;
   gallery: GalleryImage[];
   dressCode: DressCode;
+  music: InvitationMusic;
   navigation: NavigationItem[];
   seo: SeoConfig;
   copy: InvitationCopy;

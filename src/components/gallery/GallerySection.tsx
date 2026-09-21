@@ -34,7 +34,10 @@ export function GallerySection() {
           next: galleryCopy.next,
         }}
       >
-        <GalleryReveal heading={heading}>
+        <GalleryReveal
+          heading={heading}
+          description={filledText(galleryCopy.description)}
+        >
           <GallerySlider
             images={images}
             labels={{

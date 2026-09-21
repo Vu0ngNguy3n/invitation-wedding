@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
 type InvitationNamesSize = "opening" | "hero" | "closing";
@@ -7,6 +8,8 @@ type InvitationNamesProps = {
   groomName?: string;
   size?: InvitationNamesSize;
   className?: string;
+  /** Replaces the script ampersand, e.g. an ornamental rule between the names. */
+  separator?: ReactNode;
 };
 
 const nameClassName: Record<InvitationNamesSize, string> = {
@@ -27,6 +30,7 @@ export function InvitationNames({
   groomName,
   size = "hero",
   className,
+  separator,
 }: InvitationNamesProps) {
   if (!brideName && !groomName) {
     return null;
@@ -41,9 +45,11 @@ export function InvitationNames({
           <span className={cn(nameClassName[size], "block max-w-full px-1")}>
             {brideName}
           </span>
-          <span aria-hidden="true" className={ampersandClassName[size]}>
-            &
-          </span>
+          {separator ?? (
+            <span aria-hidden="true" className={ampersandClassName[size]}>
+              &
+            </span>
+          )}
           <span className={cn(nameClassName[size], "block max-w-full px-1")}>
             {groomName}
           </span>

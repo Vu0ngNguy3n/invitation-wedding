@@ -8,9 +8,9 @@ import { filledText } from "@/utils/text";
 
 export function CoupleSection() {
   const { bride, groom } = weddingData.couple;
-  const heading = weddingData.navigation.find(
-    (item) => item.id === "story",
-  )?.label;
+  const heading =
+    filledText(weddingData.copy.story.title) ??
+    weddingData.navigation.find((item) => item.id === "story")?.label;
   const brideRole = filledText(weddingData.copy.story.brideRole);
   const groomRole = filledText(weddingData.copy.story.groomRole);
 
@@ -19,7 +19,6 @@ export function CoupleSection() {
       id="story"
       tone="ivory"
       labelledBy={heading ? "story-heading" : undefined}
-      className="lg:py-36 xl:py-44"
     >
       <MotionReveal variant="storyHeading">
         {heading ? (
@@ -35,7 +34,7 @@ export function CoupleSection() {
         </div>
       </MotionReveal>
 
-      <div className="mt-24 flex flex-col gap-32 sm:mt-28 sm:gap-36 lg:mt-32 lg:gap-40 xl:mt-36 xl:gap-44">
+      <div className="mt-24 flex flex-col gap-28 sm:mt-28 sm:gap-32 lg:mt-32 lg:gap-40 xl:mt-36 xl:gap-44">
         <CoupleProfile
           profile={bride}
           placement="bride"

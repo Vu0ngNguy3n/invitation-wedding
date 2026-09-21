@@ -160,7 +160,7 @@
 
 @utility type-hero-name {
   font-family: var(--font-cormorant), ui-serif, Georgia, serif;
-  font-size: clamp(2.55rem, 8.2vw, 3.9rem);
+  font-size: clamp(2.35rem, 7.6vw, 3.3rem);
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: 0.04em;
@@ -173,8 +173,22 @@
   font-feature-settings: "lnum" 1, "onum" 0;
 
   @variant lg {
-    font-size: clamp(3.85rem, 5.3vw, 6.15rem);
+    font-size: clamp(2.9rem, 3.4vw, 3.95rem);
   }
+}
+
+/* Keeps hero typography legible over the cover photograph without flattening
+   the photograph into a dark block. */
+@utility hero-scrim {
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--deep-forest) 72%, transparent) 0%,
+    color-mix(in srgb, var(--deep-forest) 46%, transparent) 30%,
+    color-mix(in srgb, var(--deep-forest) 14%, transparent) 56%,
+    color-mix(in srgb, var(--deep-forest) 30%, transparent) 84%,
+    color-mix(in srgb, var(--deep-forest) 55%, transparent) 100%
+  );
 }
 
 @utility invitation-stack {
@@ -188,6 +202,21 @@
 
 @utility foil-border {
   border: 1px solid color-mix(in srgb, var(--gold-foil) 34%, transparent);
+}
+
+@keyframes music-note-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility music-note-spin {
+  transform-origin: center;
+  animation: music-note-spin 12s linear infinite;
 }
 
 /*

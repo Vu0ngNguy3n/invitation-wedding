@@ -4,6 +4,7 @@ import { DressCodeSection } from "@/components/dress-code/DressCodeSection";
 import { EventsSection } from "@/components/events/EventsSection";
 import { GallerySection } from "@/components/gallery/GallerySection";
 import { GuestbookSection } from "@/components/guestbook/GuestbookSection";
+import { HeroBackdrop } from "@/components/hero/HeroBackdrop";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { InvitationNav } from "@/components/layout/InvitationNav";
 import { OpeningExperience } from "@/components/opening/OpeningExperience";
@@ -25,7 +26,8 @@ export default function Home() {
           aria-labelledby="home-heading"
           className="section-forest relative flex min-h-svh flex-col"
         >
-          <InvitationNav />
+          <HeroBackdrop />
+          <InvitationNav className="px-8 pt-7 sm:px-12 sm:pt-8 lg:px-16 lg:pt-9" />
           <HeroSection />
           <div
             aria-hidden="true"
@@ -40,8 +42,8 @@ export default function Home() {
         <TimelineSection />
         <GallerySection />
         <DressCodeSection />
-        <GuestbookSection />
         <RsvpSection />
+        <GuestbookSection />
         <ThankYouSection />
       </main>
     </OpeningExperience>
